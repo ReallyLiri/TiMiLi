@@ -99,7 +99,7 @@ public class FireBaseCloudServer implements ICloudServer {
 
     @Override
     public void RegisterForUserStatusData(String userId, final IOnLatestStatusUpdatedListener onLatestStatusUpdated) {
-        Firebase ref = new Firebase(GetUserGistDirectory(userId));
+        Firebase ref = new Firebase(GetUserStatusFile(userId));
         ValueEventListener listener = new ValueEventListener() {
 
             @Override
