@@ -8,7 +8,8 @@ public class UserGist {
     public long timestamp;
     public int dayOfWeek; // [1,7]
     public int hourOfDay; // [0,23]
-    public int minuteOfDay; // [0,59]
+    public int minuteOfHour; // [0,59]
     public PhysicalActivity physicalActivity;
     public RingerMode ringerMode;
+    public boolean isScreenOn;
 }
