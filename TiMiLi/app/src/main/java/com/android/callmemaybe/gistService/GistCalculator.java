@@ -22,7 +22,7 @@ public class GistCalculator {
         mTelephonyHelper = new TelephonyHelper();
     }
 
-    public UserGist GetGist(Context context) {
+    public UserGist GetGist(Context context, boolean isDeviceStill) {
         UserGist gist = new UserGist();
 
         gist.userId = mTelephonyHelper.getMyPhoneNumber(context);
@@ -33,7 +33,7 @@ public class GistCalculator {
 
         gist.ringerMode = GetRingerMode(context);
 
-        gist.physicalActivity = null;
+        gist.isDeviceStill = isDeviceStill;
 
         return null;
     }

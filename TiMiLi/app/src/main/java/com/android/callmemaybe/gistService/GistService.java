@@ -5,8 +5,13 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.android.callmemaybe.contracts.ICloudServer;
 import com.android.callmemaybe.contracts.UserGist;
@@ -17,7 +22,7 @@ import java.util.Calendar;
 /**
  * Created by Liri on 05/02/2016.
  */
-public class GistService extends Service {
+public class GistService extends Service implements SensorEventListener {
 
     private static final String EXTRA_OPCODE = "EXTRA_OPCODE";
 
@@ -31,8 +36,7 @@ public class GistService extends Service {
         switch (opcode)
         {
             case OPCODE_WAKEUP:
-                calculateAndSendGist();
-                goToSleep(5 * 1000); // TODO
+                RegisterForSensorUpdates();
                 break;
 
             case OPCODE_NOP:
@@ -51,7 +55,7 @@ public class GistService extends Service {
     private void goToSleep(long millisec) {
         AlarmManager alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         Intent receiverIntent = new Intent(this, GistWakeupReceiver.class);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, receiverIntent, 0);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, receiverIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis() + millisec);
@@ -59,16 +63,63 @@ public class GistService extends Service {
         alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
     }
 
-    private void calculateAndSendGist() {
+    private void calculateAndSendGist(boolean isDeviceStill) {
         ICloudServer cloudServer = new FireBaseCloudServer(this);
         GistCalculator calculator = new GistCalculator();
-        UserGist gist = calculator.GetGist(this);
+        UserGist gist = calculator.GetGist(this, isDeviceStill);
         cloudServer.UpdateMyGist(gist);
+        goToSleep(5 * 1000); // TODO
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    // -------------------- Sensor handling:
+
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
+    private double mLastAccel = SensorManager.GRAVITY_EARTH;
+    private double mCurrentAccel = SensorManager.GRAVITY_EARTH;
+    private double mAggregatedAccel = 0.00f;
+    private int mSensorHitCount = 0;
+
+    public void RegisterForSensorUpdates() {
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+            mSensorHitCount++;
+
+            float[] gravity = event.values.clone();
+            float x = gravity[0];
+            float y = gravity[1];
+            float z = gravity[2];
+            mLastAccel = mCurrentAccel;
+            mCurrentAccel = Math.sqrt(x * x + y * y + z * z);
+            double delta = mCurrentAccel - mLastAccel;
+            mAggregatedAccel = mAggregatedAccel * 0.9f + delta;
+
+            if (mSensorHitCount < 2) {
+                return;
+            }
+
+            mSensorManager.unregisterListener(this, mAccelerometer);
+            mSensorHitCount = 0;
+            Log.d("PhysicalMovementHelper", "Aggregate Accelaration is now " + mAggregatedAccel);
+            boolean isDeviceStill = mAggregatedAccel <= 3;
+            calculateAndSendGist(isDeviceStill);
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        // NOP
     }
 }

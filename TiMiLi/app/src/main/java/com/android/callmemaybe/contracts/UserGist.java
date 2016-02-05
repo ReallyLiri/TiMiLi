@@ -9,7 +9,7 @@ public class UserGist {
     public int dayOfWeek; // [1,7]
     public int hourOfDay; // [0,23]
     public int minuteOfHour; // [0,59]
-    public PhysicalActivity physicalActivity;
+    public boolean isDeviceStill;
     public RingerMode ringerMode;
     public boolean isScreenOn;
 }
