@@ -68,7 +68,7 @@ public class GistService extends Service implements SensorEventListener {
         GistCalculator calculator = new GistCalculator();
         UserGist gist = calculator.GetGist(this, isDeviceStill);
         cloudServer.UpdateMyGist(gist);
-        goToSleep(5 * 1000); // TODO
+        goToSleep(gist.serviceSleepTimeInMillisec());
     }
 
     @Nullable
@@ -81,10 +81,7 @@ public class GistService extends Service implements SensorEventListener {
 
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
-    private double mLastAccel = SensorManager.GRAVITY_EARTH;
-    private double mCurrentAccel = SensorManager.GRAVITY_EARTH;
-    private double mAggregatedAccel = 0.00f;
-    private int mSensorHitCount = 0;
+    private float[] prevValues = null;
 
     public void RegisterForSensorUpdates() {
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -95,27 +92,29 @@ public class GistService extends Service implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
-            mSensorHitCount++;
 
-            float[] gravity = event.values.clone();
-            float x = gravity[0];
-            float y = gravity[1];
-            float z = gravity[2];
-            mLastAccel = mCurrentAccel;
-            mCurrentAccel = Math.sqrt(x * x + y * y + z * z);
-            double delta = mCurrentAccel - mLastAccel;
-            mAggregatedAccel = mAggregatedAccel * 0.9f + delta;
-
-            if (mSensorHitCount < 2) {
+            if (prevValues == null) {
+                prevValues = event.values.clone();
                 return;
             }
 
+            float diff = vectorDiff(event.values);
+
+            prevValues = event.values.clone();
+
             mSensorManager.unregisterListener(this, mAccelerometer);
-            mSensorHitCount = 0;
-            Log.d("PhysicalMovementHelper", "Aggregate Accelaration is now " + mAggregatedAccel);
-            boolean isDeviceStill = mAggregatedAccel <= 3;
+
+            Log.d("PhysicalMovementHelper", "Diff is " + diff);
+            boolean isDeviceStill = diff < 0.02;
             calculateAndSendGist(isDeviceStill);
         }
+    }
+
+    private float vectorDiff(float[] values) {
+        float dx = Math.abs(values[0] - prevValues[0]);
+        float dy = Math.abs(values[1] - prevValues[1]);
+        float dz = Math.abs(values[2] - prevValues[2]);
+        return dx + dy + dz;
     }
 
     @Override
