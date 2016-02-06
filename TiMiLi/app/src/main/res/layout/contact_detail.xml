@@ -10,34 +10,34 @@
     android:layout_height="match_parent">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/my_contact_toolbar"
+            android:id="@+id/contact_detail_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:elevation="4dp">
         </android.support.v7.widget.Toolbar>
 
         <ImageView
-            android:id="@+id/contact_photo"
+            android:id="@+id/contact_detail_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/status_textview"
+            android:id="@+id/contact_list_item_status_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/current_action"
+            android:id="@+id/contact_detail_current_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <Spinner
-            android:id="@+id/set_privacy_spn"
+            android:id="@+id/contact_detail_set_privacy_spn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/make_contact_btn"
+            android:id="@+id/contact_detail_make_contact_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

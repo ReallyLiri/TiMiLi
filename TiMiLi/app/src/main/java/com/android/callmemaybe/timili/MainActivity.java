@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +17,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final String LOG_TAG = MainActivity.class.getSimpleName();
+
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -24,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.activity_main_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         //MostSearchedFragment mostSearched = (MostSearchedFragment)getSupportFragmentManager()
@@ -56,9 +59,13 @@ public class MainActivity extends AppCompatActivity {
             // Intent, pass the Intent's extras to the fragment as arguments
             //mostSearchedFragment.setArguments(getIntent().getExtras());
 
+            Log.d(LOG_TAG, "before starting transaction");
+
             // Add the fragment to the 'fragment_container' FrameLayout
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_main, mostSearchedFragment).commit();
+
+            Log.d(LOG_TAG, "after starting transaction");
         }
     }
 
