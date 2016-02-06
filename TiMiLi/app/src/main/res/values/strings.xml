@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">TiMiLi</string>
+
+    <string name="greeting">My most searched contacts</string>
+
+    <!-- appbar -->
+    <string name="action_help">help</string>
+    <string name="action_settings">settings</string>
+
+    <!-- contact toolbar -->
+    <string name="action_favorite">favorite</string>
+
+    <!-- sorting and filtering options -->
+    <string name="abc">alphabetically</string>
+    <string name="availability">status</string>
+    <string name="hasApp">app users</string>
+    <string name="favorites">my favs</string>
+    <string name="searchesCounter">top searches</string>
+
 </resources>
