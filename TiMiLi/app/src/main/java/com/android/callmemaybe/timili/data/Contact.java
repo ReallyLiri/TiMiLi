@@ -2,6 +2,9 @@ package com.android.callmemaybe.timili.data;
 
 import com.android.callmemaybe.timili.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Ana on 05/02/2016.
  */
@@ -75,5 +78,27 @@ public class Contact {
 
     public void setPhoto (int photo) {
         photoId = photo;
+    }
+
+    public static List<Contact> dummyContacts() {
+        List<Contact> contacts;
+        Contact contact1 = new Contact("Liri", "04-0000000");
+        contact1.setStatus("busy");
+        contact1.setPhoto(R.drawable.art_clear);
+
+        Contact contact2 = new Contact("Mia", "04-0000001");
+        contact2.setStatus("bored");
+        contact1.setPhoto(R.drawable.art_clear);
+
+        Contact contact3 = new Contact("Tiani", "04-0000002");
+        contact3.setStatus("available");
+        contact1.setPhoto(R.drawable.art_clear);
+
+        contacts = new ArrayList<>();
+        contacts.add(contact1);
+        contacts.add(contact2);
+        contacts.add(contact2);
+
+        return contacts;
     }
 }

@@ -1,8 +1,5 @@
 package com.android.callmemaybe.timili.data;
 
-import com.android.callmemaybe.timili.R;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,41 +8,22 @@ import java.util.List;
 public class AllContacts {
 
     //we need to decide how we will handle the contact information
-    List<Contact> allContacts;
+    public static List<Contact> allContacts = Contact.dummyContacts();
 
-    public AllContacts () {
-        Contact contact1 = new Contact("Liri", "04-0000000");
-        contact1.setStatus("busy");
-        contact1.setPhoto(R.drawable.art_clear);
-
-        Contact contact2 = new Contact("Mia", "04-0000001");
-        contact2.setStatus("bored");
-        contact1.setPhoto(R.drawable.art_clear);
-
-        Contact contact3 = new Contact("Tiani", "04-0000002");
-        contact3.setStatus("available");
-        contact1.setPhoto(R.drawable.art_clear);
-
-        allContacts = new ArrayList<>();
-        allContacts.add(contact1);
-        allContacts.add(contact2);
-        allContacts.add(contact2);
-    }
-
-    private void addContact (String name, String number) {
+    private static void addContact (String name, String number) {
         Contact contact = new Contact(name, number);
         //allContacts.insert whatever
     }
 
-    public boolean isInContacts(String name) {
+    public static boolean isInContacts(String name) {
         return false;
     }
 
-    public boolean isInContacts(int number) {
+    public static boolean isInContacts(int number) {
         return false;
     }
 
-    public List<Contact> sortContacts (String sortOrder) {
+    public static List<Contact> sortContacts (String sortOrder) {
 
         /**
         switch (sortOrder) {
@@ -58,10 +36,10 @@ public class AllContacts {
         }
          **/
 
-        return allContacts;
+        return AllContacts.allContacts;
     }
 
-    public List<Contact> filterContracts () {
+    public static List<Contact> filterContracts () {
         return allContacts;
     }
 
@@ -71,13 +49,21 @@ public class AllContacts {
     }
 
     //find the 3 top searches contacts
-    public List<Contact> topSearched () {
+    public static Contact[] topSearched () {
+        List<Contact> topList;
+        Contact[] topArray;
         if (allContacts.size() <= 3) {
-            return allContacts;
+            topList = allContacts;
+            topArray = new Contact[topList.size()];
         } else {
-            List<Contact> top = sortContacts("searchedCounter");
-            return top.subList(0, 3);
+            topList = sortContacts("searchedCounter");
+            topList = topList.subList(0, 3);
+            topArray = new Contact[3];
         }
+        for (int i = 0; i < topArray.length; i++) {
+            topArray[i] = topList.get(i);
+        }
+        return topArray;
     }
 
 

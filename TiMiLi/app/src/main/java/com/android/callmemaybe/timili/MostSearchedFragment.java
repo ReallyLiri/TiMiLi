@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.android.callmemaybe.timili.data.AllContacts;
+import com.android.callmemaybe.timili.data.Contact;
 import com.android.callmemaybe.timili.data.ContactAdapter;
 
 /**
@@ -25,7 +27,10 @@ public class MostSearchedFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.most_searched, container, false);
         cListView = (ListView) rootView.findViewById(R.id.most_searched_listview);
-        contactAdapter = new ContactAdapter(getActivity(), null, 0);
+
+        //needs to deal with the cases of no contacts at all or less then 3 contacts
+        Contact[] top = AllContacts.topSearched();
+        contactAdapter = new ContactAdapter(getActivity(), top);
 
         cListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
