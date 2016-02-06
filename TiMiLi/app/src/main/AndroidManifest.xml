@@ -16,12 +16,24 @@
             </intent-filter>
         </activity>
 
+<<<<<<< HEAD
         <activity android:name=".ContactActivity" >
 
         </activity>
+=======
+        <receiver android:name="com.android.callmemaybe.gistService.GistWakeupReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.android.callmemaybe.gistService.GistService" />
+        <service android:name="com.android.callmemaybe.notificationService.NotificationService" />
+>>>>>>> 24e6654b41da48ff6182bcb567d5682ecc2bf754
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
 </manifest>
