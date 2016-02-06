@@ -6,7 +6,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:title="@string/language">
+        android:title="@string/language"
+        android:key="language">
 
         <RadioButton
             android:id="@+id/hebrew_radio_button"
@@ -26,7 +27,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:title="@string/privacy">
+        android:title="@string/privacy"
+        android:key="privacy">
 
         <RadioButton
             android:id="@+id/all_radio_button"

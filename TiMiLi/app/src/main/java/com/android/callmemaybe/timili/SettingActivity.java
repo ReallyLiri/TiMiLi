@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 
 /**
  * Created by Ana on 05/02/2016.
+ * All wrong! needs to change everything!
  */
 public class SettingActivity extends PreferenceActivity
         implements Preference.OnPreferenceChangeListener {
@@ -23,8 +24,8 @@ public class SettingActivity extends PreferenceActivity
 
         // For all preferences, attach an OnPreferenceChangeListener so the UI summary can be
         // updated when the preference changes.
-        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_location_key)));
-        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_units_key)));
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.language)));
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.privacy)));
     }
 
     /**

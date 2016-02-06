@@ -21,9 +21,17 @@
     <string name="hebrew">hebrew</string>
     <string name="english">english</string>
     <string name="language">language</string>
+    <string name="privacy">privacy</string>
     <string name="all">everyone</string>
     <string name="only_contacts">only my contacts</string>
     <string name="only_favs">only my favs</string>
     <string name="none">no one</string>
+
+    <!-- statuses -->
+    <string name="busy">busy</string>
+    <string name="available">available</string>
+    <string name="only_writing">write me</string>
+    <string name="bored">please amuse me</string>
+    <string name="default_status">don't know</string>
 
 </resources>

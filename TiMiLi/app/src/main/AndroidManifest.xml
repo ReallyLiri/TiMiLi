@@ -20,6 +20,8 @@
         <activity android:name=".ContactActivity" >
 
         </activity>
+
+        <activity android:name=".SettingActivity" ></activity>
 =======
         <receiver android:name="com.android.callmemaybe.gistService.GistWakeupReceiver" >
             <intent-filter>
