@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 /**
  * Created by Ana on 05/02/2016.
  */
-public class ContactListFragment extends Fragment{
+public class MyProfileFragment extends Fragment {
 
-    public ContactListFragment () {}
+    public MyProfileFragment () {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,6 @@ public class ContactListFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.contact_list, container, false);
+        return inflater.inflate(R.layout.my_profile, container, false);
     }
 }

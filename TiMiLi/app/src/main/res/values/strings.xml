@@ -17,4 +17,13 @@
     <string name="favorites">my favs</string>
     <string name="searchesCounter">top searches</string>
 
+    <!--settings -->
+    <string name="hebrew">hebrew</string>
+    <string name="english">english</string>
+    <string name="language">language</string>
+    <string name="all">everyone</string>
+    <string name="only_contacts">only my contacts</string>
+    <string name="only_favs">only my favs</string>
+    <string name="none">no one</string>
+
 </resources>

@@ -23,14 +23,17 @@ public class ContactActivity extends AppCompatActivity {
             // using a fragment transaction.
 
             Bundle arguments = new Bundle();
-            arguments.putParcelable(ContactActivityFragment.DETAIL_URI, getIntent().getData());
+            //needs to find out what to put in bundle
 
             ContactActivityFragment fragment = new ContactActivityFragment();
+
+            /**
             fragment.setArguments(arguments);
 
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.weather_detail_container, fragment)
+                    .add(R.id.., fragment)
                     .commit();
+             **/
         }
     }
 
