@@ -80,6 +80,14 @@ public class Contact {
         photoId = photo;
     }
 
+    public int getPhotoId () {
+        return photoId;
+    }
+
+    public String getPhoneNumber () {
+        return phoneNumber;
+    }
+
     public static List<Contact> dummyContacts() {
         List<Contact> contacts;
         Contact contact1 = new Contact("Liri", "04-0000000");

@@ -41,10 +41,8 @@ public class ContactAdapter extends ArrayAdapter<Contact>{
                    View convertView,
                    ViewGroup parent) {
 
-        //according to the examples it should be contact = getItem(position)
-        //but then I get a nullPointer when I try contact.getField
-        //but now the just app crashes :(
-        Contact contact = contactsList[position];
+
+        Contact contact = getItem(position);
         Log.d(LOG_TAG, "convertView == null:" + (convertView == null));
         ViewHolder holder;
         if (convertView == null) {
@@ -65,10 +63,11 @@ public class ContactAdapter extends ArrayAdapter<Contact>{
         }
         Log.d(LOG_TAG, "contact == null:" + (contact == null));
 
+        //I get a nullPointer when I try contact.getField
         holder.userName_textview.setText(contact.getUserName());
-        holder.phone_textview.setText(contact.phoneNumber);
+        holder.phone_textview.setText(contact.getPhoneNumber());
         holder.status_textview.setText(contact.getStatus());
-        holder.photoView.setImageResource(contact.photoId);
+        holder.photoView.setImageResource(contact.getPhotoId());
         convertView.setTag(holder);
         return convertView;
     }

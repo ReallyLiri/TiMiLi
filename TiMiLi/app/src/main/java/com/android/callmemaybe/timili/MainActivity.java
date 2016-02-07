@@ -38,6 +38,24 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.activity_main_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        //setting listener to tabs
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
         //MostSearchedFragment mostSearched = (MostSearchedFragment)getSupportFragmentManager()
         //        .findFragmentById(R.id.fragment_main);
 
@@ -62,8 +80,13 @@ public class MainActivity extends AppCompatActivity {
             Log.d(LOG_TAG, "before starting transaction");
 
             // Add the fragment to the 'fragment_container' FrameLayout
+            //Optional tag name for the fragment, to later retrieve the fragment with
+            //FragmentManager.findFragmentByTag(String)
+            //addToBackStack -  transaction will be remembered after it is committed,
+            // and will reverse its operation when later popped off the stack
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_main, mostSearchedFragment).commit();
+                    .add(R.id.fragment_main, mostSearchedFragment, "MostSearchedFragmentTag")
+                    .addToBackStack(null).commit();
 
             Log.d(LOG_TAG, "after starting transaction");
         }
