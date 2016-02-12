@@ -10,4 +10,5 @@ public class UserStatus {
     public String funnyStatus;
     public UserProfile userProfile;
     public List<Integer> inactiveDays;
+    public List<String> blockedUsers;
 }

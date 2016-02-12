@@ -12,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.FragmentManager;
 
+import com.android.callmemaybe.gistService.GistService;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +26,21 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        GistService.sendKill(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GistService.sendStartup(this);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);

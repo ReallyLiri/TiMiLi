@@ -6,5 +6,6 @@ package com.android.callmemaybe.contracts;
 public enum ActiveInPractice {
     Active,
     Inactive,
+    Unwilling,
     Unknown
 }

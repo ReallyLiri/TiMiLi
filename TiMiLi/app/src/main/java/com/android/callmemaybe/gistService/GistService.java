@@ -15,6 +15,7 @@ import android.util.Log;
 
 import com.android.callmemaybe.contracts.ICloudServer;
 import com.android.callmemaybe.contracts.UserGist;
+import com.android.callmemaybe.helpers.PhoneNumberHelper;
 import com.android.callmemaybe.server.FireBaseCloudServer;
 
 import java.util.Calendar;
@@ -28,16 +29,45 @@ public class GistService extends Service implements SensorEventListener {
 
     private static final int OPCODE_NOP = 0;
     private static final int OPCODE_WAKEUP = 1;
+    private static final int OPCODE_KILL = 2;
+    private static final int OPCODE_STARTUP = 3;
+
+    private PendingIntent mLastPendingIntent;
+    private boolean isKilled = false;
+    private String mMyId;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent == null) {
+            return super.onStartCommand(intent, flags, startId);
+        }
+
         int opcode = intent.getIntExtra(EXTRA_OPCODE, OPCODE_NOP);
+
+        Log.d("GistService", "Got start with opcode: " + opcode + ", isKilled = " + isKilled);
 
         switch (opcode)
         {
+            case OPCODE_STARTUP:
+                isKilled = false;
+                if (mMyId == null) {
+                    PhoneNumberHelper phoneNumberHelper = new PhoneNumberHelper();
+                    mMyId = phoneNumberHelper.getMyPhoneNumber(this);
+                    /*if (mMyId == null || mMyId.length() == 0) {
+                        phoneNumberHelper.brutallyGetMyPhoneNumber(this);
+                        return Service.START_NOT_STICKY;
+                    }*/
+                }
+
             case OPCODE_WAKEUP:
                 RegisterForSensorUpdates();
                 break;
+
+            case OPCODE_KILL:
+                isKilled = true;
+                UnRegisterAll();
+                break;
+
 
             case OPCODE_NOP:
                 return super.onStartCommand(intent, flags, startId);
@@ -47,28 +77,52 @@ public class GistService extends Service implements SensorEventListener {
     }
 
     public static void sendWakeup(Context context) {
+        sendOpCodeEvent(context, OPCODE_WAKEUP);
+    }
+
+    public static void sendStartup(Context context) {
+        sendOpCodeEvent(context, OPCODE_STARTUP);
+    }
+
+    public static void sendKill(Context context) {
+        sendOpCodeEvent(context, OPCODE_KILL);
+    }
+
+    private static void sendOpCodeEvent(Context context, int opcode) {
         Intent serviceIntent = new Intent(context, GistService.class);
-        serviceIntent.putExtra(EXTRA_OPCODE, OPCODE_WAKEUP);
+        serviceIntent.putExtra(EXTRA_OPCODE, opcode);
         context.startService(serviceIntent);
     }
 
     private void goToSleep(long millisec) {
+        if (isKilled) {
+            return;
+        }
+
         AlarmManager alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         Intent receiverIntent = new Intent(this, GistWakeupReceiver.class);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, receiverIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mLastPendingIntent = PendingIntent.getBroadcast(this, 0, receiverIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis() + millisec);
 
-        alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
+        alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), mLastPendingIntent);
     }
 
     private void calculateAndSendGist(boolean isDeviceStill) {
         ICloudServer cloudServer = new FireBaseCloudServer(this);
         GistCalculator calculator = new GistCalculator();
-        UserGist gist = calculator.GetGist(this, isDeviceStill);
+        UserGist gist = calculator.GetGist(this, isDeviceStill, mMyId);
         cloudServer.UpdateMyGist(gist);
         goToSleep(gist.serviceSleepTimeInMillisec());
+    }
+
+    private void UnRegisterAll() {
+        if (mLastPendingIntent != null) {
+            AlarmManager alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+            alarmMgr.cancel(mLastPendingIntent);
+        }
+        unregisterSensorListener();
     }
 
     @Nullable
@@ -84,6 +138,9 @@ public class GistService extends Service implements SensorEventListener {
     private float[] prevValues = null;
 
     public void RegisterForSensorUpdates() {
+        if (isKilled) {
+            return;
+        }
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
@@ -102,12 +159,16 @@ public class GistService extends Service implements SensorEventListener {
 
             prevValues = event.values.clone();
 
-            mSensorManager.unregisterListener(this, mAccelerometer);
+            unregisterSensorListener();
 
             Log.d("PhysicalMovementHelper", "Diff is " + diff);
             boolean isDeviceStill = diff < 0.02;
             calculateAndSendGist(isDeviceStill);
         }
+    }
+
+    private void unregisterSensorListener() {
+        mSensorManager.unregisterListener(this, mAccelerometer);
     }
 
     private float vectorDiff(float[] values) {
