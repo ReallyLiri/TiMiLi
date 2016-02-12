@@ -96,16 +96,16 @@ public class Contact {
 
         Contact contact2 = new Contact("Mia", "04-0000001");
         contact2.setStatus("bored");
-        contact1.setPhoto(R.drawable.art_clear);
+        contact2.setPhoto(R.drawable.art_clear);
 
         Contact contact3 = new Contact("Tiani", "04-0000002");
         contact3.setStatus("available");
-        contact1.setPhoto(R.drawable.art_clear);
+        contact3.setPhoto(R.drawable.art_clear);
 
         contacts = new ArrayList<>();
         contacts.add(contact1);
         contacts.add(contact2);
-        contacts.add(contact2);
+        contacts.add(contact3);
 
         return contacts;
     }

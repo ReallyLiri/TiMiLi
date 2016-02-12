@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ContactListFragment(), "All Contacts");
+        adapter.addFragment(new MostSearchedFragment(), "All Contacts");
         adapter.addFragment(new ContactListFragment(), "My Favs");
         adapter.addFragment(new MyProfileFragment(), "My Profile");
         viewPager.setAdapter(adapter);

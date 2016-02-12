@@ -47,7 +47,7 @@ public class ContactAdapter extends ArrayAdapter<Contact>{
         ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).
-                    inflate(R.layout.contact_list_item, parent, false);
+                    inflate(R.layout.most_searched_item, parent, false);
             holder = new ViewHolder();
             holder.photoView = (ImageView)
                     convertView.findViewById(R.id.most_searched_item_photo_icon);
@@ -62,6 +62,8 @@ public class ContactAdapter extends ArrayAdapter<Contact>{
             holder = (ViewHolder) convertView.getTag();
         }
         Log.d(LOG_TAG, "contact == null:" + (contact == null));
+        Log.d(LOG_TAG, "username: " + (contact.getUserName()));
+
 
         //I get a nullPointer when I try contact.getField
         holder.userName_textview.setText(contact.getUserName());
