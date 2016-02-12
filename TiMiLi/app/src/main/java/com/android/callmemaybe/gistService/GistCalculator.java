@@ -7,7 +7,7 @@ import android.os.PowerManager;
 
 import com.android.callmemaybe.contracts.RingerMode;
 import com.android.callmemaybe.contracts.UserGist;
-import com.android.callmemaybe.helpers.TelephonyHelper;
+import com.android.callmemaybe.helpers.PhoneNumberHelper;
 
 import java.util.Calendar;
 
@@ -16,16 +16,10 @@ import java.util.Calendar;
  */
 public class GistCalculator {
 
-    private TelephonyHelper mTelephonyHelper;
-
-    public GistCalculator() {
-        mTelephonyHelper = new TelephonyHelper();
-    }
-
-    public UserGist GetGist(Context context, boolean isDeviceStill) {
+    public UserGist GetGist(Context context, boolean isDeviceStill, String myId) {
         UserGist gist = new UserGist();
 
-        gist.userId = mTelephonyHelper.getMyPhoneNumber(context);
+        gist.userId = myId;
 
         gist.isScreenOn = IsScreenOn(context);
 

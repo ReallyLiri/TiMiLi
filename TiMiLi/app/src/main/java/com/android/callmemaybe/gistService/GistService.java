@@ -15,6 +15,7 @@ import android.util.Log;
 
 import com.android.callmemaybe.contracts.ICloudServer;
 import com.android.callmemaybe.contracts.UserGist;
+import com.android.callmemaybe.helpers.PhoneNumberHelper;
 import com.android.callmemaybe.server.FireBaseCloudServer;
 
 import java.util.Calendar;
@@ -33,6 +34,7 @@ public class GistService extends Service implements SensorEventListener {
 
     private PendingIntent mLastPendingIntent;
     private boolean isKilled = false;
+    private String mMyId;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -48,6 +50,15 @@ public class GistService extends Service implements SensorEventListener {
         {
             case OPCODE_STARTUP:
                 isKilled = false;
+                if (mMyId == null) {
+                    PhoneNumberHelper phoneNumberHelper = new PhoneNumberHelper();
+                    mMyId = phoneNumberHelper.getMyPhoneNumber(this);
+                    /*if (mMyId == null || mMyId.length() == 0) {
+                        phoneNumberHelper.brutallyGetMyPhoneNumber(this);
+                        return Service.START_NOT_STICKY;
+                    }*/
+                }
+
             case OPCODE_WAKEUP:
                 RegisterForSensorUpdates();
                 break;
@@ -101,7 +112,7 @@ public class GistService extends Service implements SensorEventListener {
     private void calculateAndSendGist(boolean isDeviceStill) {
         ICloudServer cloudServer = new FireBaseCloudServer(this);
         GistCalculator calculator = new GistCalculator();
-        UserGist gist = calculator.GetGist(this, isDeviceStill);
+        UserGist gist = calculator.GetGist(this, isDeviceStill, mMyId);
         cloudServer.UpdateMyGist(gist);
         goToSleep(gist.serviceSleepTimeInMillisec());
     }

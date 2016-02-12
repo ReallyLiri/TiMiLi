@@ -16,7 +16,7 @@ import com.android.callmemaybe.contracts.IOnLatestGistUpdatedListener;
 import com.android.callmemaybe.contracts.IOnLatestStatusUpdatedListener;
 import com.android.callmemaybe.contracts.UserGist;
 import com.android.callmemaybe.contracts.UserStatus;
-import com.android.callmemaybe.helpers.TelephonyHelper;
+import com.android.callmemaybe.helpers.PhoneNumberHelper;
 import com.android.callmemaybe.server.FireBaseCloudServer;
 
 import java.util.ArrayList;
@@ -53,8 +53,8 @@ public class NotificationService extends Service implements IOnLatestGistUpdated
         int opcode = intent.getIntExtra(EXTRA_OPCODE, OPCODE_NOP);
 
         if (mMyId == null) {
-            TelephonyHelper telephonyHelper = new TelephonyHelper();
-            mMyId = telephonyHelper.getMyPhoneNumber(this);
+            PhoneNumberHelper phoneNumberHelper = new PhoneNumberHelper();
+            mMyId = phoneNumberHelper.getMyPhoneNumber(this);
         }
 
         switch (opcode) {
