@@ -53,6 +53,6 @@ public class UserGist {
     }
 
     public long serviceSleepTimeInMillisec() {
-        return 5 * 1000; // 5 sec  // TODO
+        return 10 * 1000; // 10 sec  // TODO
     }
 }

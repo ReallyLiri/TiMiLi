@@ -35,7 +35,7 @@ public class GistCalculator {
 
         gist.isDeviceStill = isDeviceStill;
 
-        return null;
+        return gist;
     }
 
     private void SetTimes(UserGist gist) {

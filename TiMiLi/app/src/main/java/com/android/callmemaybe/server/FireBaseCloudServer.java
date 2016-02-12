@@ -37,9 +37,9 @@ public class FireBaseCloudServer implements ICloudServer {
     }
 
     @Override
-    public void UpdateMyGist(UserGist myStatus) {
-        Firebase ref = new Firebase(GetUserGistDirectory(myStatus.userId) + "/date_" + myStatus.timestamp);
-        ref.setValue(myStatus);
+    public void UpdateMyGist(UserGist myGist) {
+        Firebase ref = new Firebase(GetUserGistDirectory(myGist.userId) + "/date_" + myGist.timestamp);
+        ref.setValue(myGist);
     }
 
     @Override
