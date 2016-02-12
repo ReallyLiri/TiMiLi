@@ -43,6 +43,11 @@ public class FireBaseCloudServer implements ICloudServer {
     }
 
     @Override
+    public boolean IsRegisteredForUserGistData(String userId) {
+        return mGistListeners.containsKey(userId);
+    }
+
+    @Override
     public void RegisterForUserGistData(String userId, final IOnLatestGistUpdatedListener onLatestGistUpdated) {
         Firebase ref = new Firebase(GetUserGistDirectory(userId));
         Query queryRef = ref.orderByKey().limitToLast(1);

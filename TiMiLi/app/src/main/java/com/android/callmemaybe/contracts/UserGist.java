@@ -1,5 +1,6 @@
 package com.android.callmemaybe.contracts;
 
+import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -15,7 +16,21 @@ public class UserGist {
     public RingerMode ringerMode;
     public boolean isScreenOn;
 
-    public ActiveInPractice IsActiveInPractice() {
+    public ActiveInPractice IsActiveInPractice(String myId, UserStatus userStatus) {
+        if (userStatus.userProfile == UserProfile.DoNotDisturb) {
+            return ActiveInPractice.Unwilling;
+        }
+
+        if (userStatus.blockedUsers.contains(myId)) {
+            return ActiveInPractice.Unwilling;
+        }
+
+        Calendar gistDate = Calendar.getInstance();
+        gistDate.setTimeInMillis(timestamp);
+        if (userStatus.inactiveDays.contains(gistDate.get(Calendar.DAY_OF_WEEK))) {
+            return ActiveInPractice.Unwilling;
+        }
+
         long timeSince = System.currentTimeMillis() - timestamp;
         long minutesSince = TimeUnit.MILLISECONDS.toMinutes(timeSince);
         if (minutesSince > 10) {
