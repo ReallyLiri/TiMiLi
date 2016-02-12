@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.callmemaybe.timili" >
+    package="com.android.callmemaybe.UI" >
 
     <application
         android:allowBackup="true"
@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
-        <activity android:name=".MainActivity" >
+        <activity android:name="com.android.callmemaybe.UI.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -16,11 +16,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ContactActivity" >
+        <activity android:name="com.android.callmemaybe.UI.ContactActivity" >
 
         </activity>
 
-        <activity android:name=".SettingActivity" ></activity>
+        <activity android:name="com.android.callmemaybe.UI.SettingActivity" ></activity>
 
         <receiver android:name="com.android.callmemaybe.gistService.GistWakeupReceiver" >
             <intent-filter>

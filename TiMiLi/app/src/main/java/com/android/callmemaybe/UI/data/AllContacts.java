@@ -1,6 +1,9 @@
-package com.android.callmemaybe.timili.data;
+package com.android.callmemaybe.UI.data;
+
+import com.android.callmemaybe.helpers.TelephonyHelper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Ana on 05/02/2016.
@@ -8,19 +11,20 @@ import java.util.List;
 public class AllContacts {
 
     //we need to decide how we will handle the contact information
-    public static List<Contact> allContacts = Contact.dummyContacts();
+    //for now we won't delete contacts from the list in order to keep their indexes
+    public static List<Contact> allContacts = Contact.dummyContacts();//change to map in all code :)
+    public static Map<String, Contact> allContactsMap;
 
     private static void addContact (String name, String number) {
         Contact contact = new Contact(name, number);
-        //allContacts.insert whatever
+        allContactsMap.put(TelephonyHelper.normalizePhoneNumber(number), contact);
     }
 
-    public static boolean isInContacts(String name) {
-        return false;
-    }
+    //add later: public static boolean isInContacts(String name)
 
-    public static boolean isInContacts(int number) {
-        return false;
+
+    public static boolean isInContacts(String number) {
+        return allContactsMap.containsKey(TelephonyHelper.normalizePhoneNumber(number));
     }
 
     public static List<Contact> sortContacts (String sortOrder) {
@@ -66,6 +70,9 @@ public class AllContacts {
         return topArray;
     }
 
+    public static int getAllContactsSize () {
+        return allContactsMap.size();
+    }
 
 
 }

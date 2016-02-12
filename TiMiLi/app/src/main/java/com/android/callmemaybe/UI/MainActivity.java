@@ -1,4 +1,4 @@
-package com.android.callmemaybe.timili;
+package com.android.callmemaybe.UI;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -111,6 +111,10 @@ public class MainActivity extends AppCompatActivity {
                 // or something...
                 return true;
 
+            case R.id.action_my_profile:
+                //User chose the "my profile" item, open my_profile activity
+                return true;
+
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -121,9 +125,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new MostSearchedFragment(), "All Contacts");
+        adapter.addFragment(new MostSearchedFragment(), "Most Searched");
         adapter.addFragment(new ContactListFragment(), "My Favs");
-        adapter.addFragment(new MyProfileFragment(), "My Profile");
+        adapter.addFragment(new ContactListFragment(), "All Contacts");
         viewPager.setAdapter(adapter);
     }
 

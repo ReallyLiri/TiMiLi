@@ -1,4 +1,4 @@
-package com.android.callmemaybe.timili;
+package com.android.callmemaybe.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,9 +11,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android.callmemaybe.timili.data.AllContacts;
-import com.android.callmemaybe.timili.data.Contact;
-import com.android.callmemaybe.timili.data.ContactAdapter;
+import com.android.callmemaybe.UI.data.AllContacts;
+import com.android.callmemaybe.UI.data.Contact;
+import com.android.callmemaybe.UI.data.ContactAdapter;
+import com.android.callmemaybe.helpers.TelephonyHelper;
 
 /**
  * Created by Ana on 05/02/2016.
@@ -50,7 +51,14 @@ public class MostSearchedFragment extends Fragment {
                 //needs to go to the ContactActivity of the chosen contact
                 ContactActivity contactActivity = new ContactActivity();
                 Intent goToContactActivity = new Intent(getContext(), ContactActivity.class);
-                //not sure how I'm supposed to pass the contact chosen
+
+                //adding the phone number as extra in order to know who was chosen
+                TextView phoneView = (TextView)
+                        view.findViewById(R.id.most_searched_item_phone_textview);
+                String phoneNumber = TelephonyHelper.normalizePhoneNumber
+                        (phoneView.getText().toString());
+                goToContactActivity.putExtra("Phone_Number", phoneNumber);
+
                 startActivity(goToContactActivity);
 
             }

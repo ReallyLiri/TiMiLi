@@ -1,4 +1,4 @@
-package com.android.callmemaybe.timili.data;
+package com.android.callmemaybe.UI.data;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.callmemaybe.timili.R;
+import com.android.callmemaybe.UI.R;
 
 /**
  * Created by Ana on 05/02/2016.

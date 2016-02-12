@@ -1,4 +1,4 @@
-package com.android.callmemaybe.timili;
+package com.android.callmemaybe.UI;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

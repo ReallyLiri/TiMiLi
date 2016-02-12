@@ -1,6 +1,6 @@
-package com.android.callmemaybe.timili.data;
+package com.android.callmemaybe.UI.data;
 
-import com.android.callmemaybe.timili.R;
+import com.android.callmemaybe.UI.R;
 
 import java.util.ArrayList;
 import java.util.List;

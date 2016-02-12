@@ -1,4 +1,4 @@
-package com.android.callmemaybe.timili;
+package com.android.callmemaybe.UI;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +21,7 @@ public class ContactActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             // Create the contact detail fragment and add it to the activity
             // using a fragment transaction.
+            ContactActivityFragment contactActivityFragment = new ContactActivityFragment();
 
             Bundle arguments = new Bundle();
             //needs to find out what to put in bundle
