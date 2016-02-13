@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.support.v4.app.FragmentManager;
 
 import com.android.callmemaybe.gistService.GistService;
+import com.android.callmemaybe.helpers.ContactHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ContactHelper.updateContacts();
 
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
@@ -106,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(LOG_TAG, "after starting transaction");
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu (Menu menu) {

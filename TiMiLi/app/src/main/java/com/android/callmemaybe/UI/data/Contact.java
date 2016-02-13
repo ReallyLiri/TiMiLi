@@ -57,6 +57,7 @@ public class Contact {
         return status;
     }
 
+
     public void setStatus (String userStatus) {
         switch (userStatus) {
             case ("available") :
