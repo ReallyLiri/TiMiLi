@@ -3,7 +3,10 @@ package com.android.callmemaybe.helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.android.callmemaybe.UI.data.Contact;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -12,6 +15,13 @@ import java.util.Set;
 public class SharedPreferencesHelper {
 
     private static final String IDENTITY = "com.android.callmemaybe.timili";
+
+    public void PutContactHashSet(Context context, HashSet<Contact> contacts, String key){
+    }
+
+    public HashSet<Contact> GetContactHashSet(Context context, String key){
+        return null;
+    }
 
     public String GetString(Context context, String key) {
         SharedPreferences prefs = context.getSharedPreferences(IDENTITY, Context.MODE_PRIVATE);
@@ -46,4 +56,5 @@ public class SharedPreferencesHelper {
         SharedPreferences prefs = context.getSharedPreferences(IDENTITY, Context.MODE_PRIVATE);
         prefs.edit().putString(key, value.name()).apply();
     }
+
 }

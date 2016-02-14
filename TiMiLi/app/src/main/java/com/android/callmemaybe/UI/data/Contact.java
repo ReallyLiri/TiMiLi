@@ -1,5 +1,7 @@
 package com.android.callmemaybe.UI.data;
 
+import android.net.Uri;
+
 import com.android.callmemaybe.UI.R;
 
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import java.util.List;
  * Created by Ana on 05/02/2016.
  */
 public class Contact {
+    public Uri imageUri; //the contact image
     public String userName; //the username the user chose for him
     public String phoneNumber;
     public int status; //the id of the string source
@@ -19,6 +22,29 @@ public class Contact {
 
     public Contact () {
         this("unnamed", "0");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o.getClass().getSimpleName().equals(this.getClass().getSimpleName())){
+            Contact other = (Contact) o;
+            return (this.phoneNumber.equals(other.phoneNumber));
+        }
+        else {
+            return super.equals(o);
+        }
+    }
+
+    public Contact(Uri imageUri, String name, String phoneNumber){
+        this(name, phoneNumber);
+        this.imageUri = imageUri;
+    }
+
+    /*
+    checks with server if contact has app & update field
+     */
+    public boolean hasApp(){
+        return false;
     }
 
     public Contact (String name, String number) {
