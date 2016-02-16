@@ -46,7 +46,7 @@ public class NotificationService extends Service implements IOnLatestGistUpdated
                 List<String> trackedList = intent.getStringArrayListExtra(EXTRA_TRACKED_LIST);
                 Set<String> trackedSet = new HashSet<>(trackedList);
                 setupTrackedListeners(trackedSet);
-                break;
+                return Service.START_STICKY;
         }
 
         return super.onStartCommand(intent, flags, startId);
