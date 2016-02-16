@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 
 import com.android.callmemaybe.UI.data.Contact;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -16,10 +14,14 @@ public class SharedPreferencesHelper {
 
     private static final String IDENTITY = "com.android.callmemaybe.timili";
 
-    public void PutContactHashSet(Context context, HashSet<Contact> contacts, String key){
+    public void PutAllContacts(Context context, Set<Contact> allContacts, String key){
     }
 
-    public HashSet<Contact> GetContactHashSet(Context context, String key){
+    /*
+    return AllContacts in Pref.
+    important! if Pref[key] doesn't exsist - return null!
+     */
+    public Set<Contact> GetAllContacts(Context context, String key){
         return null;
     }
 

@@ -160,7 +160,7 @@ public class NotificationService extends Service implements IOnLatestGistUpdated
 
     @Override
     public void latestStatusUpdated(UserStatus latestStatus) {
-        String userId = latestStatus.userId;
+        String userId = latestStatus.phoneNum;
         boolean existed = mStatuses.containsKey(userId);
         mStatuses.put(userId, latestStatus);
 

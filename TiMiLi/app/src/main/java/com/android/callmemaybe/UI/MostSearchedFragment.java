@@ -11,9 +11,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android.callmemaybe.UI.data.AllContacts;
 import com.android.callmemaybe.UI.data.Contact;
 import com.android.callmemaybe.UI.data.ContactAdapter;
+import com.android.callmemaybe.UI.data.ContactSort;
+import com.android.callmemaybe.UI.data.ContactSortOrderType;
+import com.android.callmemaybe.helpers.ContactHelper;
 import com.android.callmemaybe.helpers.TelephonyHelper;
 
 /**
@@ -37,7 +39,7 @@ public class MostSearchedFragment extends Fragment {
 
         //needs to deal with the cases of no contacts at all or less then 3 contacts
         greetingMassage.setText(R.string.greeting);
-        Contact[] top = AllContacts.topSearched();
+        Contact[] top = ContactSort.sortContacts(ContactSortOrderType.mostSearchedToLeastSearched, ContactHelper.getAllContacts());
         Log.d(LOG_TAG, "before creating new contactAdapter");
         contactAdapter = new ContactAdapter(getActivity(), top);
         Log.d(LOG_TAG, "after creating new contactAdapter");

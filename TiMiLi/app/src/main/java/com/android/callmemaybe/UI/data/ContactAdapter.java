@@ -26,6 +26,7 @@ public class ContactAdapter extends ArrayAdapter<Contact>{
         public TextView userName_textview;
         public TextView phone_textview;
         public TextView status_textview;
+        public TextView funnyStatus_textview;
 
         public ViewHolder() {}
 
@@ -68,8 +69,8 @@ public class ContactAdapter extends ArrayAdapter<Contact>{
         //I get a nullPointer when I try contact.getField
         holder.userName_textview.setText(contact.getUserName());
         holder.phone_textview.setText(contact.getPhoneNumber());
-        holder.status_textview.setText(contact.getStatus());
-        holder.photoView.setImageResource(contact.getPhotoId());
+        holder.status_textview.setText(contact.getContactStatus().userProfile.toString());
+        holder.photoView.setImageURI(contact.getImageUri());
         convertView.setTag(holder);
         return convertView;
     }

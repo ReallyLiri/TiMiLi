@@ -98,7 +98,7 @@ public class FireBaseCloudServer implements ICloudServer {
 
     @Override
     public void UpdateMyStatus(UserStatus myStatus) {
-        Firebase ref = new Firebase(GetUserStatusFile(myStatus.userId));
+        Firebase ref = new Firebase(GetUserStatusFile(myStatus.phoneNum));
         ref.setValue(myStatus);
     }
 

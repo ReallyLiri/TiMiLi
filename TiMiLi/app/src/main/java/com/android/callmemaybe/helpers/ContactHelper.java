@@ -15,14 +15,22 @@ import com.android.callmemaybe.UI.data.Contact;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by user on 13/02/2016.
  */
 public class ContactHelper {
 
-    public final String CONTACTS_PREF_KEY = "ALL_CONTACTS";
+    private static Set<Contact> allContacts;
+    public static final String CONTACTS_PREF_KEY = "ALL_CONTACTS";
     public final String LOG_TAG = "ContactHelper";
+
+    public static Set<Contact> getAllContacts(){
+        return allContacts;
+    }
+
+
     /*
     get from phone contact list.
     for each contact read display name, phone num, pic
@@ -30,7 +38,7 @@ public class ContactHelper {
     if contact has multiple phone num - what should we do?
 
      */
-    public HashSet<Contact> getPhoneContactSet(Context context){
+    public Set<Contact> getPhoneAllContacts(Context context){
         HashSet<Contact> contacts = new HashSet<>();
         ContentResolver cr = context.getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null,
@@ -38,7 +46,7 @@ public class ContactHelper {
         while (cur.moveToNext())
         {
             String name=cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-            String phoneNumber = cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            String phoneNumber = TelephonyHelper.normalizePhoneNumber(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
             Uri imageUri = null;
             String stringImageUri = cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_URI));
             if (stringImageUri != null) {
@@ -51,18 +59,14 @@ public class ContactHelper {
         return contacts;
     }
 
-    public void setContactPrefSet(Context context, HashSet<Contact> contacts){
+    public void setAllContactPref(Context context, Set<Contact> contacts){
         SharedPreferencesHelper pref = new SharedPreferencesHelper();
-        pref.PutContactHashSet(context, contacts, CONTACTS_PREF_KEY);
+        pref.PutAllContacts(context, contacts, CONTACTS_PREF_KEY);
     }
 
-    public void initContactSet (Context context){
-        setContactPrefSet(context, this.getPhoneContactSet(context));
-    }
-
-    public HashSet<Contact> getPrefSetContacts(Context context) {
-        SharedPreferencesHelper pref = new SharedPreferencesHelper();
-        return pref.GetContactHashSet(context, CONTACTS_PREF_KEY);
+    public void initAllContacts(Context context){
+        setAllContactPref(context, this.getPhoneAllContacts(context));
+        //& reg
     }
 
 
@@ -83,6 +87,7 @@ public class ContactHelper {
             } catch (NullPointerException e){
                 Log.e(LOG_TAG, e.getMessage());
             }
+        return null;
     }
 
     /*
@@ -90,16 +95,28 @@ public class ContactHelper {
     if there is a user that exsist only is shared pref - delete it from there
     if there is a user that exsist only in contact list on phone - add to shared pref, check if has app $ register.
      */
-    public void updateContacts(Context context){
-        HashSet<Contact> phoneContacts = this.getPhoneContactSet(context);
-        HashSet<Contact> prefContacts = this.getPrefSetContacts(context);
-        for (Contact phoneContact: phoneContacts) {
-            if(!prefContacts.contains(phoneContact)){
-                prefContacts.add(phoneContact);
-                if(phoneContact.hasApp()){
+    public void updateContacts(Context context) {
+        SharedPreferencesHelper pref = new SharedPreferencesHelper();
 
-                }
+        Set<Contact> phoneContacts = this.getPhoneAllContacts(context);
+        Set<Contact> prefContacts = pref.GetAllContacts(context, CONTACTS_PREF_KEY);
+
+        if (prefContacts == null){
+            pref.PutAllContacts(context, phoneContacts, CONTACTS_PREF_KEY);
+            //bulk hasApp & bulk reg
+        }
+
+        for (Contact contact : phoneContacts){
+            if (!prefContacts.contains(contact)){
+                prefContacts.add(contact);
+                //reg & check if has app
             }
         }
+        for (Contact contact :prefContacts){
+            if (!phoneContacts.contains(contact)){
+                   prefContacts.remove(contact);
+            }
+        }
+        pref.PutAllContacts(context, prefContacts, CONTACTS_PREF_KEY);
     }
 }
