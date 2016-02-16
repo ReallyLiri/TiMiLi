@@ -5,6 +5,8 @@ import android.content.Context;
 import com.android.callmemaybe.contracts.ICloudServer;
 import com.android.callmemaybe.contracts.IOnLatestGistUpdatedListener;
 import com.android.callmemaybe.contracts.IOnLatestStatusUpdatedListener;
+import com.android.callmemaybe.contracts.IOnUserExistsResponse;
+import com.android.callmemaybe.contracts.IOnUsersExistResponse;
 import com.android.callmemaybe.contracts.UserGist;
 import com.android.callmemaybe.contracts.UserStatus;
 import com.firebase.client.ChildEventListener;
@@ -16,6 +18,7 @@ import com.firebase.client.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Liri on 05/02/2016.
@@ -23,6 +26,7 @@ import java.util.Map;
 public class FireBaseCloudServer implements ICloudServer {
     private Map<String, ChildEventListener> mGistListeners;
     private Map<String, ValueEventListener> mStatusListeners;
+    private Set<ValueEventListener> mUserExistListeners;
 
     private final String BaseFirebaseURL = "https://timili.firebaseio.com/android";
 
@@ -34,6 +38,55 @@ public class FireBaseCloudServer implements ICloudServer {
 
     private String GetUserGistDirectory(String userId) {
         return BaseFirebaseURL + "/users/user_" + userId;
+    }
+
+    @Override
+    public void DoesUserExist(final String userId, final IOnUserExistsResponse onUserExistsResponse) {
+        Firebase ref = new Firebase(GetUserStatusDir());
+        final ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                onUserExistsResponse.OnResponse(userId, dataSnapshot.hasChild(userId));
+                mUserExistListeners.remove(this);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                throw new IllegalStateException("onCancelled should not be triggered");
+            }
+        };
+        ref.addListenerForSingleValueEvent(eventListener);
+        mUserExistListeners.add(eventListener);
+    }
+
+    @Override
+    public void DoesUsersExist(final Set<String> users, final IOnUsersExistResponse onUsersExistResponse) {
+        Firebase ref = new Firebase(GetUserStatusDir());
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Map<String, Boolean> existsByUserId = new HashMap<>();
+                for (String userId : users) {
+                    existsByUserId.put(userId, dataSnapshot.hasChild(userId));
+                }
+                onUsersExistResponse.OnResponse(existsByUserId);
+                mUserExistListeners.remove(this);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                throw new IllegalStateException("onCancelled should not be triggered");
+            }
+        };
+        ref.addListenerForSingleValueEvent(eventListener);
+        mUserExistListeners.add(eventListener);
+    }
+    
+    private void UnRegisterAllUserExist() {
+        Firebase ref = new Firebase(GetUserStatusDir());
+        for (ValueEventListener eventListener : mUserExistListeners) {
+            ref.removeEventListener(eventListener);
+        }
     }
 
     @Override
@@ -92,8 +145,12 @@ public class FireBaseCloudServer implements ICloudServer {
         }
     }
 
+    private String GetUserStatusDir() {
+        return BaseFirebaseURL + "/users/all";
+    }
+
     private String GetUserStatusFile(String userId) {
-        return BaseFirebaseURL + "/users/all/" + userId;
+        return GetUserStatusDir() + "/" + userId;
     }
 
     @Override
@@ -128,6 +185,17 @@ public class FireBaseCloudServer implements ICloudServer {
         if (listener != null) {
             Firebase ref = new Firebase(GetUserStatusFile(userId));
             ref.removeEventListener(listener);
+        }
+    }
+
+    @Override
+    public void UnRegisterAll() {
+        UnRegisterAllUserExist();
+        for (String userId : mGistListeners.keySet()) {
+            UnRegisterForUserGistData(userId);
+        }
+        for (String userId : mStatusListeners.keySet()) {
+            UnRegisterForUserStatusData(userId);
         }
     }
 }
