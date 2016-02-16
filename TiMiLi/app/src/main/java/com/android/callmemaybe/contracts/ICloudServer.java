@@ -7,6 +7,8 @@ public interface ICloudServer {
 
     void UpdateMyGist(UserGist myStatus);
 
+    boolean IsRegisteredForUserGistData(String userId);
+
     void RegisterForUserGistData(String userId, IOnLatestGistUpdatedListener onLatestGistUpdated);
 
     void UnRegisterForUserGistData(String userId);
