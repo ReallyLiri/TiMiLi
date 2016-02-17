@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -44,5 +45,11 @@ public class ContactSort {
                 break;
         }
     return contacts1.toArray(new Contact[0]);
+    }
+
+    public static Contact[] sortContacts(ContactSortOrderType sortType, Contact[] contacts){
+        Set<Contact> contacstSet = new HashSet<>();
+        contacstSet.addAll(java.util.Arrays.asList(contacts));
+        return sortContacts(sortType, contacstSet);
     }
 }
