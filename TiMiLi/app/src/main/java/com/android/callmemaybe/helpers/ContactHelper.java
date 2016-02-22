@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import static android.provider.ContactsContract.*;
+
 /**
  * Created by user on 13/02/2016.
  */
@@ -41,21 +43,35 @@ public class ContactHelper {
     public Set<Contact> getPhoneAllContacts(Context context){
         HashSet<Contact> contacts = new HashSet<>();
         ContentResolver cr = context.getContentResolver();
-        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null,
-                null, null, null);
-        while (cur.moveToNext())
-        {
-            String name=cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-            String phoneNumber = TelephonyHelper.normalizePhoneNumber(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
-            Uri imageUri = null;
-            String stringImageUri = cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_URI));
-            if (stringImageUri != null) {
-                Uri.parse(stringImageUri);
+        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+        if (cur.getCount() > 0) {
+            while (cur.moveToNext()) {
+                String id = cur.getString(cur.getColumnIndex(
+                        ContactsContract.Contacts._ID));
+                String name = cur.getString(cur.getColumnIndex(
+                        ContactsContract.Contacts.DISPLAY_NAME));
+                Uri photoUri = null;
+                String photoStr = cur.getString(cur.getColumnIndex(CommonDataKinds.Phone.PHOTO_URI));
+                if (photoStr != null) {
+                    photoUri = Uri.parse(photoStr);
+                }
+                String phoneNumber = null;
+                if (Integer.parseInt(cur.getString(cur.getColumnIndex(
+                        ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+                    Cursor pCur = cr.query(
+                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                            null,
+                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                            new String[]{id}, null);
+                    while (pCur.moveToNext()) {
+                        phoneNumber = pCur.getString(pCur.getColumnIndex(
+                                ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    }
+                    pCur.close();
+                }
+                contacts.add(new Contact(photoUri, name, phoneNumber));
             }
-            Contact contact = new Contact(imageUri, name, phoneNumber);
-            contacts.add(contact);
         }
-        cur.close();
         return contacts;
     }
 
@@ -101,22 +117,41 @@ public class ContactHelper {
         Set<Contact> phoneContacts = this.getPhoneAllContacts(context);
         Set<Contact> prefContacts = pref.GetAllContacts(context, CONTACTS_PREF_KEY);
 
+        Log.d("update Contacts", "phoneContactsContain " + phoneContacts.size() + " items");
+        Log.d("update Contacts", "prefContactsContain " + (prefContacts == null));
+       // for (Contact contact: phoneContacts) {
+       //     Log.d("update Contacts",contact.getPhoneNumber());
+       // }
+       // for (Contact contact: prefContacts) {
+       //     Log.d("update Contacts",contact.getPhoneNumber());
+       // }
+
+
         if (prefContacts == null){
+            Log.d("update Contacts", "prefContacts is null");
             pref.PutAllContacts(context, phoneContacts, CONTACTS_PREF_KEY);
+            prefContacts = new HashSet<>();
             //bulk hasApp & bulk reg
         }
 
         for (Contact contact : phoneContacts){
+            Log.d("update Contacts", "contact in phone Contacts " + contact.toString());
             if (!prefContacts.contains(contact)){
+                Log.d("update Contacts", "pref Contacts does not contain " + contact.getUserName());
                 prefContacts.add(contact);
                 //reg & check if has app
             }
         }
         for (Contact contact :prefContacts){
+            Log.d("update Contacts", "contact in pref Contacts " + contact.toString());
             if (!phoneContacts.contains(contact)){
+                Log.d("update Contacts", "phone Contacts does not contain " + contact.getUserName());
                    prefContacts.remove(contact);
             }
         }
         pref.PutAllContacts(context, prefContacts, CONTACTS_PREF_KEY);
+        allContacts = prefContacts;
     }
+
+
 }

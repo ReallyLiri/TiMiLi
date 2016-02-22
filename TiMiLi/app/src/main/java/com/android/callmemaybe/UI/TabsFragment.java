@@ -13,17 +13,15 @@ import android.widget.TextView;
 
 import com.android.callmemaybe.UI.data.Contact;
 import com.android.callmemaybe.UI.data.ContactAdapter;
-import com.android.callmemaybe.UI.data.ContactSort;
-import com.android.callmemaybe.UI.data.ContactSortOrderType;
 import com.android.callmemaybe.helpers.ContactHelper;
 import com.android.callmemaybe.helpers.TelephonyHelper;
 
 /**
- * Created by Ana on 05/02/2016.
+ * Created by Mia on 22/02/2016.
  */
-public class MostSearchedFragment extends Fragment {
+abstract class TabsFragment extends Fragment {
 
-    private final String LOG_TAG = MostSearchedFragment.class.getSimpleName();
+    private final String LOG_TAG = TabsFragment.class.getSimpleName();
 
     TextView greetingMassage;
     ListView cListView;
@@ -38,8 +36,8 @@ public class MostSearchedFragment extends Fragment {
         cListView = (ListView) rootView.findViewById(R.id.most_searched_listview);
 
         //needs to deal with the cases of no contacts at all or less then 3 contacts
-        greetingMassage.setText(R.string.greeting);
-        Contact[] top = ContactSort.sortContacts(ContactSortOrderType.mostSearchedToLeastSearched, ContactHelper.getAllContacts());
+        greetingMassage.setText(getGreetingMessege());
+        Contact[] top = getContacts();
         Log.d(LOG_TAG, "before creating new contactAdapter");
         contactAdapter = new ContactAdapter(getActivity(), top);
         Log.d(LOG_TAG, "after creating new contactAdapter");
@@ -69,4 +67,7 @@ public class MostSearchedFragment extends Fragment {
 
         return rootView;
     }
+
+    abstract int getGreetingMessege();
+    abstract Contact[] getContacts();
 }

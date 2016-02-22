@@ -6,6 +6,7 @@ package com.android.callmemaybe.contracts;
 public enum UserProfile {
     Free,
     Busy,
-    DoNotDisturb
+    DoNotDisturb,
+    defaultProf; //using this when I have no data
     // etc
 }

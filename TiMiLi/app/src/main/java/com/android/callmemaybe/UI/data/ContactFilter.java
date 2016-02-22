@@ -30,7 +30,9 @@ public class ContactFilter {
                     break;
             }
         }
-        return (Contact[]) result.toArray();
+        Contact[] resultArr = new Contact[result.size()];
+        resultArr = result.toArray(resultArr);
+        return resultArr;
     }
 
     public static Contact[]  filterContacts(ContactFilterType filterType, Contact[] contacts){

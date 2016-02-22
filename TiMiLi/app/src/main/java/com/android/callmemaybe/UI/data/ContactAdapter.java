@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,8 +28,11 @@ public class ContactAdapter extends ArrayAdapter<Contact>{
         public TextView phone_textview;
         public TextView status_textview;
         public TextView funnyStatus_textview;
+        final Button fav_button;
 
-        public ViewHolder() {}
+        public ViewHolder(Context context, View convertView) {
+            this.fav_button = (Button) convertView.findViewById(R.id.most_searched_item_status_favs_button);
+        }
 
     }
 
@@ -43,13 +47,13 @@ public class ContactAdapter extends ArrayAdapter<Contact>{
                    ViewGroup parent) {
 
 
-        Contact contact = getItem(position);
+        final Contact contact = getItem(position);
         Log.d(LOG_TAG, "convertView == null:" + (convertView == null));
-        ViewHolder holder;
+        final ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).
-                    inflate(R.layout.most_searched_item, parent, false);
-            holder = new ViewHolder();
+                    inflate(R.layout.tabs_item, parent, false);
+            holder = new ViewHolder(getContext(),  convertView);
             holder.photoView = (ImageView)
                     convertView.findViewById(R.id.most_searched_item_photo_icon);
             holder.userName_textview = (TextView)
@@ -71,6 +75,27 @@ public class ContactAdapter extends ArrayAdapter<Contact>{
         holder.phone_textview.setText(contact.getPhoneNumber());
         holder.status_textview.setText(contact.getContactStatus().userProfile.toString());
         holder.photoView.setImageURI(contact.getImageUri());
+        if (contact.isFavorite()){
+            holder.fav_button.setText(R.string.in_my_favs_button);
+        }
+        else{
+            holder.fav_button.setText(R.string.not_in_my_favs_button);
+        }
+        holder.fav_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("ContactAdapter", "clicked on favs button");
+                if (contact.isFavorite()) {
+                    Log.d("ContactAdapter", contact.getUserName() + " in favs: " + contact.isFavorite() + " should be true");
+                    contact.setIsFavorite(false);
+                    holder.fav_button.setText(R.string.not_in_my_favs_button);
+                } else {
+                    Log.d("ContactAdapter", contact.getUserName() + " in favs: " + contact.isFavorite() + " should be false");
+                    contact.setIsFavorite(true);
+                    holder.fav_button.setText(R.string.in_my_favs_button);
+                }
+            }
+        });
         convertView.setTag(holder);
         return convertView;
     }

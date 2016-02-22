@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 
 import com.android.callmemaybe.gistService.GistService;
 import com.android.callmemaybe.helpers.ContactHelper;
+import com.android.callmemaybe.helpers.SharedPreferencesHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +28,21 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
+    private Fragment mostSearchedFragment  = new DeafultMostSearchedFragment();
+    private Fragment favsFragment = new MyFavoritesFragment();
+    private Fragment allContactsFragment = new AllContactsFragment();
+
     @Override
     protected void onStop() {
         super.onStop();
         GistService.sendKill(this);
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        ContactHelper contactHelper = new ContactHelper();
+        contactHelper.setAllContactPref(this, ContactHelper.getAllContacts());
     }
 
     @Override
@@ -61,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                favsFragment = new MyFavoritesFragment();
                 viewPager.setCurrentItem(tab.getPosition());
             }
 
@@ -90,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             // Create a new Fragment to be placed in the activity layout
-            MostSearchedFragment mostSearchedFragment = new MostSearchedFragment();
+            DeafultMostSearchedFragment mostSearchedFragment = new DeafultMostSearchedFragment(); ///99
 
             // In case this activity was started with special instructions from an
             // Intent, pass the Intent's extras to the fragment as arguments
@@ -145,9 +159,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new MostSearchedFragment(), "Most Searched");
-        adapter.addFragment(new ContactListFragment(), "My Favs");
-        adapter.addFragment(new ContactListFragment(), "All Contacts");
+        adapter.addFragment(mostSearchedFragment, "Most Searched");
+        adapter.addFragment(favsFragment, "My Favs");
+        adapter.addFragment(allContactsFragment, "All Contacts");
         viewPager.setAdapter(adapter);
     }
 

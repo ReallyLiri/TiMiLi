@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.android.callmemaybe.UI.MostSearchedFragment">
+    tools:context="com.android.callmemaybe.UI.">
 
     <TextView
         android:id="@+id/most_searched_greeting_massage"

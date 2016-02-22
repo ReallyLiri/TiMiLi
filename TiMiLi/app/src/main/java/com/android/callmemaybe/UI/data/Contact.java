@@ -5,6 +5,7 @@ import android.net.Uri;
 import com.android.callmemaybe.UI.R;
 import com.android.callmemaybe.contracts.UserStatus;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class Contact {
     public Uri imageUri; //the contact image
     public String userName; //the username the user chose for him
     public String phoneNumber;
-    public UserStatus contactStatus;
+    public UserStatus contactStatus = new UserStatus(phoneNumber);
     public int searchesCounter;
     public boolean hasApp;
     public boolean isFavorite = false;
@@ -93,6 +94,24 @@ public class Contact {
         else {
             return super.equals(o);
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return phoneNumber != null ? phoneNumber.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "imageUri=" + imageUri +
+                ", userName='" + userName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", contactStatus=" + contactStatus +
+                ", searchesCounter=" + searchesCounter +
+                ", hasApp=" + hasApp +
+                ", isFavorite=" + isFavorite +
+                '}';
     }
 
     public Contact(Uri imageUri, String name, String phoneNumber){

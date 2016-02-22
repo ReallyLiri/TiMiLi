@@ -2,6 +2,8 @@
     <string name="app_name">TiMiLi</string>
 
     <string name="greeting">My most searched contacts</string>
+    <string name="greeting_favs">My favorite contacts</string>
+    <string name="greeting_all">All contacts</string>
 
     <!-- appbar -->
     <string name="action_help">help</string>
@@ -16,6 +18,10 @@
     <string name="hasApp">app users</string>
     <string name="favorites">my favs</string>
     <string name="searchesCounter">top searches</string>
+
+    <!-- fav button -->
+    <string name = "in_my_favs_button">in my favorites</string>
+    <string name="not_in_my_favs_button">not in my favorites</string>
 
     <!--settings -->
     <string name="hebrew">hebrew</string>
