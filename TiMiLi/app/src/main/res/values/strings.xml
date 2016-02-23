@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">TiMiLi</string>
 
-    <string name="greeting">My most searched contacts</string>
+    <string name="greeting_most_searched">My most searched contacts</string>
     <string name="greeting_favs">My favorite contacts</string>
     <string name="greeting_all">All contacts</string>
 

@@ -13,8 +13,6 @@ import android.widget.TextView;
 
 import com.android.callmemaybe.UI.data.Contact;
 import com.android.callmemaybe.UI.data.ContactAdapter;
-import com.android.callmemaybe.helpers.ContactHelper;
-import com.android.callmemaybe.helpers.TelephonyHelper;
 
 /**
  * Created by Mia on 22/02/2016.
@@ -44,28 +42,36 @@ abstract class TabsFragment extends Fragment {
         cListView.setAdapter(contactAdapter);
         Log.d(LOG_TAG, "after setting the contactAdapter");
 
-        cListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        cListView.setOnItemClickListener(getOnListItemClickedListener());
+        Log.d(LOG_TAG, "after setting onItemClickListener");
+
+        return rootView;
+    }
+
+    protected AdapterView.OnItemClickListener getOnListItemClickedListener() {
+        return new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
                 //needs to go to the ContactActivity of the chosen contact
                 ContactActivity contactActivity = new ContactActivity();
                 Intent goToContactActivity = new Intent(getContext(), ContactActivity.class);
 
                 //adding the phone number as extra in order to know who was chosen
-                TextView phoneView = (TextView)
-                        view.findViewById(R.id.most_searched_item_phone_textview);
-                String phoneNumber = TelephonyHelper.normalizePhoneNumber
-                        (phoneView.getText().toString());
-                goToContactActivity.putExtra("Phone_Number", phoneNumber);
+                Contact selected = contactAdapter.getItem(position);
+                goToContactActivity.putExtra("Phone_Number", selected.getPhoneNumber());
 
                 startActivity(goToContactActivity);
 
             }
-        });
-        Log.d(LOG_TAG, "after setting onItemClickListener");
+        };
+    }
 
-        return rootView;
+    public void RefreshData() {
+        contactAdapter.clear();
+        contactAdapter.addAll(getContacts());
+        contactAdapter.notifyDataSetChanged();
     }
 
     abstract int getGreetingMessege();

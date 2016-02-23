@@ -89,9 +89,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //MostSearchedFragment mostSearched = (MostSearchedFragment)getSupportFragmentManager()
-        //        .findFragmentById(R.id.fragment_main);
-
         // Check that the activity is using the layout version with
         // the fragment_main FrameLayout
         if (findViewById(R.id.fragment_main) != null) {

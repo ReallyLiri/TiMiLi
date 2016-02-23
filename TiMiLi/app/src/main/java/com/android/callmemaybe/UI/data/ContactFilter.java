@@ -19,7 +19,7 @@ public class ContactFilter {
         for (Contact contact: contacts) {
             switch (filterType){
                 case favorites:
-                    if (contact.isFavorite()) {
+                    if (contact.getIsFavorite()) {
                         result.add(contact);
                     }
                     break;

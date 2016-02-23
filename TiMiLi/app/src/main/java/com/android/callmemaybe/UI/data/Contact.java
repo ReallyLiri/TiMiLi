@@ -1,7 +1,11 @@
 package com.android.callmemaybe.UI.data;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.net.Uri;
+import android.view.View;
 
+import com.android.callmemaybe.UI.BR;
 import com.android.callmemaybe.UI.R;
 import com.android.callmemaybe.contracts.UserStatus;
 
@@ -12,7 +16,7 @@ import java.util.List;
 /**
  * Created by Ana on 05/02/2016.
  */
-public class Contact {
+public class Contact extends BaseObservable {
     public Uri imageUri; //the contact image
     public String userName; //the username the user chose for him
     public String phoneNumber;
@@ -25,44 +29,54 @@ public class Contact {
         this("unnamed", "0");
     }
 
+    @Bindable
     public String getUserName() {
         return userName;
     }
 
     public void setUserName(String userName) {
         this.userName = userName;
+        notifyPropertyChanged(BR.userName);
     }
 
+    @Bindable
     public Uri getImageUri() {
         return imageUri;
     }
 
     public void setImageUri(Uri imageUri) {
         this.imageUri = imageUri;
+        notifyPropertyChanged(BR.imageUri);
     }
 
+    @Bindable
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        notifyPropertyChanged(BR.phoneNumber);
     }
 
-    public UserStatus getContactStatus() {
-        return contactStatus;
+    @Bindable
+    public String getProfileString() {
+        return contactStatus.userProfile.toString();
     }
 
     public void setContactStatus(UserStatus contactStatus) {
         this.contactStatus = contactStatus;
+        notifyPropertyChanged(BR.profileString);
     }
 
+    @Bindable
     public int getSearchesCounter() {
         return searchesCounter;
     }
 
     public void setSearchesCounter(int searchesCounter) {
         this.searchesCounter = searchesCounter;
+        notifyPropertyChanged(BR.searchesCounter);
     }
 
     public boolean isHasApp() {
@@ -73,13 +87,21 @@ public class Contact {
         this.hasApp = hasApp;
     }
 
-    public boolean isFavorite() {
+    @Bindable
+    public boolean getIsFavorite() {
         return isFavorite;
     }
 
     public void setIsFavorite(boolean isFavorite) {
         this.isFavorite = isFavorite;
+        notifyPropertyChanged(BR.isFavorite);
     }
+
+    public void toggleFavorite(View v) {
+        this.isFavorite = !this.isFavorite;
+        notifyPropertyChanged(BR.isFavorite);
+    }
+
 
     public boolean isAvailable(){
         return false; //????
@@ -125,23 +147,4 @@ public class Contact {
         phoneNumber = number;
         searchesCounter = 0;
     }
-
-    public void addToFavorites () {
-        if (isFavorite) {
-            //announce contact already in favorites
-        } else {
-            isFavorite = true;
-            //update tables
-        }
-    }
-
-    public void deleteFromFavorites () {
-        if (!isFavorite) {
-            //announce contact in not in favorites
-        } else {
-            isFavorite = false;
-            //update tables
-        }
-    }
-
 }

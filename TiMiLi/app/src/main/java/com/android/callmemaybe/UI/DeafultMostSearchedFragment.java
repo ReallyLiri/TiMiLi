@@ -13,7 +13,7 @@ import com.android.callmemaybe.helpers.ContactHelper;
 public class DeafultMostSearchedFragment extends TabsFragment {
     @Override
     int getGreetingMessege() {
-        return R.string.greeting;
+        return R.string.greeting_most_searched;
     }
 
     @Override
