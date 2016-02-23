@@ -37,8 +37,13 @@
             android:id="@+id/item_fav_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{contact.toggleFavorite}"
             android:text="@{contact.isFavorite ? @string/in_my_favs_button : @string/not_in_my_favs_button}" />
+
+        <Button
+            android:id="@+id/item_block_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/block_button" />
 
     </LinearLayout>
 </layout>

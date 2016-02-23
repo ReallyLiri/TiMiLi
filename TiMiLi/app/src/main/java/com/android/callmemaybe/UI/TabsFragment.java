@@ -30,8 +30,8 @@ abstract class TabsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.tabs_fragment, container, false);
-        greetingMassage = (TextView) rootView.findViewById(R.id.most_searched_greeting_massage);
-        cListView = (ListView) rootView.findViewById(R.id.most_searched_listview);
+        greetingMassage = (TextView) rootView.findViewById(R.id.greeting_massage);
+        cListView = (ListView) rootView.findViewById(R.id.items_list);
 
         //needs to deal with the cases of no contacts at all or less then 3 contacts
         greetingMassage.setText(getGreetingMessege());

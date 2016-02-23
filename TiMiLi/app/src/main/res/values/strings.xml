@@ -23,6 +23,9 @@
     <string name = "in_my_favs_button">in my favorites</string>
     <string name="not_in_my_favs_button">not in my favorites</string>
 
+    <!--block button -->
+    <string name="block_button">block this contact</string>
+
     <!--settings -->
     <string name="hebrew">hebrew</string>
     <string name="english">english</string>

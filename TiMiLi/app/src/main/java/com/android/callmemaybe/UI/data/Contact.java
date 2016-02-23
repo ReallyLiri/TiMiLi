@@ -97,7 +97,7 @@ public class Contact extends BaseObservable {
         notifyPropertyChanged(BR.isFavorite);
     }
 
-    public void toggleFavorite(View v) {
+    public void toggleFavorite() {
         this.isFavorite = !this.isFavorite;
         notifyPropertyChanged(BR.isFavorite);
     }
@@ -146,5 +146,9 @@ public class Contact extends BaseObservable {
         userName = name;
         phoneNumber = number;
         searchesCounter = 0;
+    }
+
+    public boolean isInBlockedList(Contact contact){
+        return this.contactStatus.blockedUsers.contains(contact);
     }
 }
