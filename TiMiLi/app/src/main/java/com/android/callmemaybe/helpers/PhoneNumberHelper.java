@@ -36,5 +36,11 @@ public class PhoneNumberHelper {
 
     public void setMyPhoneNumber(Context context, String phoneNumber) {
         mSharedPreferencesHelper.PutString(context, KEY_PHONE_NUMBER, phoneNumber);
+        sMyPhoneNumber = phoneNumber;
+    }
+
+    private static String sMyPhoneNumber;
+    public static String GetMyPhoneNumber() {
+        return sMyPhoneNumber;
     }
 }

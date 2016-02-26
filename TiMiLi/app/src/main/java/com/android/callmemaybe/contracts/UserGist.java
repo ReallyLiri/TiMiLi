@@ -17,9 +17,6 @@ public class UserGist {
     public boolean isScreenOn;
 
     public ActiveInPractice IsActiveInPractice(String myId, UserStatus userStatus) {
-        if (userStatus.userProfile == UserProfile.DoNotDisturb) {
-            return ActiveInPractice.Unwilling;
-        }
 
         if (userStatus.blockedUsers.contains(myId)) {
             return ActiveInPractice.Unwilling;

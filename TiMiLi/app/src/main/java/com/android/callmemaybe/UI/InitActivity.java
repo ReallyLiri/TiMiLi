@@ -50,7 +50,6 @@ public class InitActivity extends AppCompatActivity {
     private void getMyNumber() {
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
         Fabric.with(this, new TwitterCore(authConfig), new Digits());
-        mAuthButton.local
 
         mAuthButton.setCallback(new AuthCallback() {
             @Override
