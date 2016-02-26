@@ -43,4 +43,7 @@
     <string name="bored">please amuse me</string>
     <string name="default_status">dont know</string>
 
+    <!-- init -->
+    <string name="phone_number_button">Start with my phone number</string>
+
 </resources>

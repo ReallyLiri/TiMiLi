@@ -1,5 +1,7 @@
 package com.android.callmemaybe.UI;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -17,6 +19,10 @@ import com.android.callmemaybe.gistService.GistService;
 import com.android.callmemaybe.helpers.ContactHelper;
 import com.android.callmemaybe.helpers.SharedPreferencesHelper;
 
+import com.digits.sdk.android.Digits;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterCore;
+import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
     private Fragment mostSearchedFragment  = new DeafultMostSearchedFragment();
     private Fragment favsFragment = new MyFavoritesFragment();
     private Fragment allContactsFragment = new AllContactsFragment();
+
+    public static void startMainActivity(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onStop() {
