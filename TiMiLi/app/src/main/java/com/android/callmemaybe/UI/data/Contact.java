@@ -7,7 +7,10 @@ import android.view.View;
 
 import com.android.callmemaybe.UI.BR;
 import com.android.callmemaybe.UI.R;
+import com.android.callmemaybe.contracts.ActiveInPractice;
+import com.android.callmemaybe.contracts.UserGist;
 import com.android.callmemaybe.contracts.UserStatus;
+import com.android.callmemaybe.helpers.PhoneNumberHelper;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,6 +24,7 @@ public class Contact extends BaseObservable {
     public String userName; //the username the user chose for him
     public String phoneNumber;
     public UserStatus contactStatus = new UserStatus(phoneNumber);
+    public UserGist contactGist = null;
     public int searchesCounter;
     public boolean hasApp;
     public boolean isFavorite = false;
@@ -59,14 +63,20 @@ public class Contact extends BaseObservable {
         notifyPropertyChanged(BR.phoneNumber);
     }
 
-    @Bindable
-    public String getProfileString() {
-        return contactStatus.userProfile.toString();
-    }
-
     public void setContactStatus(UserStatus contactStatus) {
         this.contactStatus = contactStatus;
-        notifyPropertyChanged(BR.profileString);
+    }
+
+    @Bindable
+    public String getActiveInPractice() {
+        return this.contactGist != null ?
+                  this.contactGist.IsActiveInPractice(PhoneNumberHelper.GetMyPhoneNumber(), this.contactStatus).toString()
+                : ActiveInPractice.Loading.toString();
+    }
+
+    public void setContactGist(UserGist contactGist) {
+        this.contactGist = contactGist;
+        notifyPropertyChanged(BR.activeInPractice);
     }
 
     @Bindable

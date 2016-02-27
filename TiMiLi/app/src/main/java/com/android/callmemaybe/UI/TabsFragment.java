@@ -1,6 +1,7 @@
 package com.android.callmemaybe.UI;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.android.callmemaybe.UI.data.Contact;
 import com.android.callmemaybe.UI.data.ContactAdapter;
+import com.android.callmemaybe.UI.databinding.TabsFragmentBinding;
 
 /**
  * Created by Mia on 22/02/2016.
@@ -29,9 +31,9 @@ abstract class TabsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.tabs_fragment, container, false);
-        greetingMassage = (TextView) rootView.findViewById(R.id.greeting_massage);
-        cListView = (ListView) rootView.findViewById(R.id.items_list);
+        TabsFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.tabs_fragment, container, false);
+        greetingMassage = binding.greetingMassage;
+        cListView = binding.itemsList;
 
         //needs to deal with the cases of no contacts at all or less then 3 contacts
         greetingMassage.setText(getGreetingMessege());
@@ -45,7 +47,7 @@ abstract class TabsFragment extends Fragment {
         cListView.setOnItemClickListener(getOnListItemClickedListener());
         Log.d(LOG_TAG, "after setting onItemClickListener");
 
-        return rootView;
+        return binding.getRoot();
     }
 
     protected AdapterView.OnItemClickListener getOnListItemClickedListener() {

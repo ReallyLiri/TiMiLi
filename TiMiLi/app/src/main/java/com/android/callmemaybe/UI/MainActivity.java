@@ -1,5 +1,8 @@
 package com.android.callmemaybe.UI;
 
+import android.content.Context;
+import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -13,10 +16,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.FragmentManager;
 
+import com.android.callmemaybe.UI.databinding.ActivityMainBinding;
 import com.android.callmemaybe.gistService.GistService;
 import com.android.callmemaybe.helpers.ContactHelper;
+import com.android.callmemaybe.helpers.PhoneNumberHelper;
 import com.android.callmemaybe.helpers.SharedPreferencesHelper;
 
+import com.digits.sdk.android.Digits;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterCore;
+import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
     private Fragment mostSearchedFragment  = new DeafultMostSearchedFragment();
     private Fragment favsFragment = new MyFavoritesFragment();
     private Fragment allContactsFragment = new AllContactsFragment();
+
+    public static void startMainActivity(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onStop() {
@@ -58,16 +72,16 @@ public class MainActivity extends AppCompatActivity {
         ContactHelper helper = new ContactHelper();
         helper.updateContacts(this);
 
-        setContentView(R.layout.activity_main);
-        toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        toolbar = binding.activityMainToolbar;
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = binding.viewpager;
         setupViewPager(viewPager);
 
-        tabLayout = (TabLayout) findViewById(R.id.activity_main_tabs);
+        tabLayout = binding.activityMainTabs;
         tabLayout.setupWithViewPager(viewPager);
 
         //setting listener to tabs
@@ -91,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Check that the activity is using the layout version with
         // the fragment_main FrameLayout
-        if (findViewById(R.id.fragment_main) != null) {
+        if (binding.fragmentMain != null) {
 
             // However, if we're being restored from a previous state,
             // then we don't need to do anything and should return or else

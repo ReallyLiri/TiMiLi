@@ -1,8 +1,12 @@
 package com.android.callmemaybe.UI;
 
+<<<<<<< HEAD
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
+=======
+import android.databinding.DataBindingUtil;
+>>>>>>> 3b0fe5e9a733dd4db42b946f4581b90fb0059c81
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,6 +19,8 @@ import com.android.callmemaybe.UI.data.Contact;
 import com.android.callmemaybe.UI.databinding.ContactFragmentBinding;
 import com.android.callmemaybe.helpers.ContactHelper;
 
+import com.android.callmemaybe.UI.databinding.ContactFragmentBinding;
+
 /**
  * Created by Ana on 05/02/2016.
  */
@@ -25,6 +31,7 @@ public class ContactActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+<<<<<<< HEAD
         View rootView = inflater.inflate(R.layout.contact_fragment, container, false);
 
         final String contactPhone = savedInstanceState.getString("PHONE_NUMBER");
@@ -60,5 +67,9 @@ public class ContactActivityFragment extends Fragment {
         });
 
         return rootView;
+=======
+        ContactFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.contact_fragment, container, false);
+        return binding.getRoot();
+>>>>>>> 3b0fe5e9a733dd4db42b946f4581b90fb0059c81
     }
 }

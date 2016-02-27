@@ -1,13 +1,19 @@
 package com.android.callmemaybe.UI;
 
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+<<<<<<< HEAD
 import com.android.callmemaybe.UI.data.Contact;
 import com.android.callmemaybe.helpers.ContactHelper;
+=======
+import com.android.callmemaybe.UI.databinding.ContactDetailBinding;
+>>>>>>> 3b0fe5e9a733dd4db42b946f4581b90fb0059c81
 
 /**
  * Created by Ana on 05/02/2016.
@@ -17,8 +23,8 @@ public class ContactActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.contact_detail);
-        Toolbar myContactToolbar = (Toolbar) findViewById(R.id.contact_detail_toolbar);
+        ContactDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.contact_detail);
+        Toolbar myContactToolbar = binding.contactDetailToolbar;
         setSupportActionBar(myContactToolbar);
 
         String contactPhone = savedInstanceState.getString("PHONE_NUMBER");

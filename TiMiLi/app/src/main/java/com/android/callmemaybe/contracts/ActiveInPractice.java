@@ -7,5 +7,6 @@ public enum ActiveInPractice {
     Active,
     Inactive,
     Unwilling,
-    Unknown
+    Unknown,
+    Loading
 }
