@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.android.callmemaybe.UI.databinding.TabsItemBinding;
+import com.android.callmemaybe.UI.databinding.ContactListItemBinding;
 
 /**
  * Created by Ana on 05/02/2016.
@@ -22,10 +22,10 @@ public class ContactAdapter extends ArrayAdapter<Contact>{
      * Cache of the children views for a forecast list item.
      */
     public static class ViewHolder {
-        public TabsItemBinding tabsItemBinding;
+        public ContactListItemBinding contactListItemBinding;
 
-        public ViewHolder(TabsItemBinding tabsItemBinding) {
-            this.tabsItemBinding = tabsItemBinding;
+        public ViewHolder(ContactListItemBinding contactListItemBinding) {
+            this.contactListItemBinding = contactListItemBinding;
         }
     }
 
@@ -43,18 +43,19 @@ public class ContactAdapter extends ArrayAdapter<Contact>{
         final Contact contact = getItem(position);
         final ViewHolder holder;
         if (convertView == null) {
-            TabsItemBinding tabsItemBinding = TabsItemBinding.inflate(LayoutInflater.from(getContext()), parent, false);
-            convertView = tabsItemBinding.getRoot();
+            ContactListItemBinding contactListItemBinding = ContactListItemBinding
+                    .inflate(LayoutInflater.from(getContext()), parent, false);
+            convertView = contactListItemBinding.getRoot();
 
-            holder = new ViewHolder(tabsItemBinding);
+            holder = new ViewHolder(contactListItemBinding);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.tabsItemBinding.setContact(contact);
+        holder.contactListItemBinding.setContact(contact);
 
-        holder.tabsItemBinding.itemFavButton.setOnClickListener(new View.OnClickListener() {
+        holder.contactListItemBinding.itemFavButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 contact.toggleFavorite();
@@ -62,7 +63,7 @@ public class ContactAdapter extends ArrayAdapter<Contact>{
             }
         });
 
-        holder.tabsItemBinding.itemBlockButton.setOnClickListener(new View.OnClickListener() {
+        holder.contactListItemBinding.itemBlockButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {

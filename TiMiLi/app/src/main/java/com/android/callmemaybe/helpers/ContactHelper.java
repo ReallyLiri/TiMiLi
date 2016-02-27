@@ -15,6 +15,7 @@ import com.android.callmemaybe.UI.data.Contact;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import static android.provider.ContactsContract.*;
@@ -26,7 +27,7 @@ public class ContactHelper {
 
     private static Set<Contact> allContacts;
     public static final String CONTACTS_PREF_KEY = "ALL_CONTACTS";
-    public final String LOG_TAG = "ContactHelper";
+    public static final String LOG_TAG = "ContactHelper";
 
     public static Set<Contact> getAllContacts(){
         return allContacts;
@@ -40,7 +41,7 @@ public class ContactHelper {
     if contact has multiple phone num - what should we do?
 
      */
-    public Set<Contact> getPhoneAllContacts(Context context){
+    public static Set<Contact> getPhoneAllContacts(Context context){
         HashSet<Contact> contacts = new HashSet<>();
         ContentResolver cr = context.getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
@@ -75,13 +76,13 @@ public class ContactHelper {
         return contacts;
     }
 
-    public void setAllContactPref(Context context, Set<Contact> contacts){
+    public static void setAllContactPref(Context context, Set<Contact> contacts){
         SharedPreferencesHelper pref = new SharedPreferencesHelper();
         pref.PutAllContacts(context, contacts, CONTACTS_PREF_KEY);
     }
 
-    public void initAllContacts(Context context){
-        setAllContactPref(context, this.getPhoneAllContacts(context));
+    public static void initAllContacts(Context context){
+        setAllContactPref(context, getPhoneAllContacts(context));
         //& reg
     }
 
@@ -89,7 +90,7 @@ public class ContactHelper {
     /*
     gets image uri and prints the pic
      */
-    public Bitmap photoLoader(Uri image_uri, Context context){
+    public static Bitmap photoLoader(Uri image_uri, Context context){
             try {
                 Bitmap bitmap = MediaStore.Images.Media
                         .getBitmap(context.getContentResolver(),
@@ -108,13 +109,13 @@ public class ContactHelper {
 
     /*
     check if there is a mismatch between the contact list saved in shared preferances & contact list on phone.
-    if there is a user that exsist only is shared pref - delete it from there
-    if there is a user that exsist only in contact list on phone - add to shared pref, check if has app $ register.
+    if there is a user that exists only is shared pref - delete it from there
+    if there is a user that exists only in contact list on phone - add to shared pref, check if has app $ register.
      */
-    public void updateContacts(Context context) {
+    public static void updateContacts(Context context) {
         SharedPreferencesHelper pref = new SharedPreferencesHelper();
 
-        Set<Contact> phoneContacts = this.getPhoneAllContacts(context);
+        Set<Contact> phoneContacts = getPhoneAllContacts(context);
         Set<Contact> prefContacts = pref.GetAllContacts(context, CONTACTS_PREF_KEY);
 
         Log.d("update Contacts", "phoneContactsContain " + phoneContacts.size() + " items");
@@ -151,6 +152,28 @@ public class ContactHelper {
         }
         pref.PutAllContacts(context, prefContacts, CONTACTS_PREF_KEY);
         allContacts = prefContacts;
+    }
+
+    //receives a phone number string
+    //returns the first contact with the same phone number
+    //or null if no match is found
+    public static Contact getContact (String number) {
+        Iterator<Contact> iterator = getAllContacts().iterator();
+        Contact contact;
+        while(iterator.hasNext()) {
+            contact = iterator.next();
+            if (number == contact.getPhoneNumber()) {
+                return contact;
+            }
+        }
+        return null;
+    }
+
+    //returns true if a contact with the given number exists
+    //and false otherwise
+    public static boolean containsContact (String number) {
+        Contact contact = getContact(number);
+        return (contact != null);
     }
 
 

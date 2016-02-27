@@ -6,6 +6,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.android.callmemaybe.UI.data.Contact;
+import com.android.callmemaybe.helpers.ContactHelper;
+
 /**
  * Created by Ana on 05/02/2016.
  */
@@ -18,23 +21,26 @@ public class ContactActivity extends AppCompatActivity {
         Toolbar myContactToolbar = (Toolbar) findViewById(R.id.contact_detail_toolbar);
         setSupportActionBar(myContactToolbar);
 
+        String contactPhone = savedInstanceState.getString("PHONE_NUMBER");
+        Contact currentContact = ContactHelper.getContact(contactPhone);
+
+        myContactToolbar.setTitle(currentContact.getUserName());
+
         if (savedInstanceState == null) {
             // Create the contact detail fragment and add it to the activity
             // using a fragment transaction.
             ContactActivityFragment contactActivityFragment = new ContactActivityFragment();
 
             Bundle arguments = new Bundle();
-            //needs to find out what to put in bundle
+            arguments.putString("PHONE_NUMBER", savedInstanceState.getString("PHONE_NUMBER"));
 
             ContactActivityFragment fragment = new ContactActivityFragment();
-
-            /**
             fragment.setArguments(arguments);
 
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.., fragment)
-                    .commit();
-             **/
+                    .add(R.id.contact_detail_fragment, fragment, "ContactActivityFragmentTag")
+                    .addToBackStack(null).commit();
+
         }
     }
 

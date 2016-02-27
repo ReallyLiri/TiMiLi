@@ -60,7 +60,7 @@ abstract class TabsFragment extends Fragment {
 
                 //adding the phone number as extra in order to know who was chosen
                 Contact selected = contactAdapter.getItem(position);
-                goToContactActivity.putExtra("Phone_Number", selected.getPhoneNumber());
+                goToContactActivity.putExtra("PHONE_NUMBER", selected.getPhoneNumber());
 
                 startActivity(goToContactActivity);
 

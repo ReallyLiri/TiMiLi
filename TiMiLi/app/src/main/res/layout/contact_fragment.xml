@@ -1,34 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.android.callmemaybe.UI.ContactActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageView
-        android:id="@+id/contact_fragment_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <data>
+        <variable
+            name="contact"
+            type="com.android.callmemaybe.UI.data.Contact" />
+    </data>
 
-    <TextView
-        android:id="@+id/contact_fragment_status_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.android.callmemaybe.UI.ContactActivity">
 
-    <TextView
-        android:id="@+id/contact_fragment_current_action"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
-    <Spinner
-        android:id="@+id/contact_fragment_set_privacy_spn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/contact_fragment_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/contact_fragment_make_contact_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{contact.phoneNumber}"/>
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/contact_fragment_status_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{contact.contactStatus}" />
+
+        <Button
+            android:id="@+id/contact_fragment_call_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/contact_fragment_sms_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/item_block_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/block_button" />
+
+    </LinearLayout>
+</layout>

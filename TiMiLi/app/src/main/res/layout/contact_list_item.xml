@@ -1,29 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageView
-        android:id="@+id/contact_list_item_photo_icon"
-        android:layout_width="wrap_content"
+    <data>
+
+        <variable
+            name="contact"
+            type="com.android.callmemaybe.UI.data.Contact" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"/>
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/contact_list_item_username_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
 
-    <TextView
-        android:id="@+id/contact_list_item_phone_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{contact.userName}" />
 
-    <TextView
-        android:id="@+id/contact_list_item_status_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{contact.phoneNumber}" />
 
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{contact.profileString}" />
+
+        <Button
+            android:id="@+id/item_fav_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{contact.isFavorite ? @string/in_my_favs_button : @string/not_in_my_favs_button}" />
+
+        <Button
+            android:id="@+id/item_block_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/block_button" />
+
+    </LinearLayout>
+</layout>
