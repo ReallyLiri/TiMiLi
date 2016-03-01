@@ -3,17 +3,14 @@ package com.android.callmemaybe.UI;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
-<<<<<<< HEAD
 import com.android.callmemaybe.UI.data.Contact;
 import com.android.callmemaybe.helpers.ContactHelper;
-=======
 import com.android.callmemaybe.UI.databinding.ContactDetailBinding;
->>>>>>> 3b0fe5e9a733dd4db42b946f4581b90fb0059c81
 
 /**
  * Created by Ana on 05/02/2016.
