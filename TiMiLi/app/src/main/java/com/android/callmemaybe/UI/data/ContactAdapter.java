@@ -3,14 +3,12 @@ package com.android.callmemaybe.UI.data;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.android.callmemaybe.UI.ContactActivity;
 import com.android.callmemaybe.UI.databinding.ContactListItemBinding;
 
 /**
@@ -56,17 +54,6 @@ public class ContactAdapter extends ArrayAdapter<Contact>{
         }
 
         holder.contactListItemBinding.setContact(contact);
-
-        holder.contactListItemBinding.contactListItemUserName.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                String PHONE_NUM_KEY = "PHONE_NUMBER";
-                Intent intent = new Intent(getContext(), ContactActivity.class);
-                intent.putExtra(PHONE_NUM_KEY, contact.getPhoneNumber());
-                getContext().startActivity(intent);
-            }
-        });
 
         holder.contactListItemBinding.itemFavButton.setOnClickListener(new View.OnClickListener() {
             @Override

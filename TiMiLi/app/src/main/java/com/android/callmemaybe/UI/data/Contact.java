@@ -3,7 +3,6 @@ package com.android.callmemaybe.UI.data;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 
 import com.android.callmemaybe.UI.BR;
@@ -25,23 +24,13 @@ public class Contact extends BaseObservable {
     public String userName; //the username the user chose for him
     public String phoneNumber;
     public UserStatus contactStatus = new UserStatus(phoneNumber);
-    public String status = "debugg";
     public UserGist contactGist = null;
     public int searchesCounter;
     public boolean hasApp;
     public boolean isFavorite = false;
-    public String profileString = contactStatus.funnyStatus;
 
     public Contact () {
         this("unnamed", "0");
-    }
-
-    public void setProfileString(String profileString) {
-        this.profileString = profileString;
-    }
-
-    public UserStatus getContactStatus() {
-        return contactStatus;
     }
 
     @Bindable
@@ -76,11 +65,6 @@ public class Contact extends BaseObservable {
 
     public void setContactStatus(UserStatus contactStatus) {
         this.contactStatus = contactStatus;
-    }
-
-
-    public void setStatus(String contactStatus) {
-        Log.d("Contact" ,"this func is for debugging only!");
     }
 
     @Bindable
