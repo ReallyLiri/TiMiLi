@@ -10,12 +10,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-<<<<<<< HEAD
-        <FrameLayout
-            android:id="@+id/contact_detail_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></FrameLayout>
-=======
             <android.support.v7.widget.Toolbar
                 android:id="@+id/contact_detail_toolbar"
                 android:layout_width="match_parent"
@@ -26,8 +20,6 @@
                 android:id="@+id/fragment_contact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></FrameLayout>
->>>>>>> 3b0fe5e9a733dd4db42b946f4581b90fb0059c81
-
 
         </LinearLayout>
 
