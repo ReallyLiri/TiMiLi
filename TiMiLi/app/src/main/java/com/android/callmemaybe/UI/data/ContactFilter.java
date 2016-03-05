@@ -41,7 +41,7 @@ public class ContactFilter {
         return filterContacts(filterType, contacstSet);
     }
 
-    public static Contact[] searchContacts(String word, Contact[] contacts) {
+    public static Contact[] filterContacts(String word, Contact[] contacts) {
         List<Contact> result = new ArrayList<>();
         for (Contact contact: contacts) {
             if (contact.getUserName().contains(word) ||
