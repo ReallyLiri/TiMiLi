@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private final String LOG_TAG = MainActivity.class.getSimpleName();
 
     private Toolbar toolbar;
+    private Toolbar searchbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
 

@@ -40,4 +40,17 @@ public class ContactFilter {
         contacstSet.addAll(java.util.Arrays.asList(contacts));
         return filterContacts(filterType, contacstSet);
     }
+
+    public static Contact[] searchContacts(String word, Contact[] contacts) {
+        List<Contact> result = new ArrayList<>();
+        for (Contact contact: contacts) {
+            if (contact.getUserName().contains(word) ||
+                    contact.getPhoneNumber().contains(word)) {
+                result.add(contact);
+            }
+        }
+        Contact[] resultArr = new Contact[result.size()];
+        resultArr = result.toArray(resultArr);
+        return resultArr;
+    }
 }

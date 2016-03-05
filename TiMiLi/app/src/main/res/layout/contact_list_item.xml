@@ -19,6 +19,7 @@
             android:layout_gravity="center" />
 
         <TextView
+            android:id="@+id/contact_list_item_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{contact.userName}" />
