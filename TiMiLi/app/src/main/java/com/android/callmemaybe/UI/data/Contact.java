@@ -3,6 +3,7 @@ package com.android.callmemaybe.UI.data;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 
 import com.android.callmemaybe.UI.BR;
@@ -28,6 +29,8 @@ public class Contact extends BaseObservable {
     public int searchesCounter;
     public boolean hasApp;
     public boolean isFavorite = false;
+
+    private final String LOG_TAG = Contact.class.getSimpleName();
 
     public Contact () {
         this("unnamed", "0");
@@ -119,8 +122,12 @@ public class Contact extends BaseObservable {
 
     @Override
     public boolean equals(Object o) {
+        Log.d(LOG_TAG, "o null = " + (o == null));
+        Log.d(LOG_TAG, "this null = " + (this == null));
         if (o.getClass().getSimpleName().equals(this.getClass().getSimpleName())){
             Contact other = (Contact) o;
+            Log.d(LOG_TAG, "o null = " + (((Contact) o).phoneNumber == null));
+            Log.d(LOG_TAG, "this null = " + (this.phoneNumber == null));
             return (this.phoneNumber.equals(other.phoneNumber));
         }
         else {
