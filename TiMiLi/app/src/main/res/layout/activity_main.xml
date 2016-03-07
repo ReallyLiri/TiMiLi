@@ -28,11 +28,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
 
-            <TextView
+            <Button
                 android:id="@+id/activity_main_search_text"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:title="@string/search_title"/>
+                android:text="@string/search_title"/>
         </LinearLayout>
 
         <android.support.design.widget.TabLayout

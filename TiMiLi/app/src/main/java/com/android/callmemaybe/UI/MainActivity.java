@@ -16,7 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
 
 import com.android.callmemaybe.UI.databinding.ActivityMainBinding;
 import com.android.callmemaybe.gistService.GistService;
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private final String LOG_TAG = MainActivity.class.getSimpleName();
 
     private Toolbar toolbar;
-    private TextView searchText;
+    private Button searchText;
     private TabLayout tabLayout;
     private ViewPager viewPager;
 

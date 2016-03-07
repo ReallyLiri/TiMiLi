@@ -2,6 +2,7 @@ package com.android.callmemaybe.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.android.callmemaybe.UI.data.Contact;
 
@@ -27,6 +28,8 @@ public class SharedPreferencesHelper {
      */
     public Set<Contact> GetAllContacts(Context context, String key){
         ComplexPreferences prefs = ComplexPreferences.getComplexPreferences(context, IDENTITY, Context.MODE_PRIVATE);
+        Log.d("SharedPreferencesHelper", " ContactSet class=" +  ContactsSet.class);
+        Log.d("SharedPreferencesHelper", "class=" + prefs.getObject(key, ContactsSet.class).getClass());
         ContactsSet set = prefs.getObject(key, ContactsSet.class);
         if (set == null) {
             return null;
