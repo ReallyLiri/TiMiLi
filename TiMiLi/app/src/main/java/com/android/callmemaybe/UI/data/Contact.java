@@ -41,6 +41,10 @@ public class Contact extends BaseObservable {
         return userName;
     }
 
+    public String getFunnyStatus(){
+        return this.contactStatus.funnyStatus;
+    }
+
     public void setUserName(String userName) {
         this.userName = userName;
         notifyPropertyChanged(BR.userName);

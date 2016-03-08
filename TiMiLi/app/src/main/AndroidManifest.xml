@@ -16,6 +16,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".ContactActivity" />
         <activity android:name=".SettingActivity" />
+        <activity android:name=".SearchActivity" />
         <activity android:name=".InitActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,6 +37,8 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="3db91cb08ed5746cfc6e61b7f7590b16ff712deb" />
+
+        <activity android:name=".MyProfile_Activity"></activity>
     </application>
 
 </manifest>

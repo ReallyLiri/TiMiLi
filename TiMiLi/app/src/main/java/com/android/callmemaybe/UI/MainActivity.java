@@ -162,7 +162,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_my_profile:
-                //User chose the "my profile" item, open my_profile activity
+                Intent goToMyProfile = new Intent(getApplicationContext(), MyProfile_Activity.class);
+                startActivity(goToMyProfile);
                 return true;
 
             default:

@@ -23,7 +23,7 @@
     <string name="searchesCounter">top searches</string>
 
     <!-- fav button -->
-    <string name = "in_my_favs_button">in my favorites</string>
+    <string name="in_my_favs_button">in my favorites</string>
     <string name="not_in_my_favs_button">not in my favorites</string>
 
     <!--block button -->

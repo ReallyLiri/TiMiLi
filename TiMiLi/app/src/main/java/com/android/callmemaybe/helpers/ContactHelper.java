@@ -41,6 +41,13 @@ public class ContactHelper {
     if contact has multiple phone num - what should we do?
 
      */
+
+    public static Contact getMyContact(Context context){
+        PhoneNumberHelper helpi = new PhoneNumberHelper();
+        String myPhoneNumber = helpi.getMyPhoneNumber(context);
+        return getContact(myPhoneNumber);
+    }
+
     public static Set<Contact> getPhoneAllContacts(Context context){
         HashSet<Contact> contacts = new HashSet<>();
         ContentResolver cr = context.getContentResolver();
