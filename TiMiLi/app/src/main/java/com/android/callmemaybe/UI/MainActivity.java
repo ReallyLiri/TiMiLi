@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.FragmentManager;
+import android.view.View;
+import android.widget.Button;
 
 import com.android.callmemaybe.UI.databinding.ActivityMainBinding;
 import com.android.callmemaybe.gistService.GistService;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private final String LOG_TAG = MainActivity.class.getSimpleName();
 
     private Toolbar toolbar;
+    private Button searchText;
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
@@ -78,6 +81,15 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        searchText = binding.activityMainSearchText;
+        searchText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goToSearchActivity = new Intent(getApplicationContext(), SearchActivity.class);
+                startActivity(goToSearchActivity);
+            }
+        });
+
         viewPager = binding.viewpager;
         setupViewPager(viewPager);
 
@@ -117,22 +129,15 @@ public class MainActivity extends AppCompatActivity {
             // Create a new Fragment to be placed in the activity layout
             DeafultMostSearchedFragment mostSearchedFragment = new DeafultMostSearchedFragment(); ///99
 
-            // In case this activity was started with special instructions from an
-            // Intent, pass the Intent's extras to the fragment as arguments
-            //mostSearchedFragment.setArguments(getIntent().getExtras());
-
-            Log.d(LOG_TAG, "before starting transaction");
-
-            // Add the fragment to the 'fragment_container' FrameLayout
+            //Add the fragment to the 'fragment_container' FrameLayout
             //Optional tag name for the fragment, to later retrieve the fragment with
             //FragmentManager.findFragmentByTag(String)
             //addToBackStack -  transaction will be remembered after it is committed,
-            // and will reverse its operation when later popped off the stack
+            //and will reverse its operation when later popped off the stack
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_main, mostSearchedFragment, "MostSearchedFragmentTag")
                     .addToBackStack(null).commit();
 
-            Log.d(LOG_TAG, "after starting transaction");
         }
     }
 

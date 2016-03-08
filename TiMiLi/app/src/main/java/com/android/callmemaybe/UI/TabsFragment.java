@@ -38,11 +38,8 @@ abstract class TabsFragment extends Fragment {
         //needs to deal with the cases of no contacts at all or less then 3 contacts
         greetingMassage.setText(getGreetingMessege());
         Contact[] top = getContacts();
-        Log.d(LOG_TAG, "before creating new contactAdapter");
         contactAdapter = new ContactAdapter(getActivity(), top);
-        Log.d(LOG_TAG, "after creating new contactAdapter");
         cListView.setAdapter(contactAdapter);
-        Log.d(LOG_TAG, "after setting the contactAdapter");
 
         cListView.setOnItemClickListener(getOnListItemClickedListener());
         Log.d(LOG_TAG, "after setting onItemClickListener");
