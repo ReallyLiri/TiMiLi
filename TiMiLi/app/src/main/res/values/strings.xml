@@ -28,9 +28,14 @@
     <!-- fav button -->
     <string name="in_my_favs_button">in my favorites</string>
     <string name="not_in_my_favs_button">not in my favorites</string>
+    <string name="fav_tag">fav</string>
 
     <!--block button -->
     <string name="block_button">block this contact</string>
+    <string name="block_tag">block</string>
+
+    <!--add contact button -->
+    <string name="add_contact">add new contact</string>
 
     <!--settings -->
     <string name="hebrew">hebrew</string>

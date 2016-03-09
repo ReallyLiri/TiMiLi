@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.android.callmemaybe.UI.data.Contact;
 import com.android.callmemaybe.UI.data.ContactAdapter;
 import com.android.callmemaybe.UI.data.ContactFilter;
+import com.android.callmemaybe.UI.data.ContactSort;
+import com.android.callmemaybe.UI.data.ContactSortOrderType;
 import com.android.callmemaybe.UI.databinding.SearchActivityBinding;
 import com.android.callmemaybe.helpers.ContactHelper;
 
@@ -34,7 +36,7 @@ public class SearchActivity extends AppCompatActivity {
     private ListView cListView;
     private boolean isSearchOpened = false;
     private EditText edtSearch;
-    private Set<Contact> filteredList;
+    private Set<Contact> filteredSet;
     private StringBuilder word;
 
     @Override
@@ -47,9 +49,8 @@ public class SearchActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         cListView = binding.searchList;
-
-        filteredList = ContactHelper.getAllContacts();
-
+        filteredSet = ContactHelper.getAllContacts();
+        defaultSearchFragment();
     }
 
     @Override
@@ -133,17 +134,25 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void doSearch() {
-        ContactListFragment listFragment = new ContactListFragment();
         String searching = edtSearch.getText().toString();
         if(searching.length() < word.length()) { //the user deleted a letter
-            filteredList = ContactHelper.getAllContacts();
+            filteredSet = ContactHelper.getAllContacts();
         }
 
-        Contact[] filtered = ContactFilter.filterContacts(searching, filteredList.toArray(new Contact[0]));
-        filteredList = new HashSet<>(Arrays.asList(filtered));
+        Contact[] filtered = ContactFilter.filterContacts(searching,
+                filteredSet.toArray(new Contact[0]));
+        filtered = ContactSort.sortContacts(ContactSortOrderType.name_A_To_Z, filtered);
+        filteredSet = new HashSet<>(Arrays.asList(filtered));
         word = new StringBuilder(searching);
 
         ContactAdapter contactAdapter = new ContactAdapter(getApplicationContext(), filtered);
+        cListView.setAdapter(contactAdapter);
+    }
+
+    public void defaultSearchFragment() {
+        Contact[] list = ContactSort.sortContacts(ContactSortOrderType.mostSearchedToLeastSearched,
+                filteredSet);
+        ContactAdapter contactAdapter = new ContactAdapter(getApplicationContext(), list);
         cListView.setAdapter(contactAdapter);
     }
 

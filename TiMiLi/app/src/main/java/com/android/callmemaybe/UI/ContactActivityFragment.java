@@ -31,7 +31,7 @@ public class ContactActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         final String contactPhone = savedInstanceState.getString("PHONE_NUMBER");
-        Contact currentContact = ContactHelper.getContact(contactPhone);
+        final Contact currentContact = ContactHelper.getContact(contactPhone);
 
         ContactFragmentBinding binding = DataBindingUtil.setContentView(
                 getActivity(), R.layout.contact_fragment);
@@ -59,6 +59,15 @@ public class ContactActivityFragment extends Fragment {
                 intent.setData(Uri.parse(uri));
                 Intent chooser = Intent.createChooser(intent, "Send massage with...");
                 startActivity(chooser);
+            }
+        });
+
+        Button blockBtn = binding.contactFragmentBlockButton;
+        blockBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
             }
         });
 

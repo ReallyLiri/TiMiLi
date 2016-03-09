@@ -21,6 +21,12 @@
                 android:layout_height="wrap_content"
                 android:divider="@null"></ListView>
 
+            <Button
+                android:id="@+id/search_activity_add_contact_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_contact"/>
+
         </LinearLayout>
 
     </ScrollView>

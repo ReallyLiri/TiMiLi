@@ -38,13 +38,15 @@
             android:id="@+id/item_fav_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{contact.isFavorite ? @string/in_my_favs_button : @string/not_in_my_favs_button}" />
+            android:text="@{contact.isFavorite ? @string/in_my_favs_button : @string/not_in_my_favs_button}"
+            android:tag="@string/fav_tag"/>
 
         <Button
             android:id="@+id/item_block_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/block_button" />
+            android:text="@string/block_button"
+            android:tag="@string/block_tag"/>
 
     </LinearLayout>
 </layout>
