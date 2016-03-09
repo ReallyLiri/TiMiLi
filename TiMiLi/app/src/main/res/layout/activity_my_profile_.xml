@@ -27,6 +27,7 @@
             android:id="@+id/my_funny_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{contact.funnyStatus}"
             />
 
         <Button

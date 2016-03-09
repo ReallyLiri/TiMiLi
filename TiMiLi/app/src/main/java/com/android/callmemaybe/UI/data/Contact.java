@@ -47,8 +47,14 @@ public class Contact extends BaseObservable {
         return userName;
     }
 
+    @Bindable
     public String getFunnyStatus(){
         return this.contactStatus.funnyStatus;
+    }
+
+    public void setFunnyStatus(String funnyStatus) {
+        this.contactStatus.funnyStatus = funnyStatus;
+        notifyPropertyChanged(BR.funnyStatus);
     }
 
     public void setUserName(String userName) {
@@ -76,8 +82,15 @@ public class Contact extends BaseObservable {
         notifyPropertyChanged(BR.phoneNumber);
     }
 
+    @Bindable
+    public UserStatus getContactStatus() {
+        return this.contactStatus;
+    }
+
     public void setContactStatus(UserStatus contactStatus) {
         this.contactStatus = contactStatus;
+        notifyPropertyChanged(BR.contactStatus);
+        notifyPropertyChanged(BR.funnyStatus);
     }
 
     @Bindable
@@ -180,7 +193,4 @@ public class Contact extends BaseObservable {
         return this.contactStatus.blockedUsers.contains(contact);
     }
 
-    public void setFunnyStatus(String funnyStatus) {
-        this.contactStatus.funnyStatus = funnyStatus;
-    }
 }

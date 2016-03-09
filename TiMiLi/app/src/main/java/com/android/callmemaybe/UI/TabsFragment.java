@@ -52,17 +52,8 @@ abstract class TabsFragment extends Fragment {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-
-                //needs to go to the ContactActivity of the chosen contact
-                ContactActivity contactActivity = new ContactActivity();
-                Intent goToContactActivity = new Intent(getContext(), ContactActivity.class);
-
-                //adding the phone number as extra in order to know who was chosen
                 Contact selected = contactAdapter.getItem(position);
-                goToContactActivity.putExtra("PHONE_NUMBER", selected.getPhoneNumber());
-
-                startActivity(goToContactActivity);
-
+                ContactActivity.StartContactActivity(getActivity(), selected.getPhoneNumber());
             }
         };
     }

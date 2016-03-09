@@ -18,12 +18,19 @@ import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.Button;
 
+import com.android.callmemaybe.UI.data.Contact;
 import com.android.callmemaybe.UI.databinding.ActivityMainBinding;
+import com.android.callmemaybe.contracts.ICloudServer;
+import com.android.callmemaybe.contracts.IOnLatestGistUpdatedListener;
+import com.android.callmemaybe.contracts.IOnLatestStatusUpdatedListener;
+import com.android.callmemaybe.contracts.UserGist;
+import com.android.callmemaybe.contracts.UserStatus;
 import com.android.callmemaybe.gistService.GistService;
 import com.android.callmemaybe.helpers.ContactHelper;
 import com.android.callmemaybe.helpers.PhoneNumberHelper;
 import com.android.callmemaybe.helpers.SharedPreferencesHelper;
 
+import com.android.callmemaybe.server.FireBaseCloudServer;
 import com.digits.sdk.android.Digits;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
@@ -44,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
     private Fragment favsFragment = new MyFavoritesFragment();
     private Fragment allContactsFragment = new AllContactsFragment();
 
+    private ICloudServer mCloudServer;
+    private ContactHelper mContactHelper;
+
     public static void startMainActivity(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);
@@ -53,27 +63,39 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         GistService.sendKill(this);
-    }
+        mContactHelper.setAllContactPref(this, ContactHelper.getAllContacts());
 
-    @Override
-    protected void onPause(){
-        super.onPause();
-        ContactHelper contactHelper = new ContactHelper();
-        contactHelper.setAllContactPref(this, ContactHelper.getAllContacts());
+        mCloudServer.UnRegisterAll();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         GistService.sendStartup(this);
+
+        mCloudServer = new FireBaseCloudServer(this);
+        for (final Contact contact: ContactHelper.getAllContacts()) {
+            mCloudServer.RegisterForUserGistData(contact.getPhoneNumber(), new IOnLatestGistUpdatedListener() {
+                @Override
+                public void latestGistUpdated(UserGist latestGist) {
+                    contact.setContactGist(latestGist);
+                }
+            });
+            mCloudServer.RegisterForUserStatusData(contact.getPhoneNumber(), new IOnLatestStatusUpdatedListener() {
+                @Override
+                public void latestStatusUpdated(UserStatus latestStatus) {
+                    contact.setContactStatus(latestStatus);
+                }
+            });
+        }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ContactHelper helper = new ContactHelper();
-        helper.updateContacts(this);
+        mContactHelper = new ContactHelper();
+        mContactHelper.updateContacts(this);
 
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         toolbar = binding.activityMainToolbar;

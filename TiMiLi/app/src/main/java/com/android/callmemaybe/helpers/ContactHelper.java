@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
@@ -113,6 +114,10 @@ public class ContactHelper {
      */
     public static Bitmap photoLoader(Uri image_uri, Context context){
             try {
+                if (image_uri == null) {
+                    return BitmapFactory.decodeResource(context.getResources(), android.R.drawable.sym_contact_card);
+                }
+
                 Bitmap bitmap = MediaStore.Images.Media
                         .getBitmap(context.getContentResolver(),
                                 image_uri);
@@ -183,7 +188,7 @@ public class ContactHelper {
         Contact contact;
         while(iterator.hasNext()) {
             contact = iterator.next();
-            if (number == contact.getPhoneNumber()) {
+            if (number.equals(contact.getPhoneNumber())) {
                 return contact;
             }
         }

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.callmemaybe.UI.data.Contact;
 import com.android.callmemaybe.UI.databinding.ContactFragmentBinding;
@@ -25,25 +26,31 @@ import com.android.callmemaybe.UI.databinding.ContactFragmentBinding;
  */
 public class ContactActivityFragment extends Fragment {
 
+    private Contact mContact;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final String contactPhone = savedInstanceState.getString("PHONE_NUMBER");
-        final Contact currentContact = ContactHelper.getContact(contactPhone);
+        ContactFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.contact_fragment, container, false);
 
-        ContactFragmentBinding binding = DataBindingUtil.setContentView(
-                getActivity(), R.layout.contact_fragment);
-        binding.setContact(currentContact);
+        String phoneNumber = getActivity().getIntent().getStringExtra(ContactActivity.PHONE_NUMBER_EXTRA);
+        mContact = ContactHelper.getContact(phoneNumber);
+
+        if (mContact == null) {
+            Toast.makeText(getContext(), "Failed to get contact for number: " + phoneNumber, Toast.LENGTH_LONG).show();
+            return null;
+        }
+
+        binding.setContact(mContact);
 
         ImageView photo = binding.contactFragmentPhoto;
-        photo.setImageBitmap(ContactHelper.photoLoader(currentContact.getImageUri(), getContext()));
+        photo.setImageBitmap(ContactHelper.photoLoader(mContact.getImageUri(), getContext()));
 
         Button callBtn = binding.contactFragmentCallBtn;
         callBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String uri = "tel:" + contactPhone;
+                String uri = "tel:" + mContact.getPhoneNumber();
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse(uri));
                 startActivity(intent);
@@ -54,10 +61,10 @@ public class ContactActivityFragment extends Fragment {
         smsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String uri = "tel:" + contactPhone;
+                String uri = "tel:" + mContact.getPhoneNumber();
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
                 intent.setData(Uri.parse(uri));
-                Intent chooser = Intent.createChooser(intent, "Send massage with...");
+                Intent chooser = Intent.createChooser(intent, "Send message with...");
                 startActivity(chooser);
             }
         });

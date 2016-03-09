@@ -10,28 +10,30 @@ import android.widget.EditText;
 
 import com.android.callmemaybe.UI.data.Contact;
 import com.android.callmemaybe.UI.databinding.ActivityMyProfileBinding;
+import com.android.callmemaybe.contracts.ICloudServer;
 import com.android.callmemaybe.helpers.ContactHelper;
+import com.android.callmemaybe.server.FireBaseCloudServer;
 
 public class MyProfile_Activity extends AppCompatActivity {
 
-    EditText funnyStatus;
-    Button saveButton;
+    private EditText funnyStatus;
+    private Button saveButton;
+    private Contact myContact;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_profile_);
         Log.d("MyProfile", "in onCreate");
 
-        final Contact myContact = ContactHelper.getMyContact(this);
+        myContact = ContactHelper.getMyContact(this);
 
         ActivityMyProfileBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_my_profile_);
         binding.setContact(myContact);
 
-        this.funnyStatus = (EditText) findViewById(R.id.my_funny_status);
+        this.funnyStatus = binding.myFunnyStatus;
         Log.d("MyProfile", "phoneNum = " + myContact);
-        funnyStatus.setText(myContact.getFunnyStatus());
 
-        this.saveButton = (Button) findViewById(R.id.save_all_changes);
+        this.saveButton = binding.saveAllChanges;
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,7 +41,13 @@ public class MyProfile_Activity extends AppCompatActivity {
                 if (!funnyStatusString.equals(myContact.getFunnyStatus())){
                     myContact.setFunnyStatus(funnyStatusString);
                 }
+                saveToServer();
             }
         });
+    }
+
+    private void saveToServer() {
+        ICloudServer server = new FireBaseCloudServer(this);
+        server.UpdateMyStatus(myContact.getContactStatus());
     }
 }
