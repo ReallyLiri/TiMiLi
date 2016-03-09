@@ -17,23 +17,27 @@ import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 /**
  * Created by Liri on 05/02/2016.
  */
 public class FireBaseCloudServer implements ICloudServer {
-    private Map<String, ChildEventListener> mGistListeners;
-    private Map<String, ValueEventListener> mStatusListeners;
-    private Set<ValueEventListener> mUserExistListeners;
+    private ConcurrentHashMap<String, ChildEventListener> mGistListeners;
+    private ConcurrentHashMap<String, ValueEventListener> mStatusListeners;
+    private ConcurrentSkipListSet<ValueEventListener> mUserExistListeners;
 
     private final String BaseFirebaseURL = "https://timili.firebaseio.com/android";
 
     public FireBaseCloudServer(Context context) {
         Firebase.setAndroidContext(context);
-        mGistListeners = new HashMap<>();
-        mStatusListeners = new HashMap<>();
+        mGistListeners = new ConcurrentHashMap<>();
+        mStatusListeners = new ConcurrentHashMap<>();
+        mUserExistListeners = new ConcurrentSkipListSet<>();
     }
 
     private String GetUserGistDirectory(String userId) {

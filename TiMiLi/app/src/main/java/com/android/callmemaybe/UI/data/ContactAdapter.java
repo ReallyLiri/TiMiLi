@@ -62,11 +62,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         holder.contactListItemBinding.contactListItemUsername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context = getContext();
-                ContactActivity contactActivity = new ContactActivity();
-                Intent i = new Intent(context, contactActivity.getClass());
-                i.putExtra("PHONE_NUM", phone);
-                context.startActivity(i);
+                ContactActivity.StartContactActivity(getContext(), phone);
             }
         });
 
