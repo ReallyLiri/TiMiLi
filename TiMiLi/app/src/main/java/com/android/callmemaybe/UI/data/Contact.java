@@ -31,6 +31,12 @@ public class Contact extends BaseObservable {
     public boolean isFavorite = false;
 
     private final String LOG_TAG = Contact.class.getSimpleName();
+    private static final String THIS_USER_NAME = "myName";
+
+    public static Contact createMyContact(String phoneNumber){
+        Contact contact = new Contact(THIS_USER_NAME, phoneNumber);
+        return contact;
+    }
 
     public Contact () {
         this("unnamed", "0");
@@ -169,7 +175,12 @@ public class Contact extends BaseObservable {
         searchesCounter = 0;
     }
 
+
     public boolean isInBlockedList(Contact contact){
         return this.contactStatus.blockedUsers.contains(contact);
+    }
+
+    public void setFunnyStatus(String funnyStatus) {
+        this.contactStatus.funnyStatus = funnyStatus;
     }
 }

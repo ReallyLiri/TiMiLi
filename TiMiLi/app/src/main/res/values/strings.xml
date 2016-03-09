@@ -5,6 +5,9 @@
     <string name="greeting_favs">My favorite contacts</string>
     <string name="greeting_all">All contacts</string>
 
+    <!-- myProfile -->
+    <string name="save_all_changes">save all changes</string>
+
     <!-- appbar -->
     <string name="action_help">help</string>
     <string name="action_settings">settings</string>

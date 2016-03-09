@@ -15,6 +15,21 @@ public class SharedPreferencesHelper {
 
     private static final String IDENTITY = "com.android.callmemaybe.timili";
 
+    public void putMyContact(Context context, Contact contact, String key){
+        ComplexPreferences prefs = ComplexPreferences.getComplexPreferences(context, IDENTITY, Context.MODE_PRIVATE);
+        prefs.putObject(key, contact);
+        prefs.commit();
+    }
+
+    public Contact getMyContact(Context context, String key){
+        ComplexPreferences prefs = ComplexPreferences.getComplexPreferences(context, IDENTITY, Context.MODE_PRIVATE);
+        Contact contact = prefs.getObject(key, Contact.class);
+        if (contact == null) {
+            return null;
+        }
+        return contact;
+    }
+
     public void PutAllContacts(Context context, Set<Contact> allContacts, String key){
         ComplexPreferences prefs = ComplexPreferences.getComplexPreferences(context, IDENTITY, Context.MODE_PRIVATE);
         ContactsSet set = new ContactsSet(allContacts);

@@ -26,8 +26,10 @@ import static android.provider.ContactsContract.*;
 public class ContactHelper {
 
     private static Set<Contact> allContacts;
+    private static Contact myContact;
     public static final String CONTACTS_PREF_KEY = "ALL_CONTACTS";
     public static final String LOG_TAG = "ContactHelper";
+    public static final String MY_CONTACT_PREF_KEY = "MY_CONTACT_PREF_KEY";
 
     public static Set<Contact> getAllContacts(){
         return allContacts;
@@ -43,9 +45,19 @@ public class ContactHelper {
      */
 
     public static Contact getMyContact(Context context){
-        PhoneNumberHelper helpi = new PhoneNumberHelper();
-        String myPhoneNumber = helpi.getMyPhoneNumber(context);
-        return getContact(myPhoneNumber);
+        if (myContact == null){
+            SharedPreferencesHelper helpi = new SharedPreferencesHelper();
+            try {
+               myContact = helpi.getMyContact(context, MY_CONTACT_PREF_KEY);
+            }
+            catch (Exception e){
+                PhoneNumberHelper helper = new PhoneNumberHelper();
+                String phone = helper.getMyPhoneNumber(context);
+                myContact = Contact.createMyContact(phone);
+                helpi.putMyContact(context, myContact, MY_CONTACT_PREF_KEY);
+            }
+        }
+        return myContact;
     }
 
     public static Set<Contact> getPhoneAllContacts(Context context){
@@ -88,6 +100,7 @@ public class ContactHelper {
         SharedPreferencesHelper pref = new SharedPreferencesHelper();
         pref.PutAllContacts(context, contacts, CONTACTS_PREF_KEY);
     }
+
 
     public static void initAllContacts(Context context){
         setAllContactPref(context, getPhoneAllContacts(context));
