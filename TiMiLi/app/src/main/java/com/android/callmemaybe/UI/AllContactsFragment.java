@@ -4,6 +4,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.android.callmemaybe.UI.data.Contact;
+import com.android.callmemaybe.UI.data.ContactFilter;
+import com.android.callmemaybe.UI.data.ContactFilterType;
 import com.android.callmemaybe.UI.data.ContactSort;
 import com.android.callmemaybe.UI.data.ContactSortOrderType;
 import com.android.callmemaybe.helpers.ContactHelper;
@@ -19,6 +21,7 @@ public class AllContactsFragment extends TabsFragment {
 
     @Override
     Contact[] getContacts() {
-        return  ContactSort.sortContacts(ContactSortOrderType.name_A_To_Z, ContactHelper.getAllContacts());
+        Contact[] allContacts = ContactFilter.filterContacts(ContactFilterType.allValidContacts, getContext());
+        return  ContactSort.sortContacts(ContactSortOrderType.name_A_To_Z, allContacts);
     }
 }

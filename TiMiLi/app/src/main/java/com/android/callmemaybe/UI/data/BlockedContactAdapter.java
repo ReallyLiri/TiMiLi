@@ -11,13 +11,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.android.callmemaybe.UI.ContactActivity;
+import com.android.callmemaybe.UI.databinding.BlockedContactListItemBinding;
 import com.android.callmemaybe.UI.databinding.ContactListItemBinding;
 import com.android.callmemaybe.helpers.ContactHelper;
 
 /**
- * Created by Ana on 05/02/2016.
+ * Created by Mia on 10/03/2016.
  */
-public class ContactAdapter extends ArrayAdapter<Contact> {
+public class BlockedContactAdapter extends ArrayAdapter<Contact> {
     private final String LOG_TAG = ContactAdapter.class.getSimpleName();
     private Contact[] contactsList;
 
@@ -25,14 +26,14 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
      * Cache of the children views for a forecast list item.
      */
     public static class ViewHolder {
-        public ContactListItemBinding contactListItemBinding;
+        public BlockedContactListItemBinding contactListItemBinding;
 
-        public ViewHolder(ContactListItemBinding contactListItemBinding) {
+        public ViewHolder(BlockedContactListItemBinding contactListItemBinding) {
             this.contactListItemBinding = contactListItemBinding;
         }
     }
 
-    public ContactAdapter(Context context, Contact[] contacts) {
+    public BlockedContactAdapter(Context context, Contact[] contacts) {
         super(context, 0, contacts);
         contactsList = contacts;
     }
@@ -48,7 +49,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         final String phone = contact.getPhoneNumber();
 
         if (convertView == null) {
-            ContactListItemBinding contactListItemBinding = ContactListItemBinding
+            BlockedContactListItemBinding contactListItemBinding = BlockedContactListItemBinding
                     .inflate(LayoutInflater.from(getContext()), parent, false);
             convertView = contactListItemBinding.getRoot();
 
@@ -67,15 +68,9 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
             }
         });
 
-        holder.contactListItemBinding.itemFavButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                contact.toggleFavorite();
-                // TODO: refresh Favorites fragment. see TabsFragment.RefreshData
-            }
-        });
 
-        holder.contactListItemBinding.itemBlockButton.setOnClickListener(new View.OnClickListener() {
+
+        holder.contactListItemBinding.unblockedButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -86,15 +81,15 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
                 builder.setTitle("Confirm");
-                builder.setMessage("Are you sure you want to block this user?");
+                builder.setMessage("Are you sure you want to unblock this user?");
 
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
                         Contact myContact1 = ContactHelper.getMyContact(getContext());
-                        myContact1.contactStatus.blockedUsers.add(contact.getPhoneNumber());
+                        myContact1.contactStatus.blockedUsers.remove(contact.getPhoneNumber());
                         //TODO: update server that this user is blocked
-                        Toast.makeText(getContext(), "this user is blocked!!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "this user is unblocked!!", Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                     }
 

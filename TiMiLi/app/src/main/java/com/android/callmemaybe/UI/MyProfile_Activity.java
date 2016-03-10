@@ -24,6 +24,7 @@ public class MyProfile_Activity extends AppCompatActivity {
     private EditText funnyStatus;
     private Button saveButton;
     private Contact myContact;
+    private Button goToUnblockedActivity;
 
     private Button[] blocked_days;
     @Override
@@ -89,6 +90,15 @@ public class MyProfile_Activity extends AppCompatActivity {
                     myContact.contactStatus.inactiveDays = newList;
                 }
                 saveToServer();
+            }
+        });
+
+        this.goToUnblockedActivity = binding.goToUnblocked;
+        goToUnblockedActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyProfile_Activity.this, UnblockUsers.class);
+                startActivity(intent);
             }
         });
     }
