@@ -3,6 +3,7 @@ package com.android.callmemaybe.helpers;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -65,8 +66,8 @@ public class ButtonAction {
     }
 
     public static void addContactToPhone (Context context) {
-        Intent goToContactsApp = Intent.makeMainSelectorActivity(
-                Intent.ACTION_MAIN, Intent.CATEGORY_APP_CONTACTS);
+        Intent goToContactsApp = new Intent(Intent.ACTION_INSERT,
+                ContactsContract.Contacts.CONTENT_URI);
         goToContactsApp.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(goToContactsApp);
     }
