@@ -77,6 +77,9 @@ public class ContactHelper {
     }
 
     public static void setAllContactPref(Context context, Set<Contact> contacts){
+        for (Contact contact : contacts) {
+            contact.contactGist = null; // we don't want an outdated gist
+        }
         SharedPreferencesHelper pref = new SharedPreferencesHelper();
         pref.PutAllContacts(context, contacts, CONTACTS_PREF_KEY);
     }
@@ -120,13 +123,6 @@ public class ContactHelper {
 
         Log.d("update Contacts", "phoneContactsContain " + phoneContacts.size() + " items");
         Log.d("update Contacts", "prefContactsContain " + (prefContacts == null));
-       // for (Contact contact: phoneContacts) {
-       //     Log.d("update Contacts",contact.getPhoneNumber());
-       // }
-       // for (Contact contact: prefContacts) {
-       //     Log.d("update Contacts",contact.getPhoneNumber());
-       // }
-
 
         if (prefContacts == null){
             Log.d("update Contacts", "prefContacts is null");
