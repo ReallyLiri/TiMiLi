@@ -49,7 +49,21 @@ public class UserGist {
         return ActiveInPractice.Active;
     }
 
-    public long serviceSleepTimeInMillisec() {
-        return 10 * 1000; // 10 sec  // TODO
+    public long serviceSleepTimeInMillisec(String myId, UserStatus userStatus) {
+        ActiveInPractice activeInPractice = this.IsActiveInPractice(myId, userStatus);
+
+        switch (activeInPractice) {
+            case Active:
+                return 3 * 60 * 1000; // 3 minutes
+
+            case Inactive:
+                return 10 * 60 * 1000; // 10 minutes
+
+            case Loading:
+            case Unknown:
+            case Unwilling:
+            default:
+                return 60 * 1000; // 1 minute
+        }
     }
 }

@@ -50,16 +50,13 @@ public class GistService extends Service implements SensorEventListener {
         {
             case OPCODE_STARTUP:
                 isKilled = false;
+
+            case OPCODE_WAKEUP:
                 if (mMyId == null) {
                     PhoneNumberHelper phoneNumberHelper = new PhoneNumberHelper();
                     mMyId = phoneNumberHelper.getMyPhoneNumber(this);
-                    /*if (mMyId == null || mMyId.length() == 0) {
-                        phoneNumberHelper.brutallyGetMyPhoneNumber(this);
-                        return Service.START_NOT_STICKY;
-                    }*/
                 }
 
-            case OPCODE_WAKEUP:
                 RegisterForSensorUpdates();
                 break;
 
