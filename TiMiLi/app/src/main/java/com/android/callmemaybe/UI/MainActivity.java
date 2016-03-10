@@ -213,6 +213,9 @@ public class MainActivity extends AppCompatActivity {
         public void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
+            if (fragment instanceof TabsFragment) {
+                fragments.add((TabsFragment) fragment);
+            }
         }
 
         @Override
@@ -221,7 +224,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private static List<TabsFragment> fragments = new ArrayList<>();
     public static void refreshAllData() {
-
+        for (TabsFragment fragment : fragments) {
+            fragment.RefreshData();
+        }
     }
 }

@@ -73,7 +73,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
             @Override
             public void onClick(View v) {
                 contact.toggleFavorite();
-                // TODO: refresh Favorites fragment. see TabsFragment.RefreshData
+                MainActivity.refreshAllData();
             }
         });
 
@@ -84,6 +84,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
                 final Context context = getContext();
                 DialogInterface.OnClickListener onPositiveButtonClicked = new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        MainActivity.refreshAllData();
                         //TODO: update server that this user is blocked
                         Toast.makeText(context, "this user is blocked!!", Toast.LENGTH_LONG).show();
                         dialog.dismiss();
