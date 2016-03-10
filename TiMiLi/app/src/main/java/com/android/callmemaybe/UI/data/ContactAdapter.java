@@ -3,18 +3,20 @@ package com.android.callmemaybe.UI.data;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.android.callmemaybe.UI.ContactActivity;
 import com.android.callmemaybe.UI.databinding.ContactListItemBinding;
 
 /**
  * Created by Ana on 05/02/2016.
  */
-public class ContactAdapter extends ArrayAdapter<Contact>{
+public class ContactAdapter extends ArrayAdapter<Contact> {
     private final String LOG_TAG = ContactAdapter.class.getSimpleName();
     private Contact[] contactsList;
 
@@ -36,12 +38,14 @@ public class ContactAdapter extends ArrayAdapter<Contact>{
 
     @Override
     public View getView(int position,
-                   View convertView,
-                   ViewGroup parent) {
+                        View convertView,
+                        ViewGroup parent) {
 
 
         final Contact contact = getItem(position);
         final ViewHolder holder;
+        final String phone = contact.getPhoneNumber();
+
         if (convertView == null) {
             ContactListItemBinding contactListItemBinding = ContactListItemBinding
                     .inflate(LayoutInflater.from(getContext()), parent, false);
@@ -54,6 +58,13 @@ public class ContactAdapter extends ArrayAdapter<Contact>{
         }
 
         holder.contactListItemBinding.setContact(contact);
+
+        holder.contactListItemBinding.contactListItemUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContactActivity.StartContactActivity(getContext(), phone);
+            }
+        });
 
         holder.contactListItemBinding.itemFavButton.setOnClickListener(new View.OnClickListener() {
             @Override

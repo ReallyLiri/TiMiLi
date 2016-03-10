@@ -7,7 +7,9 @@
             type="com.android.callmemaybe.UI.data.Contact" />
     </data>
 
-    <LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
         <ImageView
             android:id="@+id/contact_fragment_photo"
@@ -36,10 +38,11 @@
             android:layout_height="wrap_content"/>
 
         <Button
-            android:id="@+id/item_block_button"
+            android:id="@+id/contact_fragment_block_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/block_button" />
+            android:text="@string/block_button"
+            android:tag="@string/block_tag"/>
 
     </LinearLayout>
 </layout>

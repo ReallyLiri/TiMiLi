@@ -15,13 +15,22 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.FragmentManager;
+import android.view.View;
+import android.widget.Button;
 
+import com.android.callmemaybe.UI.data.Contact;
 import com.android.callmemaybe.UI.databinding.ActivityMainBinding;
+import com.android.callmemaybe.contracts.ICloudServer;
+import com.android.callmemaybe.contracts.IOnLatestGistUpdatedListener;
+import com.android.callmemaybe.contracts.IOnLatestStatusUpdatedListener;
+import com.android.callmemaybe.contracts.UserGist;
+import com.android.callmemaybe.contracts.UserStatus;
 import com.android.callmemaybe.gistService.GistService;
 import com.android.callmemaybe.helpers.ContactHelper;
 import com.android.callmemaybe.helpers.PhoneNumberHelper;
 import com.android.callmemaybe.helpers.SharedPreferencesHelper;
 
+import com.android.callmemaybe.server.FireBaseCloudServer;
 import com.digits.sdk.android.Digits;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
@@ -34,12 +43,16 @@ public class MainActivity extends AppCompatActivity {
     private final String LOG_TAG = MainActivity.class.getSimpleName();
 
     private Toolbar toolbar;
+    private Button searchText;
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
     private Fragment mostSearchedFragment  = new DeafultMostSearchedFragment();
     private Fragment favsFragment = new MyFavoritesFragment();
     private Fragment allContactsFragment = new AllContactsFragment();
+
+    private ICloudServer mCloudServer;
+    private ContactHelper mContactHelper;
 
     public static void startMainActivity(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -50,33 +63,54 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         GistService.sendKill(this);
-    }
+        mContactHelper.setAllContactPref(this, ContactHelper.getAllContacts());
 
-    @Override
-    protected void onPause(){
-        super.onPause();
-        ContactHelper contactHelper = new ContactHelper();
-        contactHelper.setAllContactPref(this, ContactHelper.getAllContacts());
+        mCloudServer.UnRegisterAll();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         GistService.sendStartup(this);
+
+        mCloudServer = new FireBaseCloudServer(this);
+        for (final Contact contact: ContactHelper.getAllContacts()) {
+            mCloudServer.RegisterForUserGistData(contact.getPhoneNumber(), new IOnLatestGistUpdatedListener() {
+                @Override
+                public void latestGistUpdated(UserGist latestGist) {
+                    contact.setContactGist(latestGist);
+                }
+            });
+            mCloudServer.RegisterForUserStatusData(contact.getPhoneNumber(), new IOnLatestStatusUpdatedListener() {
+                @Override
+                public void latestStatusUpdated(UserStatus latestStatus) {
+                    contact.setContactStatus(latestStatus);
+                }
+            });
+        }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ContactHelper helper = new ContactHelper();
-        helper.updateContacts(this);
+        mContactHelper = new ContactHelper();
+        mContactHelper.updateContacts(this);
 
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         toolbar = binding.activityMainToolbar;
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        searchText = binding.activityMainSearchText;
+        searchText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goToSearchActivity = new Intent(getApplicationContext(), SearchActivity.class);
+                startActivity(goToSearchActivity);
+            }
+        });
 
         viewPager = binding.viewpager;
         setupViewPager(viewPager);
@@ -117,22 +151,15 @@ public class MainActivity extends AppCompatActivity {
             // Create a new Fragment to be placed in the activity layout
             DeafultMostSearchedFragment mostSearchedFragment = new DeafultMostSearchedFragment(); ///99
 
-            // In case this activity was started with special instructions from an
-            // Intent, pass the Intent's extras to the fragment as arguments
-            //mostSearchedFragment.setArguments(getIntent().getExtras());
-
-            Log.d(LOG_TAG, "before starting transaction");
-
-            // Add the fragment to the 'fragment_container' FrameLayout
+            //Add the fragment to the 'fragment_container' FrameLayout
             //Optional tag name for the fragment, to later retrieve the fragment with
             //FragmentManager.findFragmentByTag(String)
             //addToBackStack -  transaction will be remembered after it is committed,
-            // and will reverse its operation when later popped off the stack
+            //and will reverse its operation when later popped off the stack
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_main, mostSearchedFragment, "MostSearchedFragmentTag")
                     .addToBackStack(null).commit();
 
-            Log.d(LOG_TAG, "after starting transaction");
         }
     }
 
@@ -157,7 +184,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_my_profile:
-                //User chose the "my profile" item, open my_profile activity
+                Intent goToMyProfile = new Intent(getApplicationContext(), MyProfile_Activity.class);
+                startActivity(goToMyProfile);
                 return true;
 
             default:

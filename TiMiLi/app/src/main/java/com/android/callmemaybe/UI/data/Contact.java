@@ -3,6 +3,7 @@ package com.android.callmemaybe.UI.data;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 
 import com.android.callmemaybe.UI.BR;
@@ -29,6 +30,14 @@ public class Contact extends BaseObservable {
     public boolean hasApp;
     public boolean isFavorite = false;
 
+    private final String LOG_TAG = Contact.class.getSimpleName();
+    private static final String THIS_USER_NAME = "myName";
+
+    public static Contact createMyContact(String phoneNumber){
+        Contact contact = new Contact(THIS_USER_NAME, phoneNumber);
+        return contact;
+    }
+
     public Contact () {
         this("unnamed", "0");
     }
@@ -36,6 +45,16 @@ public class Contact extends BaseObservable {
     @Bindable
     public String getUserName() {
         return userName;
+    }
+
+    @Bindable
+    public String getFunnyStatus(){
+        return this.contactStatus.funnyStatus;
+    }
+
+    public void setFunnyStatus(String funnyStatus) {
+        this.contactStatus.funnyStatus = funnyStatus;
+        notifyPropertyChanged(BR.funnyStatus);
     }
 
     public void setUserName(String userName) {
@@ -63,8 +82,15 @@ public class Contact extends BaseObservable {
         notifyPropertyChanged(BR.phoneNumber);
     }
 
+    @Bindable
+    public UserStatus getContactStatus() {
+        return this.contactStatus;
+    }
+
     public void setContactStatus(UserStatus contactStatus) {
         this.contactStatus = contactStatus;
+        notifyPropertyChanged(BR.contactStatus);
+        notifyPropertyChanged(BR.funnyStatus);
     }
 
     @Bindable
@@ -119,8 +145,12 @@ public class Contact extends BaseObservable {
 
     @Override
     public boolean equals(Object o) {
+        Log.d(LOG_TAG, "o null = " + (o == null));
+        Log.d(LOG_TAG, "this null = " + (this == null));
         if (o.getClass().getSimpleName().equals(this.getClass().getSimpleName())){
             Contact other = (Contact) o;
+            Log.d(LOG_TAG, "o null = " + (((Contact) o).phoneNumber == null));
+            Log.d(LOG_TAG, "this null = " + (this.phoneNumber == null));
             return (this.phoneNumber.equals(other.phoneNumber));
         }
         else {
@@ -158,7 +188,9 @@ public class Contact extends BaseObservable {
         searchesCounter = 0;
     }
 
+
     public boolean isInBlockedList(Contact contact){
         return this.contactStatus.blockedUsers.contains(contact);
     }
+
 }

@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
@@ -26,8 +27,10 @@ import static android.provider.ContactsContract.*;
 public class ContactHelper {
 
     private static Set<Contact> allContacts;
+    private static Contact myContact;
     public static final String CONTACTS_PREF_KEY = "ALL_CONTACTS";
     public static final String LOG_TAG = "ContactHelper";
+    public static final String MY_CONTACT_PREF_KEY = "MY_CONTACT_PREF_KEY";
 
     public static Set<Contact> getAllContacts(){
         return allContacts;
@@ -41,6 +44,23 @@ public class ContactHelper {
     if contact has multiple phone num - what should we do?
 
      */
+
+    public static Contact getMyContact(Context context){
+        if (myContact == null){
+            SharedPreferencesHelper helpi = new SharedPreferencesHelper();
+            try {
+               myContact = helpi.getMyContact(context, MY_CONTACT_PREF_KEY);
+            }
+            catch (Exception e){
+                PhoneNumberHelper helper = new PhoneNumberHelper();
+                String phone = helper.getMyPhoneNumber(context);
+                myContact = Contact.createMyContact(phone);
+                helpi.putMyContact(context, myContact, MY_CONTACT_PREF_KEY);
+            }
+        }
+        return myContact;
+    }
+
     public static Set<Contact> getPhoneAllContacts(Context context){
         HashSet<Contact> contacts = new HashSet<>();
         ContentResolver cr = context.getContentResolver();
@@ -69,8 +89,9 @@ public class ContactHelper {
                                 ContactsContract.CommonDataKinds.Phone.NUMBER));
                     }
                     pCur.close();
+                    contacts.add(new Contact(photoUri, name, phoneNumber));
                 }
-                contacts.add(new Contact(photoUri, name, phoneNumber));
+
             }
         }
         return contacts;
@@ -84,6 +105,7 @@ public class ContactHelper {
         pref.PutAllContacts(context, contacts, CONTACTS_PREF_KEY);
     }
 
+
     public static void initAllContacts(Context context){
         setAllContactPref(context, getPhoneAllContacts(context));
         //& reg
@@ -95,6 +117,10 @@ public class ContactHelper {
      */
     public static Bitmap photoLoader(Uri image_uri, Context context){
             try {
+                if (image_uri == null) {
+                    return BitmapFactory.decodeResource(context.getResources(), android.R.drawable.sym_contact_card);
+                }
+
                 Bitmap bitmap = MediaStore.Images.Media
                         .getBitmap(context.getContentResolver(),
                                 image_uri);
@@ -158,7 +184,7 @@ public class ContactHelper {
         Contact contact;
         while(iterator.hasNext()) {
             contact = iterator.next();
-            if (number == contact.getPhoneNumber()) {
+            if (number.equals(contact.getPhoneNumber())) {
                 return contact;
             }
         }
