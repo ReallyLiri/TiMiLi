@@ -5,8 +5,12 @@
     <string name="greeting_favs">My favorite contacts</string>
     <string name="greeting_all">All contacts</string>
 
+    <!-- UnblockActivity -->
+    <string name="save_all_changes_unblock">save all changes</string>
+
     <!-- myProfile -->
     <string name="save_all_changes">save all changes</string>
+    <string name="go_to_unblocked_activity">go to blocked users</string>
 
     <string name="sun_is_blocked">sun is blocked</string>
     <string name="sun_is_not_blocked">sun is not blocked</string>
