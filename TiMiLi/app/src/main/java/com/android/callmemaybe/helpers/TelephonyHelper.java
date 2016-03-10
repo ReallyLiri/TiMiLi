@@ -3,6 +3,8 @@ package com.android.callmemaybe.helpers;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+
 /**
  * Created by Liri on 05/02/2016.
  */
@@ -28,16 +30,7 @@ public class TelephonyHelper {
         return phoneNumber;
     }
 
-    //gets a string of a phone number
-    //returns a string containing only numbers
     public static String normalizePhoneNumber ( String phoneNumber) {
-        StringBuilder norNum = new StringBuilder();
-        for (int i = 0; i < phoneNumber.length(); i++) {
-            Character c = phoneNumber.charAt(i);
-            if ( (c >= '0') && (c <= '9')) {
-                norNum.append(c);
-            }
-        }
-        return norNum.toString();
+        return PhoneNumberUtil.normalizeDigitsOnly(phoneNumber);
     }
 }
