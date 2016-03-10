@@ -117,7 +117,7 @@ public class ContactHelper {
      */
     public static Bitmap photoLoader(Uri image_uri, Context context){
             try {
-                if (image_uri == null) {
+                if (image_uri == null || image_uri.toString().length() == 0) {
                     return BitmapFactory.decodeResource(context.getResources(), android.R.drawable.sym_contact_card);
                 }
 

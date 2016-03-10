@@ -60,12 +60,14 @@ public class ButtonAction {
         String uri = "tel:" + contact.getPhoneNumber();
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse(uri));
-        context.startActivity(intent);
+        Intent chooser = Intent.createChooser(intent, "Call with with...");
+        context.startActivity(chooser);
     }
 
     public static void addContactToPhone (Context context) {
         Intent goToContactsApp = Intent.makeMainSelectorActivity(
                 Intent.ACTION_MAIN, Intent.CATEGORY_APP_CONTACTS);
+        goToContactsApp.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(goToContactsApp);
     }
 }
