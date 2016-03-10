@@ -57,13 +57,11 @@ public class ContactHelper {
             if (myContact == null){
                 PhoneNumberHelper helper = new PhoneNumberHelper();
                 String phone = helper.getMyPhoneNumber(context);
-                //next 3 lines are for genymotion only! take out as soon as possible!!!!
-                if (phone == null){
-                    myContact = Contact.createMyContact("972541234567");
-                    helpi.putMyContact(context, myContact, MY_CONTACT_PREF_KEY);
-                }
                 myContact = Contact.createMyContact(phone);
                 helpi.putMyContact(context, myContact, MY_CONTACT_PREF_KEY);
+
+                ICloudServer server = new FireBaseCloudServer(context);
+                server.UpdateMyStatus(myContact.getContactStatus());
             }
         }
         return myContact;
@@ -199,6 +197,9 @@ public class ContactHelper {
         checkIfUsersExist(missingContacts, server, new IOnUsersExistResponse() {
             @Override
             public void OnResponse(Map<String, Boolean> existsByUserId) {
+                if (existsByUserId == null || existsByUserId.size() == 0) {
+                    return;
+                }
                 Set<Contact> prefContacts = new HashSet<>();
                 for (Contact contact : phoneContacts) {
                     if (existsByUserId.get(contact.getPhoneNumber())) {

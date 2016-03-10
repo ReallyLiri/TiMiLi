@@ -104,6 +104,7 @@ public class Contact extends BaseObservable {
         this.contactStatus = contactStatus;
         notifyPropertyChanged(BR.contactStatus);
         notifyPropertyChanged(BR.funnyStatus);
+        notifyPropertyChanged(BR.activeInPractice);
     }
 
     @Bindable
@@ -115,7 +116,9 @@ public class Contact extends BaseObservable {
 
     public void setContactGist(UserGist contactGist) {
         this.contactGist = contactGist;
-        notifyPropertyChanged(BR.activeInPractice);
+        if (this.contactStatus != null) {
+            notifyPropertyChanged(BR.activeInPractice);
+        }
     }
 
     @Bindable

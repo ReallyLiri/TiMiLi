@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.callmemaybe.UI.data.Contact;
 import com.android.callmemaybe.UI.databinding.ActivityInitBinding;
 import com.android.callmemaybe.helpers.ContactHelper;
 import com.android.callmemaybe.helpers.PhoneNumberHelper;
@@ -58,6 +59,8 @@ public class InitActivity extends AppCompatActivity {
     }
 
     private void afterNumberVerification() {
+        ContactHelper.getMyContact(this);
+
         mContactHelper = new ContactHelper();
         boolean canContinue = mContactHelper.updateContacts(this);
     }
@@ -69,6 +72,7 @@ public class InitActivity extends AppCompatActivity {
         mAuthButton.setCallback(new AuthCallback() {
             @Override
             public void success(DigitsSession session, String phoneNumber) {
+                mAuthButton.setVisibility(View.GONE);
                 phoneNumber = TelephonyHelper.normalizePhoneNumber(phoneNumber);
                 Toast.makeText(getApplicationContext(), "Phone number authentication succeeded with: " + phoneNumber, Toast.LENGTH_LONG).show();
                 mPhoneNumberHelper.setMyPhoneNumber(InitActivity.this, phoneNumber);
