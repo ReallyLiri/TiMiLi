@@ -30,6 +30,56 @@
             android:text="@{contact.funnyStatus}"
             />
 
+        <LinearLayout
+            android:id="@+id/all_blocked_days"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/sun"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{contact.getBlockedDays()[0] ? @string/sun_is_blocked : @string/sun_is_not_blocked}"/>
+
+            <Button
+                android:id="@+id/mon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{contact.getBlockedDays()[1] ? @string/mon_is_blocked : @string/mon_is_not_blocked}"/>
+
+            <Button
+                android:id="@+id/tue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{contact.getBlockedDays()[2] ? @string/tue_is_blocked : @string/tue_is_not_blocked}"/>
+
+            <Button
+                android:id="@+id/wed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{contact.getBlockedDays()[3] ? @string/wed_is_blocked : @string/wed_is_not_blocked}"/>
+
+            <Button
+                android:id="@+id/thu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{contact.getBlockedDays()[4] ? @string/thu_is_blocked : @string/thu_is_not_blocked}"/>
+
+            <Button
+                android:id="@+id/fri"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{contact.getBlockedDays()[5] ? @string/fri_is_blocked : @string/fri_is_not_blocked}"/>
+
+            <Button
+                android:id="@+id/sat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{contact.getBlockedDays()[6] ? @string/sat_is_blocked : @string/sat_is_not_blocked}"/>
+
+        </LinearLayout>
+
         <Button
             android:id="@+id/save_all_changes"
             android:layout_width="wrap_content"

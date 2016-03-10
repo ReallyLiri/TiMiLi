@@ -48,12 +48,15 @@ public class ContactHelper {
     public static Contact getMyContact(Context context){
         if (myContact == null){
             SharedPreferencesHelper helpi = new SharedPreferencesHelper();
-            try {
-               myContact = helpi.getMyContact(context, MY_CONTACT_PREF_KEY);
-            }
-            catch (Exception e){
+            myContact = helpi.getMyContact(context, MY_CONTACT_PREF_KEY);
+            if (myContact == null){
                 PhoneNumberHelper helper = new PhoneNumberHelper();
                 String phone = helper.getMyPhoneNumber(context);
+                //next 3 lines are for genymotion only! take out as soon as possible!!!!
+                if (phone == null){
+                    myContact = Contact.createMyContact("972541234567");
+                    helpi.putMyContact(context, myContact, MY_CONTACT_PREF_KEY);
+                }
                 myContact = Contact.createMyContact(phone);
                 helpi.putMyContact(context, myContact, MY_CONTACT_PREF_KEY);
             }
