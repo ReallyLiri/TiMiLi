@@ -4,167 +4,167 @@
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame1"/>
+        android:drawable="@drawable/blink_frame1"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame2"/>
+        android:drawable="@drawable/blink_frame2"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame3"/>
+        android:drawable="@drawable/blink_frame3"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame4"/>
+        android:drawable="@drawable/blink_frame4"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame5"/>
+        android:drawable="@drawable/blink_frame5"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame6"/>
+        android:drawable="@drawable/blink_frame6"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame7"/>
+        android:drawable="@drawable/blink_frame7"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame6"/>
+        android:drawable="@drawable/blink_frame6"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame5"/>
+        android:drawable="@drawable/blink_frame5"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame4"/>
+        android:drawable="@drawable/blink_frame4"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame3"/>
+        android:drawable="@drawable/blink_frame3"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame2"/>
+        android:drawable="@drawable/blink_frame2"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame1"/>
+        android:drawable="@drawable/blink_frame1"/>
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame1"/>
-
-
-    <item
-        android:duration="200"
-        android:drawable="@drawable/blinkFrame2"/>
+        android:drawable="@drawable/blink_frame1"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame3"/>
+        android:drawable="@drawable/blink_frame2"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame4"/>
+        android:drawable="@drawable/blink_frame3"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame5"/>
+        android:drawable="@drawable/blink_frame4"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame6"/>
+        android:drawable="@drawable/blink_frame5"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame7"/>
+        android:drawable="@drawable/blink_frame6"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame6"/>
+        android:drawable="@drawable/blink_frame7"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame5"/>
+        android:drawable="@drawable/blink_frame6"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame4"/>
+        android:drawable="@drawable/blink_frame5"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame3"/>
+        android:drawable="@drawable/blink_frame4"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame2"/>
+        android:drawable="@drawable/blink_frame3"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/blinkFrame1"/>
+        android:drawable="@drawable/blink_frame2"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/wanderFrame1"/>
+        android:drawable="@drawable/blink_frame1"/>
 
 
     <item
         android:duration="200"
-        android:drawable="@drawable/wanderFrame2"/>
+        android:drawable="@drawable/wander_frame1"/>
+
 
     <item
         android:duration="200"
-        android:drawable="@drawable/wanderFrame3"/>
+        android:drawable="@drawable/wander_frame2"/>
 
     <item
         android:duration="200"
-        android:drawable="@drawable/wanderFrame4"/>
+        android:drawable="@drawable/wander_frame3"/>
 
     <item
         android:duration="200"
-        android:drawable="@drawable/wanderFrame5"/>
+        android:drawable="@drawable/wander_frame4"/>
 
     <item
         android:duration="200"
-        android:drawable="@drawable/wanderFrame6"/>
+        android:drawable="@drawable/wander_frame5"/>
 
     <item
         android:duration="200"
-        android:drawable="@drawable/wanderFrame7"/>
+        android:drawable="@drawable/wander_frame6"/>
 
     <item
         android:duration="200"
-        android:drawable="@drawable/wanderFrame8"/>
+        android:drawable="@drawable/wander_frame7"/>
 
     <item
         android:duration="200"
-        android:drawable="@drawable/wanderFrame9"/>
+        android:drawable="@drawable/wander_frame8"/>
+
+    <item
+        android:duration="200"
+        android:drawable="@drawable/wander_frame9"/>
 
 </animation-list>
