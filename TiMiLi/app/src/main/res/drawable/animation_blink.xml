@@ -65,5 +65,106 @@
     <item
         android:duration="200"
         android:drawable="@drawable/blinkFrame1"/>
+    <item
+        android:duration="200"
+        android:drawable="@drawable/blinkFrame1"/>
+
+
+    <item
+        android:duration="200"
+        android:drawable="@drawable/blinkFrame2"/>
+
+
+    <item
+        android:duration="200"
+        android:drawable="@drawable/blinkFrame3"/>
+
+
+    <item
+        android:duration="200"
+        android:drawable="@drawable/blinkFrame4"/>
+
+
+    <item
+        android:duration="200"
+        android:drawable="@drawable/blinkFrame5"/>
+
+
+    <item
+        android:duration="200"
+        android:drawable="@drawable/blinkFrame6"/>
+
+
+    <item
+        android:duration="200"
+        android:drawable="@drawable/blinkFrame7"/>
+
+
+    <item
+        android:duration="200"
+        android:drawable="@drawable/blinkFrame6"/>
+
+
+    <item
+        android:duration="200"
+        android:drawable="@drawable/blinkFrame5"/>
+
+
+    <item
+        android:duration="200"
+        android:drawable="@drawable/blinkFrame4"/>
+
+
+    <item
+        android:duration="200"
+        android:drawable="@drawable/blinkFrame3"/>
+
+
+    <item
+        android:duration="200"
+        android:drawable="@drawable/blinkFrame2"/>
+
+
+    <item
+        android:duration="200"
+        android:drawable="@drawable/blinkFrame1"/>
+
+
+    <item
+        android:duration="200"
+        android:drawable="@drawable/wanderFrame1"/>
+
+
+    <item
+        android:duration="200"
+        android:drawable="@drawable/wanderFrame2"/>
+
+    <item
+        android:duration="200"
+        android:drawable="@drawable/wanderFrame3"/>
+
+    <item
+        android:duration="200"
+        android:drawable="@drawable/wanderFrame4"/>
+
+    <item
+        android:duration="200"
+        android:drawable="@drawable/wanderFrame5"/>
+
+    <item
+        android:duration="200"
+        android:drawable="@drawable/wanderFrame6"/>
+
+    <item
+        android:duration="200"
+        android:drawable="@drawable/wanderFrame7"/>
+
+    <item
+        android:duration="200"
+        android:drawable="@drawable/wanderFrame8"/>
+
+    <item
+        android:duration="200"
+        android:drawable="@drawable/wanderFrame9"/>
 
 </animation-list>
