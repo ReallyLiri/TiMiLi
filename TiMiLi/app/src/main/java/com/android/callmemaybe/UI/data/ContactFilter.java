@@ -1,5 +1,8 @@
 package com.android.callmemaybe.UI.data;
 
+import android.content.Context;
+
+import com.android.callmemaybe.helpers.ContactHelper;
 import com.firebase.client.core.utilities.Predicate;
 
 import java.util.ArrayList;
@@ -14,17 +17,29 @@ import java.util.Set;
 public class ContactFilter {
 
 
-    public static Contact[] filterContacts(ContactFilterType filterType, Set<Contact> contacts) {
+    public static Contact[] filterContacts(ContactFilterType filterType, Context context) {
+        Set<Contact> contacts = ContactHelper.getAllContacts();
+        Contact myContact1 = ContactHelper.getMyContact(context);
         List<Contact> result = new ArrayList<>();
         for (Contact contact: contacts) {
             switch (filterType){
+                case allValidContacts:
+                    if (!myContact1.isInBlockedList(contact)){
+                        result.add(contact);
+                    }
+                    break;
                 case favorites:
-                    if (contact.getIsFavorite()) {
+                    if (contact.getIsFavorite() && !myContact1.isInBlockedList(contact)) {
                         result.add(contact);
                     }
                     break;
                 case available:
-                    if (contact.isAvailable()){
+                    if (contact.isAvailable() && !myContact1.isInBlockedList(contact)){
+                        result.add(contact);
+                    }
+                    break;
+                case blocked:
+                    if (myContact1.isInBlockedList(contact)){
                         result.add(contact);
                     }
                     break;
@@ -35,11 +50,6 @@ public class ContactFilter {
         return resultArr;
     }
 
-    public static Contact[]  filterContacts(ContactFilterType filterType, Contact[] contacts){
-        Set<Contact> contacstSet = new HashSet<>();
-        contacstSet.addAll(java.util.Arrays.asList(contacts));
-        return filterContacts(filterType, contacstSet);
-    }
 
     public static Contact[] filterContacts(String word, Contact[] contacts) {
         List<Contact> result = new ArrayList<>();

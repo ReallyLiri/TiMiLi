@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,10 +10,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.android.callmemaybe.UI.UnblockUsers">
 
-    <Button
-        android:id="@+id/save_all_changes_in_unblock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/save_all_changes_unblock"/>
+    <ListView
+        android:id="@+id/blocked_contacts"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
 
 </RelativeLayout>
+</layout>

@@ -69,7 +69,13 @@ public class ContactHelper {
         return myContact;
     }
 
-    public static Set<Contact> getPhoneAllContacts(Context context){
+    public static void updateMyContact(Context context){
+        SharedPreferencesHelper helpi = new SharedPreferencesHelper();
+        helpi.putMyContact(context, myContact, MY_CONTACT_PREF_KEY);
+    }
+
+
+        public static Set<Contact> getPhoneAllContacts(Context context){
         HashSet<Contact> contacts = new HashSet<>();
         ContentResolver cr = context.getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);

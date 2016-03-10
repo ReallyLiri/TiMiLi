@@ -11,17 +11,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.android.callmemaybe.UI.ContactActivity;
-import com.android.callmemaybe.UI.MainActivity;
+import com.android.callmemaybe.UI.databinding.BlockedContactListItemBinding;
 import com.android.callmemaybe.UI.databinding.ContactListItemBinding;
-import com.android.callmemaybe.contracts.ICloudServer;
 import com.android.callmemaybe.helpers.ContactHelper;
-import com.android.callmemaybe.helpers.ButtonAction;
-import com.android.callmemaybe.server.FireBaseCloudServer;
 
 /**
- * Created by Ana on 05/02/2016.
+ * Created by Mia on 10/03/2016.
  */
-public class ContactAdapter extends ArrayAdapter<Contact> {
+public class BlockedContactAdapter extends ArrayAdapter<Contact> {
     private final String LOG_TAG = ContactAdapter.class.getSimpleName();
     private Contact[] contactsList;
 
@@ -29,14 +26,14 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
      * Cache of the children views for a forecast list item.
      */
     public static class ViewHolder {
-        public ContactListItemBinding contactListItemBinding;
+        public BlockedContactListItemBinding contactListItemBinding;
 
-        public ViewHolder(ContactListItemBinding contactListItemBinding) {
+        public ViewHolder(BlockedContactListItemBinding contactListItemBinding) {
             this.contactListItemBinding = contactListItemBinding;
         }
     }
 
-    public ContactAdapter(Context context, Contact[] contacts) {
+    public BlockedContactAdapter(Context context, Contact[] contacts) {
         super(context, 0, contacts);
         contactsList = contacts;
     }
@@ -50,10 +47,9 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         final Contact contact = getItem(position);
         final ViewHolder holder;
         final String phone = contact.getPhoneNumber();
-        final ButtonAction buttonAction = new ButtonAction(contact);
 
         if (convertView == null) {
-            ContactListItemBinding contactListItemBinding = ContactListItemBinding
+            BlockedContactListItemBinding contactListItemBinding = BlockedContactListItemBinding
                     .inflate(LayoutInflater.from(getContext()), parent, false);
             convertView = contactListItemBinding.getRoot();
 
@@ -72,35 +68,44 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
             }
         });
 
-        holder.contactListItemBinding.itemFavButton.setOnClickListener(new View.OnClickListener() {
+
+
+        holder.contactListItemBinding.unblockedButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                contact.toggleFavorite();
-                MainActivity.refreshAllData();
+                dialogOpner();
             }
-        });
 
-        holder.contactListItemBinding.itemBlockButton.setOnClickListener(new View.OnClickListener() {
+            private void dialogOpner() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-            @Override
-            public void onClick(View v) {
-                final Context context = getContext();
-                DialogInterface.OnClickListener onPositiveButtonClicked = new DialogInterface.OnClickListener() {
+                builder.setTitle("Confirm");
+                builder.setMessage("Are you sure you want to unblock this user?");
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
                     public void onClick(DialogInterface dialog, int which) {
-                        Contact myContact = ContactHelper.getMyContact(getContext());
-                        myContact.contactStatus.blockedUsers.add(contact.getPhoneNumber());
-
-                        ICloudServer server = new FireBaseCloudServer(context);
-                        server.UpdateMyStatus(myContact.getContactStatus());
-
+                        Contact myContact1 = ContactHelper.getMyContact(getContext());
+                        myContact1.contactStatus.blockedUsers.remove(contact.getPhoneNumber());
+                        //TODO: update server that this user is blocked
                         ContactHelper.updateMyContact(getContext());
-                        MainActivity.refreshAllData();
-                        Toast.makeText(getContext(), "this user is blocked!!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "this user is unblocked!!", Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                     }
 
-                };
-                buttonAction.blockAction(context, v, onPositiveButtonClicked);
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
             }
         });
 
