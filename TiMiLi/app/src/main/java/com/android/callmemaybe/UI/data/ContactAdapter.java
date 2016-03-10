@@ -11,8 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.android.callmemaybe.UI.ContactActivity;
+import com.android.callmemaybe.UI.MainActivity;
 import com.android.callmemaybe.UI.databinding.ContactListItemBinding;
 import com.android.callmemaybe.helpers.ContactHelper;
+import com.android.callmemaybe.helpers.ButtonAction;
 
 /**
  * Created by Ana on 05/02/2016.
@@ -46,6 +48,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         final Contact contact = getItem(position);
         final ViewHolder holder;
         final String phone = contact.getPhoneNumber();
+        final ButtonAction buttonAction = new ButtonAction(contact);
 
         if (convertView == null) {
             ContactListItemBinding contactListItemBinding = ContactListItemBinding
@@ -79,17 +82,8 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
 
             @Override
             public void onClick(View v) {
-                dialogOpner();
-            }
-
-            private void dialogOpner() {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-
-                builder.setTitle("Confirm");
-                builder.setMessage("Are you sure you want to block this user?");
-
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
+                final Context context = getContext();
+                DialogInterface.OnClickListener onPositiveButtonClicked = new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
 
@@ -102,18 +96,8 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
                         dialog.dismiss();
                     }
 
-                });
-
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-
-                AlertDialog alert = builder.create();
-                alert.show();
+                };
+                buttonAction.blockAction(context, v, onPositiveButtonClicked);
             }
         });
 

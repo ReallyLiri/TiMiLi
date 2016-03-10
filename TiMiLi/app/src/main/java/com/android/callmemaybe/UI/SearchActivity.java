@@ -3,6 +3,7 @@ package com.android.callmemaybe.UI;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -79,6 +80,9 @@ public class SearchActivity extends AppCompatActivity {
             case R.id.search:
                 handleMenuSearch();
                 return true;
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -90,7 +94,7 @@ public class SearchActivity extends AppCompatActivity {
         if(isSearchOpened){ //test if the search is open
 
             action.setDisplayShowCustomEnabled(false); //disable a custom view inside the actionbar
-            action.setDisplayShowTitleEnabled(true); //show the title in the action bar
+            action.setDisplayShowTitleEnabled(false); //show the title in the action bar
 
             //hides the keyboard
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

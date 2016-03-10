@@ -77,7 +77,7 @@ public class Contact extends BaseObservable {
 
     @Bindable
     public Uri getImageUri() {
-        return Uri.parse(imageUri);
+        return imageUri == null ? null : Uri.parse(imageUri);
     }
 
     public void setImageUri(Uri imageUri) {
@@ -158,12 +158,8 @@ public class Contact extends BaseObservable {
 
     @Override
     public boolean equals(Object o) {
-        Log.d(LOG_TAG, "o null = " + (o == null));
-        Log.d(LOG_TAG, "this null = " + (this == null));
         if (o.getClass().getSimpleName().equals(this.getClass().getSimpleName())){
             Contact other = (Contact) o;
-            Log.d(LOG_TAG, "o null = " + (((Contact) o).phoneNumber == null));
-            Log.d(LOG_TAG, "this null = " + (this.phoneNumber == null));
             return (this.phoneNumber.equals(other.phoneNumber));
         }
         else {
