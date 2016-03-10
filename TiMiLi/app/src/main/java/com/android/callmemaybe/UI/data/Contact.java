@@ -21,7 +21,7 @@ import java.util.List;
  * Created by Ana on 05/02/2016.
  */
 public class Contact extends BaseObservable {
-    public Uri imageUri; //the contact image
+    public String imageUri; //the contact image
     public String userName; //the username the user chose for him
     public String phoneNumber;
     public UserStatus contactStatus = new UserStatus(phoneNumber);
@@ -36,6 +36,19 @@ public class Contact extends BaseObservable {
     public static Contact createMyContact(String phoneNumber){
         Contact contact = new Contact(THIS_USER_NAME, phoneNumber);
         return contact;
+    }
+
+    public boolean[] getBlockedDays(){
+        boolean[] res = new boolean[7];
+        for (Integer i = 1; i < 8; i++){
+            if (this.contactStatus.inactiveDays.contains(i)){
+                res[i-1] = true;
+            }
+            else {
+                res[i - 1] = false;
+            }
+        }
+        return res;
     }
 
     public Contact () {
@@ -64,11 +77,11 @@ public class Contact extends BaseObservable {
 
     @Bindable
     public Uri getImageUri() {
-        return imageUri;
+        return Uri.parse(imageUri);
     }
 
     public void setImageUri(Uri imageUri) {
-        this.imageUri = imageUri;
+        this.imageUri = imageUri.toString();
         notifyPropertyChanged(BR.imageUri);
     }
 
@@ -178,7 +191,7 @@ public class Contact extends BaseObservable {
 
     public Contact(Uri imageUri, String name, String phoneNumber){
         this(name, phoneNumber);
-        this.imageUri = imageUri;
+        this.imageUri = imageUri == null ? null : imageUri.toString();
     }
 
 
@@ -186,6 +199,7 @@ public class Contact extends BaseObservable {
         userName = name;
         phoneNumber = number;
         searchesCounter = 0;
+        imageUri = null;
     }
 
 

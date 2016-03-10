@@ -5,12 +5,33 @@
     <string name="greeting_favs">My favorite contacts</string>
     <string name="greeting_all">All contacts</string>
 
+    <!-- UnblockActivity -->
+    <string name="save_all_changes_unblock">save all changes</string>
+
     <!-- myProfile -->
     <string name="save_all_changes">save all changes</string>
+    <string name="go_to_unblocked_activity">go to blocked users</string>
 
-    <!-- appbar -->
-    <string name="action_help">help</string>
-    <string name="action_settings">settings</string>
+    <string name="sun_is_blocked">sun is blocked</string>
+    <string name="sun_is_not_blocked">sun is not blocked</string>
+
+    <string name="mon_is_blocked">mon is blocked</string>
+    <string name="mon_is_not_blocked">mon is not blocked</string>
+
+    <string name="tue_is_blocked">tue is blocked</string>
+    <string name="tue_is_not_blocked">tue is not blocked</string>
+
+    <string name="wed_is_blocked">wed is blocked</string>
+    <string name="wed_is_not_blocked">wed is not blocked</string>
+
+    <string name="thu_is_blocked">thu is blocked</string>
+    <string name="thu_is_not_blocked">thu is not blocked</string>
+
+    <string name="fri_is_blocked">fri is blocked</string>
+    <string name="fri_is_not_blocked">fri is not blocked</string>
+
+    <string name="sat_is_blocked">sat is blocked</string>
+    <string name="sat_is_not_blocked">sat is not blocked</string>
 
     <!-- contact toolbar -->
     <string name="action_favorite">favorite</string>
