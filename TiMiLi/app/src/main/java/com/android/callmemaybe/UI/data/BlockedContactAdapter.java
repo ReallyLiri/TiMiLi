@@ -89,6 +89,7 @@ public class BlockedContactAdapter extends ArrayAdapter<Contact> {
                         Contact myContact1 = ContactHelper.getMyContact(getContext());
                         myContact1.contactStatus.blockedUsers.remove(contact.getPhoneNumber());
                         //TODO: update server that this user is blocked
+                        ContactHelper.updateMyContact(getContext());
                         Toast.makeText(getContext(), "this user is unblocked!!", Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                     }

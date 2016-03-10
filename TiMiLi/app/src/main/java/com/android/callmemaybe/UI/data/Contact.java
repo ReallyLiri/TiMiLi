@@ -204,7 +204,7 @@ public class Contact extends BaseObservable {
 
 
     public boolean isInBlockedList(Contact contact){
-        return this.contactStatus.blockedUsers.contains(contact);
+        return this.contactStatus.blockedUsers.contains(contact.phoneNumber);
     }
 
 }

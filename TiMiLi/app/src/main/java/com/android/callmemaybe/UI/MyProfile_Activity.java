@@ -89,6 +89,7 @@ public class MyProfile_Activity extends AppCompatActivity {
                 if (!old.equals(newList)){
                     myContact.contactStatus.inactiveDays = newList;
                 }
+                ContactHelper.updateMyContact(MyProfile_Activity.this);
                 saveToServer();
             }
         });
@@ -120,4 +121,5 @@ public class MyProfile_Activity extends AppCompatActivity {
         ICloudServer server = new FireBaseCloudServer(this);
         server.UpdateMyStatus(myContact.getContactStatus());
     }
+
 }

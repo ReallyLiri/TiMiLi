@@ -91,9 +91,13 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
+
+
+
                         Contact myContact1 = ContactHelper.getMyContact(getContext());
                         myContact1.contactStatus.blockedUsers.add(contact.getPhoneNumber());
                         //TODO: update server that this user is blocked
+                        ContactHelper.updateMyContact(getContext());
                         Toast.makeText(getContext(), "this user is blocked!!", Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                     }
