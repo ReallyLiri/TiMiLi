@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.support.v4.app.TaskStackBuilder;
 
 import com.android.callmemaybe.UI.data.Contact;
 import com.android.callmemaybe.contracts.ICloudServer;
@@ -27,6 +29,7 @@ public class ContactActivity extends AppCompatActivity {
 
     private ICloudServer mCloudServer;
     private Contact mContact;
+    private String callingActivity;
 
     public static final String PHONE_NUMBER_EXTRA = "PHONE_NUMBER";
 
@@ -35,6 +38,7 @@ public class ContactActivity extends AppCompatActivity {
         Intent goToContactActivity = new Intent(context, ContactActivity.class);
 
         goToContactActivity.putExtra(PHONE_NUMBER_EXTRA, phoneNumber);
+        goToContactActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         context.startActivity(goToContactActivity);
     }
@@ -77,8 +81,11 @@ public class ContactActivity extends AppCompatActivity {
         ContactDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.contact_detail);
         Toolbar myContactToolbar = binding.contactDetailToolbar;
         setSupportActionBar(myContactToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //allows up navigation
 
-        String contactPhone;
+        callingActivity = getIntent().getStringExtra("CALLNG_ACTIVITY");
+
+                String contactPhone;
         if (savedInstanceState != null) {
             contactPhone = savedInstanceState.getString(PHONE_NUMBER_EXTRA);
         }
@@ -113,6 +120,30 @@ public class ContactActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent upIntent = NavUtils.getParentActivityIntent(this);
+                if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                    // This activity is NOT part of this app's task, so create a new task
+                    // when navigating up, with a synthesized back stack.
+                    TaskStackBuilder.create(this)
+                            // Add all of this activity's parents to the back stack
+                            .addNextIntentWithParentStack(upIntent)
+                                    // Navigate up to the closest parent
+                            .startActivities();
+                } else {
+                    // This activity is part of this app's task, so simply
+                    // navigate up to the logical parent activity.
+
+                    if (callingActivity == "MainActivity") {
+                        NavUtils.navigateUpTo(this, upIntent);
+                    } else {
+                        //upIntent =
+                        NavUtils.navigateUpTo(this, upIntent);
+                    }
+
+                }
+                return true;
+
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
