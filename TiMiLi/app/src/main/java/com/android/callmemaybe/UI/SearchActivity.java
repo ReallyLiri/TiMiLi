@@ -42,6 +42,7 @@ public class SearchActivity extends AppCompatActivity {
     private EditText edtSearch;
     private Set<Contact> filteredSet;
     private StringBuilder word;
+    private int searchKey = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +64,14 @@ public class SearchActivity extends AppCompatActivity {
 
         cListView = binding.searchList;
         filteredSet = ContactHelper.getAllContacts();
-        defaultSearchFragment();
+        String word = getIntent().getStringExtra("PHONE_STRING");
+        if (word == "-1") {
+            defaultSearchFragment();
+        } else {
+            edtSearch.setText(word);
+            doSearch();
+        }
+
     }
 
     @Override
@@ -162,6 +170,7 @@ public class SearchActivity extends AppCompatActivity {
         word = new StringBuilder(searching);
 
         ContactAdapter contactAdapter = new ContactAdapter(getApplicationContext(), filtered);
+        cListView.setTag(searchKey, word);
         cListView.setAdapter(contactAdapter);
     }
 
@@ -169,6 +178,7 @@ public class SearchActivity extends AppCompatActivity {
         Contact[] list = ContactSort.sortContacts(ContactSortOrderType.mostSearchedToLeastSearched,
                 filteredSet);
         ContactAdapter contactAdapter = new ContactAdapter(getApplicationContext(), list);
+        cListView.setTag(searchKey, "-1");
         cListView.setAdapter(contactAdapter);
     }
 

@@ -30,8 +30,10 @@ public class ContactActivity extends AppCompatActivity {
     private ICloudServer mCloudServer;
     private Contact mContact;
     private String callingActivity;
+    private String searchString;
 
     public static final String PHONE_NUMBER_EXTRA = "PHONE_NUMBER";
+    public static final String SEARCH_STRING = "SEARCH_STRING";
 
     public static void StartContactActivity(Context context, String phoneNumber) {
 
@@ -39,6 +41,17 @@ public class ContactActivity extends AppCompatActivity {
 
         goToContactActivity.putExtra(PHONE_NUMBER_EXTRA, phoneNumber);
         goToContactActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        context.startActivity(goToContactActivity);
+    }
+
+    public static void StartContactActivity(Context context, String phoneNumber, String searchWord) {
+
+        Intent goToContactActivity = new Intent(context, ContactActivity.class);
+
+        goToContactActivity.putExtra(PHONE_NUMBER_EXTRA, phoneNumber);
+        goToContactActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        goToContactActivity.putExtra(SEARCH_STRING, searchWord);
 
         context.startActivity(goToContactActivity);
     }
@@ -84,8 +97,11 @@ public class ContactActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //allows up navigation
 
         callingActivity = getIntent().getStringExtra("CALLNG_ACTIVITY");
+        if (callingActivity != "MainActivity") {
+            searchString = getIntent().getStringExtra("SEARCH_STRING");
+        }
 
-                String contactPhone;
+        String contactPhone;
         if (savedInstanceState != null) {
             contactPhone = savedInstanceState.getString(PHONE_NUMBER_EXTRA);
         }
@@ -137,7 +153,8 @@ public class ContactActivity extends AppCompatActivity {
                     if (callingActivity == "MainActivity") {
                         NavUtils.navigateUpTo(this, upIntent);
                     } else {
-                        //upIntent =
+                        upIntent = new Intent(getApplicationContext(), SearchActivity.class);
+                        upIntent.putExtra(SEARCH_STRING, searchString);
                         NavUtils.navigateUpTo(this, upIntent);
                     }
 

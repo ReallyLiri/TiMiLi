@@ -89,7 +89,7 @@ public class ContactHelper {
                             new String[]{id}, null);
                     while (pCur.moveToNext()) {
                         phoneNumber = pCur.getString(pCur.getColumnIndex(
-                                ContactsContract.CommonDataKinds.Phone.NUMBER));
+                                CommonDataKinds.Phone.NUMBER));
                     }
                     pCur.close();
                     contacts.add(new Contact(photoUri, name, phoneNumber));

@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent goToSearchActivity = new Intent(getApplicationContext(), SearchActivity.class);
+                goToSearchActivity.putExtra("SEARCH_STRING", "-1");
                 startActivity(goToSearchActivity);
             }
         });
