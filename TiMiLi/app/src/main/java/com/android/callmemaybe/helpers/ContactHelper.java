@@ -103,6 +103,7 @@ public class ContactHelper {
                                 ContactsContract.CommonDataKinds.Phone.NUMBER));
                     }
                     pCur.close();
+                    phoneNumber = TelephonyHelper.normalizePhoneNumber(phoneNumber);
                     contacts.add(new Contact(photoUri, name, phoneNumber));
                 }
 

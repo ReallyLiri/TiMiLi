@@ -13,6 +13,7 @@ import com.android.callmemaybe.UI.databinding.ActivityInitBinding;
 import com.android.callmemaybe.helpers.ContactHelper;
 import com.android.callmemaybe.helpers.PhoneNumberHelper;
 import com.android.callmemaybe.helpers.SharedPreferencesHelper;
+import com.android.callmemaybe.helpers.TelephonyHelper;
 import com.digits.sdk.android.AuthCallback;
 import com.digits.sdk.android.Digits;
 import com.digits.sdk.android.DigitsAuthButton;
@@ -68,6 +69,7 @@ public class InitActivity extends AppCompatActivity {
         mAuthButton.setCallback(new AuthCallback() {
             @Override
             public void success(DigitsSession session, String phoneNumber) {
+                phoneNumber = TelephonyHelper.normalizePhoneNumber(phoneNumber);
                 Toast.makeText(getApplicationContext(), "Phone number authentication succeeded with: " + phoneNumber, Toast.LENGTH_LONG).show();
                 mPhoneNumberHelper.setMyPhoneNumber(InitActivity.this, phoneNumber);
                 InitActivity.this.afterNumberVerification();
