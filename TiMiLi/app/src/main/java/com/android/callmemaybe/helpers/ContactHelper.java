@@ -11,12 +11,17 @@ import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import com.android.callmemaybe.UI.MainActivity;
 import com.android.callmemaybe.UI.data.Contact;
+import com.android.callmemaybe.contracts.ICloudServer;
+import com.android.callmemaybe.contracts.IOnUsersExistResponse;
+import com.android.callmemaybe.server.FireBaseCloudServer;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import static android.provider.ContactsContract.*;
@@ -64,7 +69,13 @@ public class ContactHelper {
         return myContact;
     }
 
-    public static Set<Contact> getPhoneAllContacts(Context context){
+    public static void updateMyContact(Context context){
+        SharedPreferencesHelper helpi = new SharedPreferencesHelper();
+        helpi.putMyContact(context, myContact, MY_CONTACT_PREF_KEY);
+    }
+
+
+        public static Set<Contact> getPhoneAllContacts(Context context){
         HashSet<Contact> contacts = new HashSet<>();
         ContentResolver cr = context.getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
@@ -144,39 +155,83 @@ public class ContactHelper {
     if there is a user that exists only is shared pref - delete it from there
     if there is a user that exists only in contact list on phone - add to shared pref, check if has app $ register.
      */
-    public static void updateContacts(Context context) {
-        SharedPreferencesHelper pref = new SharedPreferencesHelper();
+    public static boolean updateContacts(final Context context) {
+        ICloudServer server = new FireBaseCloudServer(context);
+        final SharedPreferencesHelper pref = new SharedPreferencesHelper();
 
-        Set<Contact> phoneContacts = getPhoneAllContacts(context);
-        Set<Contact> prefContacts = pref.GetAllContacts(context, CONTACTS_PREF_KEY);
+        final Set<Contact> phoneContacts = getPhoneAllContacts(context);
+        final Set<Contact> prefContacts = pref.GetAllContacts(context, CONTACTS_PREF_KEY);
 
         Log.d("update Contacts", "phoneContactsContain " + phoneContacts.size() + " items");
         Log.d("update Contacts", "prefContactsContain " + (prefContacts == null));
 
         if (prefContacts == null){
             Log.d("update Contacts", "prefContacts is null");
-            pref.PutAllContacts(context, phoneContacts, CONTACTS_PREF_KEY);
-            prefContacts = new HashSet<>();
-            //bulk hasApp & bulk reg
+
+            checkIfUsersExist(phoneContacts, server, new IOnUsersExistResponse() {
+
+                @Override
+                public void OnResponse(Map<String, Boolean> existsByUserId) {
+                    Set<Contact> prefContacts = new HashSet<>();
+                    for (Contact contact : phoneContacts) {
+                        if (existsByUserId.get(contact.getPhoneNumber())) {
+                            prefContacts.add(contact);
+                        }
+                    }
+                    pref.PutAllContacts(context, phoneContacts, CONTACTS_PREF_KEY);
+                    allContacts = prefContacts;
+                    MainActivity.startMainActivity(context);
+                }
+            });
+
+            return false;
         }
 
+        final Set<Contact> missingContacts = new HashSet<>();
         for (Contact contact : phoneContacts){
-            Log.d("update Contacts", "contact in phone Contacts " + contact.toString());
             if (!prefContacts.contains(contact)){
                 Log.d("update Contacts", "pref Contacts does not contain " + contact.getUserName());
-                prefContacts.add(contact);
-                //reg & check if has app
+                missingContacts.add(contact);
             }
         }
-        for (Contact contact :prefContacts){
+
+        checkIfUsersExist(missingContacts, server, new IOnUsersExistResponse() {
+            @Override
+            public void OnResponse(Map<String, Boolean> existsByUserId) {
+                Set<Contact> prefContacts = new HashSet<>();
+                for (Contact contact : phoneContacts) {
+                    if (existsByUserId.get(contact.getPhoneNumber())) {
+                        prefContacts.add(contact);
+                    }
+                }
+                pref.PutAllContacts(context, phoneContacts, CONTACTS_PREF_KEY);
+                allContacts = prefContacts;
+                MainActivity.refreshAllData();
+            }
+        });
+
+        for (Contact contact : prefContacts) {
             Log.d("update Contacts", "contact in pref Contacts " + contact.toString());
             if (!phoneContacts.contains(contact)){
                 Log.d("update Contacts", "phone Contacts does not contain " + contact.getUserName());
                    prefContacts.remove(contact);
             }
         }
+
         pref.PutAllContacts(context, prefContacts, CONTACTS_PREF_KEY);
         allContacts = prefContacts;
+
+        MainActivity.startMainActivity(context);
+
+        return true;
+    }
+
+    private static void checkIfUsersExist(Set<Contact> users, ICloudServer server, IOnUsersExistResponse onResponse) {
+        Set<String> numbers = new HashSet<>();
+        for (Contact user: users) {
+            numbers.add(user.phoneNumber);
+        }
+        server.DoesUsersExist(numbers, onResponse);
     }
 
     //receives a phone number string

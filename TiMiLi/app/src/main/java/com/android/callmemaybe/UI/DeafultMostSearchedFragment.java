@@ -3,6 +3,8 @@ package com.android.callmemaybe.UI;
 import android.view.View;
 
 import com.android.callmemaybe.UI.data.Contact;
+import com.android.callmemaybe.UI.data.ContactFilter;
+import com.android.callmemaybe.UI.data.ContactFilterType;
 import com.android.callmemaybe.UI.data.ContactSort;
 import com.android.callmemaybe.UI.data.ContactSortOrderType;
 import com.android.callmemaybe.helpers.ContactHelper;
@@ -18,6 +20,7 @@ public class DeafultMostSearchedFragment extends TabsFragment {
 
     @Override
     Contact[] getContacts() {
-        return ContactSort.sortContacts(ContactSortOrderType.mostSearchedToLeastSearched, ContactHelper.getAllContacts());
+        Contact[] allContacts = ContactFilter.filterContacts(ContactFilterType.allValidContacts, getContext());
+        return ContactSort.sortContacts(ContactSortOrderType.mostSearchedToLeastSearched, allContacts);
     }
 }

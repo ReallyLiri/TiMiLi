@@ -6,7 +6,7 @@
     <string name="greeting_all">All contacts</string>
 
     <!-- UnblockActivity -->
-    <string name="save_all_changes_unblock">save all changes</string>
+    <string name="unblock_me">unblock me</string>
 
     <!-- myProfile -->
     <string name="save_all_changes">save all changes</string>

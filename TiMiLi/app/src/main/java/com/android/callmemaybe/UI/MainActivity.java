@@ -94,9 +94,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mContactHelper = new ContactHelper();
-        mContactHelper.updateContacts(this);
-
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         toolbar = binding.activityMainToolbar;
         setSupportActionBar(toolbar);
@@ -217,11 +214,21 @@ public class MainActivity extends AppCompatActivity {
         public void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
+            if (fragment instanceof TabsFragment) {
+                fragments.add((TabsFragment) fragment);
+            }
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
+        }
+    }
+
+    private static List<TabsFragment> fragments = new ArrayList<>();
+    public static void refreshAllData() {
+        for (TabsFragment fragment : fragments) {
+            fragment.RefreshData();
         }
     }
 }

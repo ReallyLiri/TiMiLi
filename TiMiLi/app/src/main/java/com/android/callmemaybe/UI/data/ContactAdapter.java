@@ -13,7 +13,10 @@ import android.widget.Toast;
 import com.android.callmemaybe.UI.ContactActivity;
 import com.android.callmemaybe.UI.MainActivity;
 import com.android.callmemaybe.UI.databinding.ContactListItemBinding;
+import com.android.callmemaybe.contracts.ICloudServer;
+import com.android.callmemaybe.helpers.ContactHelper;
 import com.android.callmemaybe.helpers.ButtonAction;
+import com.android.callmemaybe.server.FireBaseCloudServer;
 
 /**
  * Created by Ana on 05/02/2016.
@@ -85,7 +88,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
             @Override
             public void onClick(View v) {
                 contact.toggleFavorite();
-                // TODO: refresh Favorites fragment. see TabsFragment.RefreshData
+                MainActivity.refreshAllData();
             }
         });
 
@@ -96,10 +99,18 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
                 final Context context = getContext();
                 DialogInterface.OnClickListener onPositiveButtonClicked = new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        //TODO: update server that this user is blocked
-                        Toast.makeText(context, "this user is blocked!!", Toast.LENGTH_LONG).show();
+                        Contact myContact = ContactHelper.getMyContact(getContext());
+                        myContact.contactStatus.blockedUsers.add(contact.getPhoneNumber());
+
+                        ICloudServer server = new FireBaseCloudServer(context);
+                        server.UpdateMyStatus(myContact.getContactStatus());
+
+                        ContactHelper.updateMyContact(getContext());
+                        MainActivity.refreshAllData();
+                        Toast.makeText(getContext(), "this user is blocked!!", Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                     }
+
                 };
                 buttonAction.blockAction(context, v, onPositiveButtonClicked);
             }

@@ -29,7 +29,6 @@ import java.util.concurrent.ConcurrentSkipListSet;
 public class FireBaseCloudServer implements ICloudServer {
     private ConcurrentHashMap<String, ChildEventListener> mGistListeners;
     private ConcurrentHashMap<String, ValueEventListener> mStatusListeners;
-    private ConcurrentSkipListSet<ValueEventListener> mUserExistListeners;
 
     private final String BaseFirebaseURL = "https://timili.firebaseio.com/android";
 
@@ -37,7 +36,6 @@ public class FireBaseCloudServer implements ICloudServer {
         Firebase.setAndroidContext(context);
         mGistListeners = new ConcurrentHashMap<>();
         mStatusListeners = new ConcurrentHashMap<>();
-        mUserExistListeners = new ConcurrentSkipListSet<>();
     }
 
     private String GetUserGistDirectory(String userId) {
@@ -51,7 +49,6 @@ public class FireBaseCloudServer implements ICloudServer {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 onUserExistsResponse.OnResponse(userId, dataSnapshot.hasChild(userId));
-                mUserExistListeners.remove(this);
             }
 
             @Override
@@ -60,7 +57,6 @@ public class FireBaseCloudServer implements ICloudServer {
             }
         };
         ref.addListenerForSingleValueEvent(eventListener);
-        mUserExistListeners.add(eventListener);
     }
 
     @Override
@@ -74,7 +70,6 @@ public class FireBaseCloudServer implements ICloudServer {
                     existsByUserId.put(userId, dataSnapshot.hasChild(userId));
                 }
                 onUsersExistResponse.OnResponse(existsByUserId);
-                mUserExistListeners.remove(this);
             }
 
             @Override
@@ -83,14 +78,6 @@ public class FireBaseCloudServer implements ICloudServer {
             }
         };
         ref.addListenerForSingleValueEvent(eventListener);
-        mUserExistListeners.add(eventListener);
-    }
-    
-    private void UnRegisterAllUserExist() {
-        Firebase ref = new Firebase(GetUserStatusDir());
-        for (ValueEventListener eventListener : mUserExistListeners) {
-            ref.removeEventListener(eventListener);
-        }
     }
 
     @Override
@@ -194,12 +181,13 @@ public class FireBaseCloudServer implements ICloudServer {
 
     @Override
     public void UnRegisterAll() {
-        UnRegisterAllUserExist();
         for (String userId : mGistListeners.keySet()) {
             UnRegisterForUserGistData(userId);
         }
         for (String userId : mStatusListeners.keySet()) {
             UnRegisterForUserStatusData(userId);
         }
+        mGistListeners.clear();
+        mStatusListeners.clear();
     }
 }
