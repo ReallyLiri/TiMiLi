@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        GistService.sendKill(this);
+        // GistService.sendKill(this);
         mContactHelper.setAllContactPref(this, ContactHelper.getAllContacts());
 
         mCloudServer.UnRegisterAll();

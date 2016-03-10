@@ -49,7 +49,12 @@ public class UserGist {
         return ActiveInPractice.Active;
     }
 
-    public long serviceSleepTimeInMillisec() {
-        return 10 * 1000; // 10 sec  // TODO
+    public long serviceSleepTimeInMillisec(boolean isDeviceStill) {
+        if (isDeviceStill) {
+            return 10 * 60 * 1000; // 10 minutes
+        }
+        else {
+            return 1 * 60 * 1000; // 1 minute
+        }
     }
 }
