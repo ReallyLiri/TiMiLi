@@ -42,7 +42,8 @@
             android:name="io.fabric.ApiKey"
             android:value="3db91cb08ed5746cfc6e61b7f7590b16ff712deb" />
 
-        <activity android:name=".MyProfile_Activity"></activity>
+        <activity android:name=".MyProfile_Activity" />
+        <activity android:name=".UnblockUsers"></activity>
     </application>
 
 </manifest>

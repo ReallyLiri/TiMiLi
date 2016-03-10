@@ -38,6 +38,19 @@ public class Contact extends BaseObservable {
         return contact;
     }
 
+    public boolean[] getBlockedDays(){
+        boolean[] res = new boolean[7];
+        for (Integer i = 1; i < 8; i++){
+            if (this.contactStatus.inactiveDays.contains(i)){
+                res[i-1] = true;
+            }
+            else {
+                res[i - 1] = false;
+            }
+        }
+        return res;
+    }
+
     public Contact () {
         this("unnamed", "0");
     }
