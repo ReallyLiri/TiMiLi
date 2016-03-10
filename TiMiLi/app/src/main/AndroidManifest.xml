@@ -14,9 +14,37 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".MainActivity" />
+
+        <activity
+            android:name=".SearchActivity"
+            android:parentActivityName="com.android.callmemaybe.UI.MainActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.android.callmemaybe.UI.MainActivity" />
+        </activity>
+
         <activity android:name=".ContactActivity" />
         <activity android:name=".SettingActivity" />
-        <activity android:name=".SearchActivity" />
+
+        <activity
+            android:name=".MyProfile_Activity"
+            android:parentActivityName="com.android.callmemaybe.UI.MainActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.android.callmemaybe.UI.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".UnblockUsers"
+            android:parentActivityName="com.android.callmemaybe.UI.MyProfile_Activity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.android.callmemaybe.UI.MyProfile_Activity" />
+        </activity>
+
         <activity android:name=".InitActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,8 +70,6 @@
             android:name="io.fabric.ApiKey"
             android:value="3db91cb08ed5746cfc6e61b7f7590b16ff712deb" />
 
-        <activity android:name=".MyProfile_Activity" />
-        <activity android:name=".UnblockUsers"></activity>
     </application>
 
 </manifest>
