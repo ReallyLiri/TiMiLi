@@ -111,7 +111,7 @@ public class GistService extends Service implements SensorEventListener {
         GistCalculator calculator = new GistCalculator();
         UserGist gist = calculator.GetGist(this, isDeviceStill, mMyId);
         cloudServer.UpdateMyGist(gist);
-        goToSleep(gist.serviceSleepTimeInMillisec());
+        goToSleep(gist.serviceSleepTimeInMillisec(isDeviceStill));
     }
 
     private void UnRegisterAll() {
