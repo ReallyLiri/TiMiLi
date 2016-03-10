@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        GistService.sendKill(this);
+        // GistService.sendKill(this);
         mContactHelper.setAllContactPref(this, ContactHelper.getAllContacts());
 
         mCloudServer.UnRegisterAll();
@@ -174,15 +174,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                // User chose the "Settings" item, show the app settings UI...
-                return true;
-
-            case R.id.action_help:
-                // User chose the "help" action, open tutorial
-                // or something...
-                return true;
-
             case R.id.action_my_profile:
                 Intent goToMyProfile = new Intent(getApplicationContext(), MyProfile_Activity.class);
                 startActivity(goToMyProfile);

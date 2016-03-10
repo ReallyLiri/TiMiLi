@@ -101,6 +101,9 @@ public class ContactHelper {
     }
 
     public static void setAllContactPref(Context context, Set<Contact> contacts){
+        for (Contact contact : contacts) {
+            contact.contactGist = null; // we don't want an outdated gist
+        }
         SharedPreferencesHelper pref = new SharedPreferencesHelper();
         pref.PutAllContacts(context, contacts, CONTACTS_PREF_KEY);
     }
@@ -117,7 +120,7 @@ public class ContactHelper {
      */
     public static Bitmap photoLoader(Uri image_uri, Context context){
             try {
-                if (image_uri == null) {
+                if (image_uri == null || image_uri.toString().length() == 0) {
                     return BitmapFactory.decodeResource(context.getResources(), android.R.drawable.sym_contact_card);
                 }
 
@@ -149,13 +152,6 @@ public class ContactHelper {
 
         Log.d("update Contacts", "phoneContactsContain " + phoneContacts.size() + " items");
         Log.d("update Contacts", "prefContactsContain " + (prefContacts == null));
-       // for (Contact contact: phoneContacts) {
-       //     Log.d("update Contacts",contact.getPhoneNumber());
-       // }
-       // for (Contact contact: prefContacts) {
-       //     Log.d("update Contacts",contact.getPhoneNumber());
-       // }
-
 
         if (prefContacts == null){
             Log.d("update Contacts", "prefContacts is null");
