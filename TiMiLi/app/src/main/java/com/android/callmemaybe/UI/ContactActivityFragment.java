@@ -50,11 +50,6 @@ public class ContactActivityFragment extends Fragment {
         callBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 buttonAction.callAction(getContext());
-
-                /*String uri = "tel:" + mContact.getPhoneNumber();
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse(uri));
-                startActivity(intent);*/
             }
         }) ;
 
@@ -63,12 +58,6 @@ public class ContactActivityFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 buttonAction.msgAction(getContext());
-
-                /*String uri = "tel:" + mContact.getPhoneNumber();
-                Intent intent = new Intent(Intent.ACTION_SENDTO);
-                intent.setData(Uri.parse(uri));
-                Intent chooser = Intent.createChooser(intent, "Send message with...");
-                startActivity(chooser);*/
             }
         });
 
@@ -100,7 +89,6 @@ public class ContactActivityFragment extends Fragment {
                             //the flag delets from stack's all activities comint after the target activity
                             goToMainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             context.startActivity(goToMainActivity);
-
                         } else {
                             //TODO: go to previous activity. we cant use finishActivity() because its a fragment
                             getActivity().finish();
