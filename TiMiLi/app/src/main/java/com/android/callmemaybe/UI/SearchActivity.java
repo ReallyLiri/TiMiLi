@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.util.Log;
 
 import com.android.callmemaybe.UI.data.Contact;
 import com.android.callmemaybe.UI.data.ContactAdapter;
@@ -42,7 +43,7 @@ public class SearchActivity extends AppCompatActivity {
     private EditText edtSearch;
     private Set<Contact> filteredSet;
     private StringBuilder word;
-    private int searchKey = 1;
+    private String SEARCH_STRING = "SEARCH_STRING";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,8 @@ public class SearchActivity extends AppCompatActivity {
 
         cListView = binding.searchList;
         filteredSet = ContactHelper.getAllContacts();
-        String word = getIntent().getStringExtra("PHONE_STRING");
+        String word = getIntent().getStringExtra(SEARCH_STRING);
+        Log.d("SearchString", "word = " + word);
         if (word == "-1") {
             defaultSearchFragment();
         } else {
@@ -169,16 +171,15 @@ public class SearchActivity extends AppCompatActivity {
         filteredSet = new HashSet<>(Arrays.asList(filtered));
         word = new StringBuilder(searching);
 
-        ContactAdapter contactAdapter = new ContactAdapter(getApplicationContext(), filtered);
-        cListView.setTag(searchKey, word);
+        ContactAdapter contactAdapter = new ContactAdapter(getApplicationContext(), filtered,
+                word.toString());
         cListView.setAdapter(contactAdapter);
     }
 
     public void defaultSearchFragment() {
         Contact[] list = ContactSort.sortContacts(ContactSortOrderType.mostSearchedToLeastSearched,
                 filteredSet);
-        ContactAdapter contactAdapter = new ContactAdapter(getApplicationContext(), list);
-        cListView.setTag(searchKey, "-1");
+        ContactAdapter contactAdapter = new ContactAdapter(getApplicationContext(), list, "-1");
         cListView.setAdapter(contactAdapter);
     }
 
