@@ -48,6 +48,7 @@ public class ContactActivityFragment extends Fragment {
 
         Button callBtn = binding.contactFragmentCallBtn;
         callBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
                 buttonAction.callAction(getContext());
             }

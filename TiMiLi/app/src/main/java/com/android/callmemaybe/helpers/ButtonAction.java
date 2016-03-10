@@ -61,7 +61,7 @@ public class ButtonAction {
         String uri = "tel:" + contact.getPhoneNumber();
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse(uri));
-        Intent chooser = Intent.createChooser(intent, "Call with with...");
+        Intent chooser = Intent.createChooser(intent, "Call with...");
         context.startActivity(chooser);
     }
 
