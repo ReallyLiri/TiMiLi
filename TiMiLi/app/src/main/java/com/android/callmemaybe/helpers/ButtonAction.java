@@ -1,4 +1,4 @@
-package com.android.callmemaybe.UI.data;
+package com.android.callmemaybe.helpers;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
 import android.widget.Toast;
+
+import com.android.callmemaybe.UI.data.Contact;
 
 
 /**
@@ -26,21 +28,13 @@ public class ButtonAction {
         //change picture
     }
 
-    public void blockAction (final Context context, View v) {
+    public void blockAction (final Context context, View v, DialogInterface.OnClickListener onPositiveButtonClicked) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         builder.setTitle("Confirm");
         builder.setMessage("Are you sure you want to block this user?");
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int which) {
-                //TODO: update server that this user is blocked
-                Toast.makeText(context, "this user is blocked!!", Toast.LENGTH_LONG).show();
-                dialog.dismiss();
-            }
-
-        });
+        builder.setPositiveButton("OK", onPositiveButtonClicked);
 
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 
@@ -52,7 +46,6 @@ public class ButtonAction {
 
         AlertDialog alert = builder.create();
         alert.show();
-
     }
 
     public void msgAction (Context context) {
@@ -70,4 +63,9 @@ public class ButtonAction {
         context.startActivity(intent);
     }
 
+    public static void addContactToPhone (Context context) {
+        Intent goToContactsApp = Intent.makeMainSelectorActivity(
+                Intent.ACTION_MAIN, Intent.CATEGORY_APP_CONTACTS);
+        context.startActivity(goToContactsApp);
+    }
 }

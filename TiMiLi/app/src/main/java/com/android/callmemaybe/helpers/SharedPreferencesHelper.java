@@ -43,8 +43,6 @@ public class SharedPreferencesHelper {
      */
     public Set<Contact> GetAllContacts(Context context, String key){
         ComplexPreferences prefs = ComplexPreferences.getComplexPreferences(context, IDENTITY, Context.MODE_PRIVATE);
-        Log.d("SharedPreferencesHelper", " ContactSet class=" +  ContactsSet.class);
-        Log.d("SharedPreferencesHelper", "class=" + prefs.getObject(key, ContactsSet.class).getClass());
         ContactsSet set = prefs.getObject(key, ContactsSet.class);
         if (set == null) {
             return null;

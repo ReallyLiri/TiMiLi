@@ -9,8 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ import com.android.callmemaybe.UI.data.ContactFilter;
 import com.android.callmemaybe.UI.data.ContactSort;
 import com.android.callmemaybe.UI.data.ContactSortOrderType;
 import com.android.callmemaybe.UI.databinding.SearchActivityBinding;
+import com.android.callmemaybe.helpers.ButtonAction;
 import com.android.callmemaybe.helpers.ContactHelper;
 
 import java.util.Arrays;
@@ -44,9 +47,18 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         SearchActivityBinding binding = DataBindingUtil.setContentView(
                 this, R.layout.search_activity);
+        final Context context = getApplicationContext();
         searchBar = binding.searchActivityToolbar;
         setSupportActionBar(searchBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Button addContact = binding.searchActivityAddContactBtn;
+        addContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ButtonAction.addContactToPhone(context);
+            }
+        });
 
         cListView = binding.searchList;
         filteredSet = ContactHelper.getAllContacts();

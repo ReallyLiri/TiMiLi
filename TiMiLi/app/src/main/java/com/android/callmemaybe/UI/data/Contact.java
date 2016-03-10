@@ -186,6 +186,7 @@ public class Contact extends BaseObservable {
         userName = name;
         phoneNumber = number;
         searchesCounter = 0;
+        imageUri = null;
     }
 
 

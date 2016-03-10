@@ -9,16 +9,4 @@
         android:title="myProfile"
         app:showAsAction="ifRoom" />
 
-    <!-- Settings, should always be in the overflow -->
-    <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        app:showAsAction="never"/>
-
-    <!-- see tutorial, should appear as action button if possible -->
-    <item
-        android:id="@+id/action_help"
-        android:title="@string/action_help"
-        app:showAsAction="never"/>
-
 </menu>
