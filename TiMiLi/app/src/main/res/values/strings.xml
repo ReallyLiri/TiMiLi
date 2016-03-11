@@ -5,6 +5,10 @@
     <string name="greeting_favs">My favorite contacts</string>
     <string name="greeting_all">All contacts</string>
 
+    <!-- main_toolbar -->
+    <string name="my_profile_action">My Profile</string>
+    <string name="show_only_active">show only actives</string>
+
     <!-- UnblockActivity -->
     <string name="unblock">unblock users</string>
     <string name="unblock_me">unblock me</string>

@@ -15,6 +15,16 @@ public class SharedPreferencesHelper {
 
     private static final String IDENTITY = "com.android.callmemaybe.timili";
 
+    public boolean getShowOnlyActive (Context context, String key){
+        SharedPreferences prefs = context.getSharedPreferences(IDENTITY, Context.MODE_PRIVATE);
+        return prefs.getBoolean(key, true);
+    }
+
+    public void putShowOnlyActive(Context context, String key, boolean value) {
+        SharedPreferences prefs = context.getSharedPreferences(IDENTITY, Context.MODE_PRIVATE);
+        prefs.edit().putBoolean(key, value).apply();
+    }
+
     public void putMyContact(Context context, Contact contact, String key){
         ComplexPreferences prefs = ComplexPreferences.getComplexPreferences(context, IDENTITY, Context.MODE_PRIVATE);
         prefs.putObject(key, contact);

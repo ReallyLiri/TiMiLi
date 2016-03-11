@@ -1,5 +1,6 @@
 package com.android.callmemaybe.UI;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -10,6 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.FragmentManager;
@@ -27,6 +29,7 @@ import com.android.callmemaybe.contracts.UserStatus;
 import com.android.callmemaybe.gistService.GistService;
 import com.android.callmemaybe.helpers.ContactHelper;
 
+import com.android.callmemaybe.helpers.SharedPreferencesHelper;
 import com.android.callmemaybe.server.FireBaseCloudServer;
 
 import java.util.ArrayList;
@@ -41,12 +44,16 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
+    public static boolean showOnlyActiveItemCheck;
+
     private Fragment mostSearchedFragment  = new DeafultMostSearchedFragment();
     private Fragment favsFragment = new MyFavoritesFragment();
     private Fragment allContactsFragment = new AllContactsFragment();
 
     private ICloudServer mCloudServer;
     private ContactHelper mContactHelper;
+
+    private final String SHOW_ONLY_ACTIVE = "SHOW_ONLY_ACTIVE";
 
     public static void startMainActivity(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -57,8 +64,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         // GistService.sendKill(this);
+        Log.d("OnStop", "we have got: " + showOnlyActiveItemCheck);
         mContactHelper.setAllContactPref(this, ContactHelper.getAllContacts());
-
+        SharedPreferencesHelper helper = new SharedPreferencesHelper();
+        helper.putShowOnlyActive(MainActivity.this, SHOW_ONLY_ACTIVE, showOnlyActiveItemCheck);
         mCloudServer.UnRegisterAll();
     }
 
@@ -73,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void latestGistUpdated(UserGist latestGist) {
                     contact.setContactGist(latestGist);
+                    if (showOnlyActiveItemCheck) {
+                        MainActivity.refreshAllData();
+                    }
                 }
             });
             mCloudServer.RegisterForUserStatusData(contact.getPhoneNumber(), new IOnLatestStatusUpdatedListener() {
@@ -87,6 +99,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferencesHelper helper = new SharedPreferencesHelper();
+        showOnlyActiveItemCheck = helper.getShowOnlyActive(MainActivity.this, SHOW_ONLY_ACTIVE);
 
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         toolbar = binding.activityMainToolbar;
@@ -143,6 +158,17 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu (Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_toolbar, menu);
+        final MenuItem showOnlyActive = menu.findItem(R.id.action_show_only_active);
+        showOnlyActive.setChecked(showOnlyActiveItemCheck);
+        showOnlyActive.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                item.setChecked(!showOnlyActiveItemCheck);
+                showOnlyActiveItemCheck = !showOnlyActiveItemCheck;
+                MainActivity.refreshAllData();
+                return false;
+            }
+        });
         return true;
     }
 
