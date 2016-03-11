@@ -36,7 +36,7 @@
         <activity android:name=".SettingActivity" />
 
         <activity
-            android:name=".MyProfile_Activity"
+            android:name=".MyProfileActivity"
             android:parentActivityName="com.android.callmemaybe.UI.MainActivity" >
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
@@ -46,11 +46,11 @@
 
         <activity
             android:name=".UnblockUsers"
-            android:parentActivityName="com.android.callmemaybe.UI.MyProfile_Activity" >
+            android:parentActivityName=".MyProfileActivity" >
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.android.callmemaybe.UI.MyProfile_Activity" />
+                android:value=".MyProfileActivity" />
         </activity>
 
         <activity android:name=".InitActivity">

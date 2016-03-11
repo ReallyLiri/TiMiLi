@@ -2,9 +2,13 @@ package com.android.callmemaybe.UI;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,14 +21,14 @@ import com.android.callmemaybe.server.FireBaseCloudServer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class MyProfile_Activity extends AppCompatActivity {
+public class MyProfileActivity extends AppCompatActivity {
 
     private EditText funnyStatus;
     private Button saveButton;
     private Contact myContact;
     private Button goToUnblockedActivity;
+    private Toolbar toolbar;
 
     private Button[] blocked_days;
     @Override
@@ -34,8 +38,12 @@ public class MyProfile_Activity extends AppCompatActivity {
 
         myContact = ContactHelper.getMyContact(this);
 
-        ActivityMyProfileBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_my_profile_);
+        ActivityMyProfileBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_my_profile);
         binding.setContact(myContact);
+
+        toolbar = binding.myProfileToolbar;
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //allows up navigation
 
         this.funnyStatus = binding.myFunnyStatus;
         Log.d("MyProfile", "phoneNum = " + myContact);
@@ -89,7 +97,7 @@ public class MyProfile_Activity extends AppCompatActivity {
                 if (!old.equals(newList)){
                     myContact.contactStatus.inactiveDays = newList;
                 }
-                ContactHelper.updateMyContact(MyProfile_Activity.this);
+                ContactHelper.updateMyContact(MyProfileActivity.this);
                 saveToServer();
             }
         });
@@ -101,10 +109,33 @@ public class MyProfile_Activity extends AppCompatActivity {
         goToUnblockedActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyProfile_Activity.this, UnblockUsers.class);
+                Intent intent = new Intent(MyProfileActivity.this, UnblockUsers.class);
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu (Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.contact_toolbar, menu);
+        toolbar.setTitle(R.string.my_profile);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent upIntent = NavUtils.getParentActivityIntent(this);
+                NavUtils.navigateUpTo(this, upIntent);
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private List<Integer> getUpdatedInactiveDays(boolean[] activeDays){

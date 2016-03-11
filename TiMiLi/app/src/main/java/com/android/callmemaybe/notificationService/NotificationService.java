@@ -2,14 +2,17 @@ package com.android.callmemaybe.notificationService;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
+import com.android.callmemaybe.UI.ContactActivity;
 import com.android.callmemaybe.contracts.ActiveInPractice;
 import com.android.callmemaybe.contracts.ICloudServer;
 import com.android.callmemaybe.contracts.IOnLatestGistUpdatedListener;
@@ -154,6 +157,24 @@ public class NotificationService extends Service implements IOnLatestGistUpdated
                 new NotificationCompat.Builder(this)
                         .setContentTitle("User is active!")
                         .setContentText("Id: " + userId);
+
+        //TODO: check if it actually works-Tiana
+        // Intent for the activity to open when user selects the notification
+        Intent goToContactActivity = new Intent(this, ContactActivity.class);
+        goToContactActivity.putExtra("PHONE_NUMBER", userId);
+
+        // Use TaskStackBuilder to build the back stack and get the PendingIntent
+        PendingIntent pendingIntent =
+                TaskStackBuilder.create(this)
+                        // add all of DetailsActivity's parents to the stack,
+                        // followed by DetailsActivity itself
+                        //should be upIntent, but I'm not sure what it is
+                        .addNextIntentWithParentStack(goToContactActivity)
+                        .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setContentIntent(pendingIntent);
+        //end of Tiana's code
 
         notificationManager.notify(notificationId, notificationBuilder.build());
     }

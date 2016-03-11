@@ -8,10 +8,8 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.FragmentManager;
@@ -28,14 +26,9 @@ import com.android.callmemaybe.contracts.UserGist;
 import com.android.callmemaybe.contracts.UserStatus;
 import com.android.callmemaybe.gistService.GistService;
 import com.android.callmemaybe.helpers.ContactHelper;
-import com.android.callmemaybe.helpers.PhoneNumberHelper;
-import com.android.callmemaybe.helpers.SharedPreferencesHelper;
 
 import com.android.callmemaybe.server.FireBaseCloudServer;
-import com.digits.sdk.android.Digits;
-import com.twitter.sdk.android.core.TwitterAuthConfig;
-import com.twitter.sdk.android.core.TwitterCore;
-import io.fabric.sdk.android.Fabric;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent goToSearchActivity = new Intent(getApplicationContext(), SearchActivity.class);
+                goToSearchActivity.putExtra("SEARCH_STRING", "-1");
                 startActivity(goToSearchActivity);
             }
         });
@@ -156,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_my_profile:
-                Intent goToMyProfile = new Intent(getApplicationContext(), MyProfile_Activity.class);
+                Intent goToMyProfile = new Intent(getApplicationContext(), MyProfileActivity.class);
                 startActivity(goToMyProfile);
                 return true;
 

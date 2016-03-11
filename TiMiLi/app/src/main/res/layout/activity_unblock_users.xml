@@ -10,6 +10,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.android.callmemaybe.UI.UnblockUsers">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/unblock_users_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="4dp"></android.support.v7.widget.Toolbar>
+
     <ListView
         android:id="@+id/blocked_contacts"
         android:layout_width="fill_parent"
