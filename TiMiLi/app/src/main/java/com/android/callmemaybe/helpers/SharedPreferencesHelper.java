@@ -17,7 +17,7 @@ public class SharedPreferencesHelper {
 
     public boolean getShowOnlyActive (Context context, String key){
         SharedPreferences prefs = context.getSharedPreferences(IDENTITY, Context.MODE_PRIVATE);
-        return prefs.getBoolean(key, true);
+        return prefs.getBoolean(key, false);
     }
 
     public void putShowOnlyActive(Context context, String key, boolean value) {

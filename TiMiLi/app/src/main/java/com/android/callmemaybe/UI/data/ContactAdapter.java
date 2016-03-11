@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.android.callmemaybe.UI.BR;
 import com.android.callmemaybe.UI.ContactActivity;
 import com.android.callmemaybe.UI.MainActivity;
+import com.android.callmemaybe.UI.R;
 import com.android.callmemaybe.UI.databinding.ContactListItemBinding;
 import com.android.callmemaybe.contracts.ActiveInPractice;
 import com.android.callmemaybe.contracts.ICloudServer;
@@ -81,8 +82,16 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         }
 
         holder.contactListItemBinding.setContact(contact);
-/**
-        holder.contactListItemBinding.contactImage.setOnClickListener(new View.OnClickListener() {
+
+        holder.contactListItemBinding.itemFavButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                contact.toggleFavorite();
+                MainActivity.refreshAllData();
+            }
+        });
+
+        holder.contactListItemBinding.contactTexts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (searchString == null) {
@@ -93,8 +102,6 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
             }
         });
 
-        holder.contactListItemBinding.contactImage.setImageBitmap(ContactHelper.photoLoader(contact.getImageUri(), getContext()));
-**/
         holder.contactListItemBinding.itemFavButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,48 +110,68 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
             }
         });
 
-        holder.contactListItemBinding.itemTrackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Contact myContact1 = ContactHelper.getMyContact(getContext());
-                UserStatus currContactStatus = myContact1.contactStatus;
-                ArrayList<String> currTrackedList = currContactStatus.trackedUsers;
-                Log.d("Tracking", "contact = " + contact + " currTrackList = " + currTrackedList);
-                currTrackedList.add(contact.getPhoneNumber());
-                ContactHelper.updateMyContact(getContext());
-                NotificationService.NotifyOfTrackedListChanged(getContext(), ContactHelper.getMyContact(getContext()).contactStatus.trackedUsers);
-            }
-        });
+        holder.contactListItemBinding.activeCircle.setBackgroundResource(contact.getActiveInPracticeDrawable());
+        contact.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback()
 
-        holder.contactListItemBinding.itemBlockButton.setOnClickListener(new View.OnClickListener() {
+                                             {
+                                                 @Override
+                                                 public void onPropertyChanged(Observable sender, int propertyId) {
+                                                     if (propertyId == BR.activeInPractice) {
+                                                         holder.contactListItemBinding.activeCircle.setBackgroundResource(contact.getActiveInPracticeDrawable());
+                                                     }
+                                                 }
+                                             }
 
-            @Override
-            public void onClick(View v) {
-                final Context context = getContext();
-                DialogInterface.OnClickListener onPositiveButtonClicked = new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Contact myContact = ContactHelper.getMyContact(getContext());
-                        myContact.contactStatus.blockedUsers.add(contact.getPhoneNumber());
+        );
 
-                        ICloudServer server = new FireBaseCloudServer(context);
-                        server.UpdateMyStatus(myContact.getContactStatus());
+        holder.contactListItemBinding.itemTrackButton.setOnClickListener(new View.OnClickListener()
 
-                        ContactHelper.updateMyContact(getContext());
-                        MainActivity.refreshAllData();
-                        Toast.makeText(getContext(), "this user is blocked!!", Toast.LENGTH_LONG).show();
-                        dialog.dismiss();
-                    }
+                                                                         {
+                                                                             @Override
+                                                                             public void onClick(View v) {
+                                                                                 Contact myContact1 = ContactHelper.getMyContact(getContext());
+                                                                                 UserStatus currContactStatus = myContact1.contactStatus;
+                                                                                 ArrayList<String> currTrackedList = currContactStatus.trackedUsers;
+                                                                                 Log.d("Tracking", "contact = " + contact + " currTrackList = " + currTrackedList);
+                                                                                 currTrackedList.add(contact.getPhoneNumber());
+                                                                                 ContactHelper.updateMyContact(getContext());
+                                                                                 NotificationService.NotifyOfTrackedListChanged(getContext(), ContactHelper.getMyContact(getContext()).contactStatus.trackedUsers);
+                                                                             }
+                                                                         }
 
-                };
-                buttonAction.blockAction(context, v, onPositiveButtonClicked);
-            }
-        });
+        );
+
+        holder.contactListItemBinding.itemBlockButton.setOnClickListener(new View.OnClickListener()
+
+                                                                         {
+
+                                                                             @Override
+                                                                             public void onClick(View v) {
+                                                                                 final Context context = getContext();
+                                                                                 DialogInterface.OnClickListener onPositiveButtonClicked = new DialogInterface.OnClickListener() {
+                                                                                     public void onClick(DialogInterface dialog, int which) {
+                                                                                         Contact myContact = ContactHelper.getMyContact(getContext());
+                                                                                         myContact.contactStatus.blockedUsers.add(contact.getPhoneNumber());
+
+                                                                                         ICloudServer server = new FireBaseCloudServer(context);
+                                                                                         server.UpdateMyStatus(myContact.getContactStatus());
+
+                                                                                         ContactHelper.updateMyContact(getContext());
+                                                                                         MainActivity.refreshAllData();
+                                                                                         Toast.makeText(getContext(), "this user is blocked!!", Toast.LENGTH_LONG).show();
+                                                                                         dialog.dismiss();
+                                                                                     }
+
+                                                                                 };
+                                                                                 buttonAction.blockAction(context, v, onPositiveButtonClicked);
+                                                                             }
+                                                                         }
+
+        );
 
         convertView.setTag(holder);
 
         return convertView;
     }
 
-
 }
-

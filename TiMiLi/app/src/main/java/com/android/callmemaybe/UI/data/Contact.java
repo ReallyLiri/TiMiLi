@@ -2,6 +2,7 @@ package com.android.callmemaybe.UI.data;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.databinding.Observable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
@@ -12,10 +13,6 @@ import com.android.callmemaybe.contracts.ActiveInPractice;
 import com.android.callmemaybe.contracts.UserGist;
 import com.android.callmemaybe.contracts.UserStatus;
 import com.android.callmemaybe.helpers.PhoneNumberHelper;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Ana on 05/02/2016.
@@ -35,6 +32,7 @@ public class Contact extends BaseObservable {
 
     public static Contact createMyContact(String phoneNumber){
         Contact contact = new Contact(THIS_USER_NAME, phoneNumber);
+        contact.contactStatus.phoneNum = phoneNumber;
         return contact;
     }
 
@@ -92,6 +90,7 @@ public class Contact extends BaseObservable {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        this.contactStatus.phoneNum = phoneNumber;
         notifyPropertyChanged(BR.phoneNumber);
     }
 
@@ -114,8 +113,8 @@ public class Contact extends BaseObservable {
                 : ActiveInPractice.Loading.toString();
     }
 
-    @Bindable
     public int getActiveInPracticeDrawable() {
+
         if (this.contactGist == null) {
             return R.drawable.circle_gray;
         }
