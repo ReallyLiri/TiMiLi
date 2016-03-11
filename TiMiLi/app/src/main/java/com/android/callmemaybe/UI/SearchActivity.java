@@ -90,8 +90,8 @@ public class SearchActivity extends AppCompatActivity {
                 if (lastWordSearches == null){
                     lastWordSearches = "-1";
                 }
-                ContactActivity.StartContactActivity(SearchActivity.this, selected.getPhoneNumber(),
-                        lastWordSearches);
+                ContactActivity.StartContactActivity(SearchActivity.this, selected.getPhoneNumber()
+                        , "SearchActivity", lastWordSearches);
             }
         });
 

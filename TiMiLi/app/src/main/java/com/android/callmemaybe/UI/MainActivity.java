@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
                     rand = new Random().nextInt(favsAndAv.length);
                     contact = favsAndAv[rand];
                 }
-                ContactActivity.StartContactActivity(context, contact.getPhoneNumber());
+                ContactActivity.StartContactActivity(context, contact.getPhoneNumber(), "MainActivity");
 
                 return true;
             }
