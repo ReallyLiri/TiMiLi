@@ -34,7 +34,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                app:style="?android:attr/itemTextViewStyle"
+                android:style="?android:attr/itemTextViewStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@{contact.phoneNumber}"
@@ -53,7 +53,7 @@
                 />
 
             <TextView
-                app:style="?android:attr/itemTextViewStyle"
+                android:style="?android:attr/itemTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{contact.activeInPractice}"
@@ -74,19 +74,25 @@
 
             <Button
                 android:id="@+id/item_fav_button"
-                app:style="?android:attr/itemButtonStyle"
+                android:style="?android:attr/itemButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@{contact.isFavorite ? @drawable/favorite_on : @drawable/favorite_off}"
                 android:tag="@string/fav_tag" />
 
             <Button
                 android:id="@+id/item_block_button"
-                app:style="?android:attr/itemButtonStyle"
+                android:style="?android:attr/itemButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@drawable/block"
                 android:tag="@string/block_tag" />
 
             <Button
                 android:id="@+id/item_track_button"
-                app:style="?android:attr/itemButtonStyle"
+                android:style="?android:attr/itemButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@drawable/track"
                 android:tag="@string/track"/>
 

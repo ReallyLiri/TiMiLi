@@ -1,7 +1,7 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="android:style/Theme.Holo.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
@@ -9,7 +9,7 @@
     </style>
 
     <!-- Tabs theme -->
-    <style name="tabsTheme">
+    <style name="tabsTheme" parent="@android:style/Theme.Holo.Light">
         <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
         <item name="actionBarTabStyle">@style/ActionBarTabBarStyle</item>
     </style>
@@ -35,22 +35,18 @@
 
     <!-- contact list item button -->
     <style name="itemButtonStyle">
-        <item name="android:layout_width">30dp</item>
-        <item name="android:layout_height">30dp</item>
         <item name="android:gravity">center</item>
         <item name="android:padding">5dp</item>
     </style>
 
     <!-- contact TextView -->
-    <style name="contactTextView">
+    <style name="contactTextViewStyle">
         <item name="android:textAppearance">@android:style/TextAppearance_DeviceDefault_Medium</item>
         <item name="android:color">@color/primary</item>
     </style>
 
     <!-- contact Button -->
-    <style name="contactButton">
-        <item name="android:layout_height">40dp</item>
-        <item name="android:layout_weight">40dp</item>
+    <style name="contactButtonStyle">
     </style>
 
 </resources>
