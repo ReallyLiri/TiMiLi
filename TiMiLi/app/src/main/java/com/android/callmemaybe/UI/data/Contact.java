@@ -114,6 +114,23 @@ public class Contact extends BaseObservable {
                 : ActiveInPractice.Loading.toString();
     }
 
+    @Bindable
+    public int getActiveInPracticeDrawable() {
+        if (this.contactGist == null) {
+            return R.drawable.circle_gray;
+        }
+        switch (this.contactGist.IsActiveInPractice(PhoneNumberHelper.GetMyPhoneNumber(), this.contactStatus)) {
+            case Active:
+                return R.drawable.circle_green;
+            case Inactive:
+                return R.drawable.circle_yellow;
+            case Unwilling:
+                return R.drawable.circle_red;
+            default:
+                return R.drawable.circle_gray;
+        }
+    }
+
     public void setContactGist(UserGist contactGist) {
         this.contactGist = contactGist;
         if (this.contactStatus != null) {
