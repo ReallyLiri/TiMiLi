@@ -1,5 +1,6 @@
 package com.android.callmemaybe.UI.data;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,16 +12,22 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.android.callmemaybe.UI.ContactActivity;
+import com.android.callmemaybe.UI.MainActivity;
 import com.android.callmemaybe.UI.databinding.BlockedContactListItemBinding;
 import com.android.callmemaybe.UI.databinding.ContactListItemBinding;
+import com.android.callmemaybe.contracts.ICloudServer;
 import com.android.callmemaybe.helpers.ContactHelper;
+import com.android.callmemaybe.server.FireBaseCloudServer;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Mia on 10/03/2016.
  */
 public class BlockedContactAdapter extends ArrayAdapter<Contact> {
-    private final String LOG_TAG = ContactAdapter.class.getSimpleName();
-    private Contact[] contactsList;
+
+    private ICloudServer mServer;
 
     /**
      * Cache of the children views for a forecast list item.
@@ -34,8 +41,8 @@ public class BlockedContactAdapter extends ArrayAdapter<Contact> {
     }
 
     public BlockedContactAdapter(Context context, Contact[] contacts) {
-        super(context, 0, contacts);
-        contactsList = contacts;
+        super(context, 0, new ArrayList<>(Arrays.asList(contacts)));
+        mServer = new FireBaseCloudServer(context);
     }
 
     @Override
@@ -86,11 +93,24 @@ public class BlockedContactAdapter extends ArrayAdapter<Contact> {
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
-                        Contact myContact1 = ContactHelper.getMyContact(getContext());
-                        myContact1.contactStatus.blockedUsers.remove(contact.getPhoneNumber());
-                        //TODO: update server that this user is blocked
+                        Contact myContact = ContactHelper.getMyContact(getContext());
+                        myContact.contactStatus.blockedUsers.remove(contact.getPhoneNumber());
+
+                        mServer.UpdateMyStatus(myContact.contactStatus);
+
+                        BlockedContactAdapter.this.remove(contact);
+                        BlockedContactAdapter.this.notifyDataSetChanged();
+
                         ContactHelper.updateMyContact(getContext());
+
+                        MainActivity.refreshAllData();
+
                         Toast.makeText(getContext(), "this user is unblocked!!", Toast.LENGTH_LONG).show();
+
+                        if (BlockedContactAdapter.this.getCount() == 0) {
+                            ((Activity) BlockedContactAdapter.this.getContext()).finish();
+                        }
+
                         dialog.dismiss();
                     }
 

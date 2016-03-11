@@ -95,6 +95,9 @@ public class MyProfile_Activity extends AppCompatActivity {
         });
 
         this.goToUnblockedActivity = binding.goToUnblocked;
+        if (!myContact.hasBlockedUsers()) {
+            this.goToUnblockedActivity.setVisibility(View.GONE);
+        }
         goToUnblockedActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
