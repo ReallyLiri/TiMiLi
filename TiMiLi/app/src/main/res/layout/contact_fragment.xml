@@ -19,14 +19,14 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:style="@styles/contactTextViewStyle"
+            style="@style/contactTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{contact.phoneNumber}"/>
 
         <TextView
             android:id="@+id/contact_fragment_status_textview"
-            android:style="@styles/contactTextViewStyle"
+            style="@style/contactTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{contact.activeInPractice}" />
@@ -37,14 +37,14 @@
             android:orientation="horizontal">
             <Button
                 android:id="@+id/contact_fragment_call_btn"
-                android:style="@styles/contactButtonStyle"
+                style="@style/contactButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/call"/>
 
             <Button
                 android:id="@+id/contact_fragment_sms_btn"
-                android:style="@styles/contactButtonStyle"
+                style="@style/contactButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/message"/>
@@ -56,7 +56,7 @@
             android:orientation="horizontal">
             <Button
                 android:id="@+id/contact_fragment_fav_button"
-                android:style="@styles/contactButtonStyle"
+                style="@style/contactButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{contact.isFavorite ? @string/in_my_favs_button : @string/not_in_my_favs_button}"

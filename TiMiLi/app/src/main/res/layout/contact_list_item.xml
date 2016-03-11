@@ -27,14 +27,14 @@
 
             <TextView
                 android:id="@+id/contact_list_item_username"
-                app:style="?android:attr/itemTextViewStyle"
+                style="@style/itemTextViewStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@{contact.userName}"
                 android:textSize="20sp" />
 
             <TextView
-                android:style="?android:attr/itemTextViewStyle"
+                style="@style/itemTextViewStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@{contact.phoneNumber}"
@@ -53,7 +53,7 @@
                 />
 
             <TextView
-                android:style="?android:attr/itemTextViewStyle"
+                style="@style/itemTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{contact.activeInPractice}"
@@ -74,7 +74,7 @@
 
             <Button
                 android:id="@+id/item_fav_button"
-                android:style="?android:attr/itemButtonStyle"
+                style="@style/itemButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@{contact.isFavorite ? @drawable/favorite_on : @drawable/favorite_off}"
@@ -82,7 +82,7 @@
 
             <Button
                 android:id="@+id/item_block_button"
-                android:style="?android:attr/itemButtonStyle"
+                style="@style/itemButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@drawable/block"
@@ -90,7 +90,7 @@
 
             <Button
                 android:id="@+id/item_track_button"
-                android:style="?android:attr/itemButtonStyle"
+                style="@style/itemButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@drawable/track"

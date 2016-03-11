@@ -28,7 +28,6 @@
 
     <!-- contact list item textview -->
     <style name="itemTextViewStyle">
-        <item name="android:textAppearance">@android:style/TextAppearance_DeviceDefault_Medium</item>
         <item name="android:padding">5dp</item>
         <item name="android:color">@color/primary</item>
     </style>
