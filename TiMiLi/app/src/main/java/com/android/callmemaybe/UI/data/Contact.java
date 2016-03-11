@@ -2,6 +2,7 @@ package com.android.callmemaybe.UI.data;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.databinding.Observable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
@@ -114,8 +115,8 @@ public class Contact extends BaseObservable {
                 : ActiveInPractice.Loading.toString();
     }
 
-    @Bindable
     public int getActiveInPracticeDrawable() {
+
         if (this.contactGist == null) {
             return R.drawable.circle_gray;
         }

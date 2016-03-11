@@ -54,10 +54,10 @@
             android:orientation="horizontal">
 
             <View
+                android:id="@+id/active_circle"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_gravity="center"
-                android:background="@{contact.activeInPracticeDrawable}"
                 />
 
             <TextView
