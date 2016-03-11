@@ -50,6 +50,20 @@ public class ContactFilter {
         return resultArr;
     }
 
+    public static Contact[] filterContacts(String word, Context context){
+        word = word.toLowerCase();
+        Set<Contact> contacts = ContactHelper.getAllContacts();
+        Contact myContact1 = ContactHelper.getMyContact(context);
+        List<Contact> result = new ArrayList<>();
+        for (Contact contact: contacts){
+            if (contact.getPhoneNumber().contains(word) || contact.getUserName().toLowerCase().contains(word)){
+                result.add(contact);
+            }
+        }
+        Contact[] resultArr = new Contact[result.size()];
+        resultArr = result.toArray(resultArr);
+        return resultArr;
+    }
 
     public static Contact[] filterContacts(String word, Contact[] contacts) {
         List<Contact> result = new ArrayList<>();

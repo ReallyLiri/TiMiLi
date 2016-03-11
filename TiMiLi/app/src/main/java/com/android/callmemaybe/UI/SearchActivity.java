@@ -1,6 +1,7 @@
 package com.android.callmemaybe.UI;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -13,16 +14,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.util.Log;
 
 import com.android.callmemaybe.UI.data.Contact;
 import com.android.callmemaybe.UI.data.ContactAdapter;
 import com.android.callmemaybe.UI.data.ContactFilter;
+import com.android.callmemaybe.UI.data.ContactFilterType;
 import com.android.callmemaybe.UI.data.ContactSort;
 import com.android.callmemaybe.UI.data.ContactSortOrderType;
 import com.android.callmemaybe.UI.databinding.SearchActivityBinding;
@@ -42,21 +44,33 @@ public class SearchActivity extends AppCompatActivity {
     private boolean isSearchOpened = false;
     private EditText edtSearch;
     private StringBuilder word;
-    private String SEARCH_STRING = "SEARCH_STRING";
 
-    private Contact filteredContacts[];
-    private String contactsDescriptions[];
+    private Contact[] filteredContacts;
+    private String[] contactsDescriptions;
     private ArrayAdapter<String> adapter;
+
+    @Override
+    public boolean onCreateOptionsMenu (Menu menu) {
+        getMenuInflater().inflate(R.menu.search_toolbar, menu);
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SearchActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.search_activity);
         final Context context = getApplicationContext();
+
+        final String getsearchWordFromIntent = getIntent().getStringExtra("SEARCH_STRING");
+
+
+        final String searchWordFromIntent = getsearchWordFromIntent;
+        //toolbar
         searchBar = binding.searchActivityToolbar;
         setSupportActionBar(searchBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //add new contact
         Button addContact = binding.searchActivityAddContactBtn;
         addContact.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,103 +79,52 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        //contact list
         cListView = binding.searchList;
-
-        filteredContacts = ContactHelper.getAllContacts().toArray(new Contact[0]);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        cListView.setAdapter(adapter);
+        cListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Contact contact = filteredContacts[position];
+                Contact selected = filteredContacts[position];
+                ContactActivity.StartContactActivity(SearchActivity.this, selected.getPhoneNumber());
+            }
+        });
+        this.filteredContacts = ContactFilter.filterContacts(ContactFilterType.allValidContacts,
+                SearchActivity.this);
         updateFilteredContacts();
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.search:
-                handleMenuSearch();
-                return true;
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    protected void handleMenuSearch(){
-        ActionBar action = getSupportActionBar(); //get the actionbar
-
-        if(isSearchOpened){ //test if the search is open
-
-            action.setDisplayShowCustomEnabled(false); //disable a custom view inside the actionbar
-            action.setDisplayShowTitleEnabled(false); //show the title in the action bar
-
-            //hides the keyboard
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(edtSearch.getWindowToken(), 0);
-
-            //add the search icon in the action bar
-            //mSearchAction.setIcon(getResources().getDrawable(R.drawable.ic_open_search));
-
-            isSearchOpened = false;
-        } else { //open the search entry
-
-            action.setDisplayShowCustomEnabled(true); //enable it to display a
-            // custom view in the action bar.
-            action.setCustomView(R.layout.search_bar);//add the custom view
-            action.setDisplayShowTitleEnabled(false); //hide the title
-
-            edtSearch = (EditText)action.getCustomView().findViewById(R.id.edtSearch); //the text editor
-
-            //this is a listener to do a search when the user clicks on search button
-            edtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                        doSearch();
-                        return true;
-                    }
-                    return false;
+        //edit text
+        final EditText searchEditText = binding.searchEditText;
+        searchEditText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                String newWord;
+                if (getsearchWordFromIntent != null && !getsearchWordFromIntent.equals("-1")){
+                    newWord = getsearchWordFromIntent;
                 }
-            });
-
-
-            edtSearch.requestFocus();
-
-            //open the keyboard focused in the edtSearch
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(edtSearch, InputMethodManager.SHOW_IMPLICIT);
-
-
-            //add the close icon
-            //mSearchAction.setIcon(getResources().getDrawable(R.drawable.ic_close_search));
-
-            isSearchOpened = true;
-        }
+                else {
+                    newWord = searchEditText.getText().toString();
+                }
+                updateFilteredContacts(newWord);
+                return false;
+            }
+        });
     }
+
+
 
     @Override
     public void onBackPressed() {
-        if(isSearchOpened) {
-            handleMenuSearch();
-            return;
-        }
         super.onBackPressed();
     }
 
-    private void doSearch() {
-        String searching = edtSearch.getText().toString();
-        if(searching.length() < word.length()) { //the user deleted a letter
-            filteredContacts = ContactHelper.getAllContacts().toArray(new Contact[0]);
-        }
-
-
-        word = new StringBuilder(searching);
-
-    }
 
 
     private void updateFilteredContacts() {
-        filteredContacts = ContactSort.sortContacts(ContactSortOrderType.mostSearchedToLeastSearched, filteredContacts);
+        filteredContacts = ContactSort.sortContacts(ContactSortOrderType.mostSearchedToLeastSearched,
+                filteredContacts);
         contactsDescriptions = new String[filteredContacts.length];
         for (int i = 0; i < filteredContacts.length; i++) {
             contactsDescriptions[i] = filteredContacts[i].getUserName() + " (" + filteredContacts[i].getPhoneNumber() + ")";
@@ -169,5 +132,10 @@ public class SearchActivity extends AppCompatActivity {
         adapter.clear();
         adapter.addAll(contactsDescriptions);
         adapter.notifyDataSetChanged();
+    }
+
+    private void updateFilteredContacts(String word){
+        filteredContacts = ContactFilter.filterContacts(word, SearchActivity.this);
+        updateFilteredContacts();
     }
 }
