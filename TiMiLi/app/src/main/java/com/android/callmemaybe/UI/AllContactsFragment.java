@@ -22,6 +22,9 @@ public class AllContactsFragment extends TabsFragment {
     @Override
     Contact[] getContacts() {
         Contact[] allContacts = ContactFilter.filterContacts(ContactFilterType.allValidContacts, getContext());
+        if (MainActivity.showOnlyActiveItemCheck){
+            allContacts = ContactFilter.filterContacts(ContactFilterType.available, getContext(), allContacts);
+        }
         return  ContactSort.sortContacts(ContactSortOrderType.name_A_To_Z, allContacts);
     }
 }
