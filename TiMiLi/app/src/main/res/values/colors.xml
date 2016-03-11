@@ -8,4 +8,10 @@
     <color name="secondary_text">#727272</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
+
+    <color name="active">#3dec2b</color>
+    <color name="inactive">#e7db1e</color>
+    <color name="unwilling">#960000</color>
+    <color name="unknown">#B6B6B6</color>
+    <color name="loading">#B6B6B6</color>
 </resources>
