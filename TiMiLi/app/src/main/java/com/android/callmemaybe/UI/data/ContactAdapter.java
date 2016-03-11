@@ -80,7 +80,15 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
 
         holder.contactListItemBinding.setContact(contact);
 
-        holder.contactListItemBinding.contactImage.setOnClickListener(new View.OnClickListener() {
+        holder.contactListItemBinding.itemFavButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                contact.toggleFavorite();
+                MainActivity.refreshAllData();
+            }
+        });
+
+        holder.contactListItemBinding.contactTexts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (searchString == null) {
@@ -88,16 +96,6 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
                 } else {
                     ContactActivity.StartContactActivity(getContext(), phone, searchString);
                 }
-            }
-        });
-
-        holder.contactListItemBinding.contactImage.setImageBitmap(ContactHelper.photoLoader(contact.getImageUri(), getContext()));
-
-        holder.contactListItemBinding.itemFavButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                contact.toggleFavorite();
-                MainActivity.refreshAllData();
             }
         });
 

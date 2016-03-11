@@ -14,10 +14,6 @@ import com.android.callmemaybe.contracts.UserGist;
 import com.android.callmemaybe.contracts.UserStatus;
 import com.android.callmemaybe.helpers.PhoneNumberHelper;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Ana on 05/02/2016.
  */
