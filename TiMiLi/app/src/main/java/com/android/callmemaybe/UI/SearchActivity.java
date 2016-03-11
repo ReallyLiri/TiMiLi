@@ -8,6 +8,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -61,9 +62,8 @@ public class SearchActivity extends AppCompatActivity {
         final Context context = getApplicationContext();
 
         final String getsearchWordFromIntent = getIntent().getStringExtra("SEARCH_STRING");
+        Log.d("Intent Search: ", getsearchWordFromIntent);
 
-
-        final String searchWordFromIntent = getsearchWordFromIntent;
         //toolbar
         searchBar = binding.searchActivityToolbar;
         setSupportActionBar(searchBar);
@@ -87,9 +87,14 @@ public class SearchActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Contact contact = filteredContacts[position];
                 Contact selected = filteredContacts[position];
-                ContactActivity.StartContactActivity(SearchActivity.this, selected.getPhoneNumber());
+                if (lastWordSearches == null){
+                    lastWordSearches = "-1";
+                }
+                ContactActivity.StartContactActivity(SearchActivity.this, selected.getPhoneNumber(),
+                        lastWordSearches);
             }
         });
+
         this.filteredContacts = ContactFilter.filterContacts(ContactFilterType.allValidContacts,
                 SearchActivity.this);
         updateFilteredContacts();
@@ -102,10 +107,12 @@ public class SearchActivity extends AppCompatActivity {
                 String newWord;
                 if (getsearchWordFromIntent != null && !getsearchWordFromIntent.equals("-1")){
                     newWord = getsearchWordFromIntent;
+                    searchEditText.setText(newWord);
                 }
                 else {
                     newWord = searchEditText.getText().toString();
                 }
+                Log.d("Intent Search: ", "new word = " + newWord);
                 lastWordSearches = newWord;
                 updateFilteredContacts(newWord);
                 return false;

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -16,36 +17,27 @@
         android:orientation="horizontal"
         android:padding="10dp">
 
-        <ImageView
-            android:id="@+id/contact_image"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_toRightOf="@+id/contact_image"
             android:layout_toLeftOf="@+id/contact_actions"
             android:layout_centerInParent="true"
             android:padding="5dp">
 
             <TextView
                 android:id="@+id/contact_list_item_username"
+                app:style="?android:attr/itemTextViewStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@{contact.userName}"
-                android:textColor="@color/primary"
                 android:textSize="20sp" />
 
             <TextView
+                app:style="?android:attr/itemTextViewStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@{contact.phoneNumber}"
-                android:textColor="@color/primary"
                 android:textSize="16sp" />
 
         <LinearLayout
@@ -61,10 +53,10 @@
                 />
 
             <TextView
+                app:style="?android:attr/itemTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{contact.activeInPractice}"
-                android:textColor="@color/primary"
                 android:textSize="18sp" />
 
             </LinearLayout>
@@ -82,19 +74,21 @@
 
             <Button
                 android:id="@+id/item_fav_button"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="5dp"
+                app:style="?android:attr/itemButtonStyle"
                 android:background="@{contact.isFavorite ? @drawable/favorite_on : @drawable/favorite_off}"
                 android:tag="@string/fav_tag" />
 
             <Button
                 android:id="@+id/item_block_button"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="5dp"
+                app:style="?android:attr/itemButtonStyle"
                 android:background="@drawable/block"
                 android:tag="@string/block_tag" />
+
+            <Button
+                android:id="@+id/item_track_button"
+                app:style="?android:attr/itemButtonStyle"
+                android:background="@drawable/track"
+                android:tag="@string/track"/>
 
         </LinearLayout>
 

@@ -7,6 +7,7 @@ import com.firebase.client.core.utilities.Predicate;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,9 +17,13 @@ import java.util.Set;
  */
 public class ContactFilter {
 
+    public static Contact[] filterContacts(ContactFilterType filterType, Context context, Contact[] contacts){
+        Set<Contact> contactSet = new HashSet<>();
+        Collections.addAll(contactSet, contacts);
+        return filterContacts(filterType, context, contactSet);
+    }
 
-    public static Contact[] filterContacts(ContactFilterType filterType, Context context) {
-        Set<Contact> contacts = ContactHelper.getAllContacts();
+    public static Contact[] filterContacts(ContactFilterType filterType, Context context, Set<Contact> contacts){
         Contact myContact1 = ContactHelper.getMyContact(context);
         List<Contact> result = new ArrayList<>();
         for (Contact contact: contacts) {
@@ -48,6 +53,11 @@ public class ContactFilter {
         Contact[] resultArr = new Contact[result.size()];
         resultArr = result.toArray(resultArr);
         return resultArr;
+    }
+
+    public static Contact[] filterContacts(ContactFilterType filterType, Context context) {
+        Set<Contact> contacts = ContactHelper.getAllContacts();
+        return filterContacts(filterType, context, contacts);
     }
 
     public static Contact[] filterContacts(String word, Context context){

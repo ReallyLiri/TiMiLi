@@ -14,4 +14,8 @@
     <color name="unwilling">#960000</color>
     <color name="unknown">#B6B6B6</color>
     <color name="loading">#B6B6B6</color>
+
+    <!-- colors for tabs -->
+    <color name="transparent">#00000000</color>
+    <color name="tab_highlight">#ff9ecfbf</color>
 </resources>

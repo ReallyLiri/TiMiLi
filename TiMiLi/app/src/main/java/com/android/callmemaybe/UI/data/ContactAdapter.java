@@ -16,6 +16,7 @@ import com.android.callmemaybe.UI.ContactActivity;
 import com.android.callmemaybe.UI.MainActivity;
 import com.android.callmemaybe.UI.R;
 import com.android.callmemaybe.UI.databinding.ContactListItemBinding;
+import com.android.callmemaybe.contracts.ActiveInPractice;
 import com.android.callmemaybe.contracts.ICloudServer;
 import com.android.callmemaybe.helpers.ContactHelper;
 import com.android.callmemaybe.helpers.ButtonAction;

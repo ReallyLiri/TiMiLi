@@ -16,4 +16,49 @@
         <item name="dgts__accentColor">@color/primary_dark</item>
     </style>
 
+    <!-- Tabs theme -->
+    <style name="tabsTheme">
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabBarStyle</item>
+    </style>
+
+    <style name="ActionBarTabStyle">
+        <item name="android:background">@drawable/tab_bar_background</item>
+    </style>
+
+    <style name="ActionBarTabBarStyle">
+
+    </style>
+
+    <style name="ActionBarTabTextStyle">
+
+    </style>
+
+    <!-- contact list item textview -->
+    <style name="itemTextViewStyle">
+        <item name="android:textAppearance">@android:style/TextAppearance_DeviceDefault_Medium</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:color">@color/primary</item>
+    </style>
+
+    <!-- contact list item button -->
+    <style name="itemButtonStyle">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
+    <!-- contact TextView -->
+    <style name="contactTextView">
+        <item name="android:textAppearance">@android:style/TextAppearance_DeviceDefault_Medium</item>
+        <item name="android:color">@color/primary</item>
+    </style>
+
+    <!-- contact Button -->
+    <style name="contactButton">
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_weight">40dp</item>
+    </style>
+
 </resources>

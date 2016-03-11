@@ -23,7 +23,14 @@ public class MyFavoritesFragment extends TabsFragment {
 
     @Override
     Contact[] getContacts() {
-        Contact[] filtered = ContactFilter.filterContacts(ContactFilterType.favorites, getContext());
+        Contact[] filtered;
+        if (MainActivity.showOnlyActiveItemCheck){
+            filtered = ContactFilter.filterContacts(ContactFilterType.available, getContext(),
+                    ContactFilter.filterContacts(ContactFilterType.favorites, getContext()));
+        }
+        else {
+            filtered = ContactFilter.filterContacts(ContactFilterType.favorites, getContext());
+        }
         Log.d("myFavs", filtered.length + " favs contact");
         return ContactSort.sortContacts(ContactSortOrderType.name_A_To_Z, filtered);
     }

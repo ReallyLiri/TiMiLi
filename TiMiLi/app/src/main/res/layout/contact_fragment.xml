@@ -62,6 +62,13 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/block"
                 android:tag="@string/block_tag"/>
+            <Button
+                android:id="@+id/contact_fragment_track_button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/track"
+                android:tag="@string/track"/>
         </LinearLayout>
 
 

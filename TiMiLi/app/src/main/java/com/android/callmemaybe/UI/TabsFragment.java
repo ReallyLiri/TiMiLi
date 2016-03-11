@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.android.callmemaybe.UI.data.Contact;
 import com.android.callmemaybe.UI.data.ContactAdapter;
+import com.android.callmemaybe.UI.data.ContactFilter;
 import com.android.callmemaybe.UI.databinding.TabsFragmentBinding;
 
 /**
@@ -45,6 +46,12 @@ abstract class TabsFragment extends Fragment {
         Log.d(LOG_TAG, "after setting onItemClickListener");
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.RefreshData();
     }
 
     protected AdapterView.OnItemClickListener getOnListItemClickedListener() {

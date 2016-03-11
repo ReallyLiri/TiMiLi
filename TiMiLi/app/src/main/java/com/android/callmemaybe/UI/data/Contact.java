@@ -174,7 +174,7 @@ public class Contact extends BaseObservable {
 
 
     public boolean isAvailable(){
-        return false; //????
+        return getActiveInPractice().equals(ActiveInPractice.Active.toString());
     }
 
     @Override
