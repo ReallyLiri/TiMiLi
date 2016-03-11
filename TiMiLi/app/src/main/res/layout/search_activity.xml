@@ -39,8 +39,10 @@
             android:id="@+id/search_list"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:background="@color/accent"
-            android:divider="@drawable/separator" />
+            android:background="@drawable/round_corners"
+            android:divider="@drawable/separator"
+            android:dividerHeight="2dp"
+            android:padding="5dp"/>
 
 
     </LinearLayout>
