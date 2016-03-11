@@ -71,10 +71,10 @@ public class NotificationService extends Service implements IOnLatestGistUpdated
         return super.onStartCommand(intent, flags, startId);
     }
 
-    public static void NotifyOfTrackedListChanged(Context context, ArrayList<String> tracked) {
+    public static void NotifyOfTrackedListChanged(Context context, List<String> tracked) {
         Intent serviceIntent = new Intent(context, NotificationService.class);
         serviceIntent.putExtra(EXTRA_OPCODE, OPCODE_TRACKED_LIST_CHANGED);
-        serviceIntent.putStringArrayListExtra(EXTRA_TRACKED_LIST, tracked);
+        serviceIntent.putStringArrayListExtra(EXTRA_TRACKED_LIST, new ArrayList<>(tracked));
     }
 
     private void setupTrackedListeners(Set<String> trackedSet) {

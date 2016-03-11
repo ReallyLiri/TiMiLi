@@ -36,10 +36,6 @@ public class Contact extends BaseObservable {
         return contact;
     }
 
-    public String getfunnystatus() {
-        return this.contactStatus.funnyStatus;
-    }
-
     public boolean[] getBlockedDays(){
         boolean[] res = new boolean[7];
         for (Integer i = 1; i < 8; i++){
@@ -64,6 +60,7 @@ public class Contact extends BaseObservable {
 
     @Bindable
     public String getFunnyStatus(){
+        Log.d("Contact", "status is " + this.contactStatus + " and I'm " + userName);
         return this.contactStatus.funnyStatus;
     }
 
@@ -221,6 +218,9 @@ public class Contact extends BaseObservable {
         searchesCounter = 0;
         imageUri = null;
         contactStatus = new UserStatus(number);
+        contactStatus.inactiveDays.add(7);
+        contactStatus.trackedUsers.add("972547703703");
+        contactStatus.blockedUsers.add("972547703703");
     }
 
     public boolean isInBlockedList(Contact contact){

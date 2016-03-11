@@ -1,6 +1,7 @@
 package com.android.callmemaybe.server;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.callmemaybe.contracts.ICloudServer;
 import com.android.callmemaybe.contracts.IOnLatestGistUpdatedListener;
@@ -18,6 +19,7 @@ import com.firebase.client.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -154,7 +156,23 @@ public class FireBaseCloudServer implements ICloudServer {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                UserStatus latestStatus = dataSnapshot.getValue(UserStatus.class);
+                Log.d("Firebase", "1");
+                HashMap object = (HashMap) dataSnapshot.getValue();
+                Log.d("Firebase", "2");
+                if (object == null) {
+                    return;
+                }
+                String phoneNum = (String) object.get("phoneNum");
+                Log.d("Firebase", "3");
+                UserStatus latestStatus = new UserStatus(phoneNum);
+                Log.d("Firebase", "4");
+                latestStatus.funnyStatus = (String) object.get("funnyStatus");
+                Log.d("Firebase", "5");
+                latestStatus.inactiveDays = (List<Integer>) object.get("inactiveDays");
+                Log.d("Firebase", "6");
+                latestStatus.blockedUsers = (List<String>) object.get("blockedUsers");
+                Log.d("Firebase", "7");
+                latestStatus.trackedUsers = (List<String>) object.get("trackedUsers");
                 onLatestStatusUpdated.latestStatusUpdated(latestStatus);
             }
 

@@ -27,6 +27,7 @@ import com.android.callmemaybe.server.FireBaseCloudServer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Ana on 05/02/2016.
@@ -131,7 +132,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
                                                                              public void onClick(View v) {
                                                                                  Contact myContact1 = ContactHelper.getMyContact(getContext());
                                                                                  UserStatus currContactStatus = myContact1.contactStatus;
-                                                                                 ArrayList<String> currTrackedList = currContactStatus.trackedUsers;
+                                                                                 List<String> currTrackedList = currContactStatus.trackedUsers;
                                                                                  Log.d("Tracking", "contact = " + contact + " currTrackList = " + currTrackedList);
                                                                                  currTrackedList.add(contact.getPhoneNumber());
                                                                                  ContactHelper.updateMyContact(getContext());
