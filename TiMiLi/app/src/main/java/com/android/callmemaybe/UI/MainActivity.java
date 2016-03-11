@@ -18,8 +18,11 @@ import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.android.callmemaybe.UI.data.Contact;
+import com.android.callmemaybe.UI.data.ContactFilter;
+import com.android.callmemaybe.UI.data.ContactFilterType;
 import com.android.callmemaybe.UI.databinding.ActivityMainBinding;
 import com.android.callmemaybe.contracts.ICloudServer;
 import com.android.callmemaybe.contracts.IOnLatestGistUpdatedListener;
@@ -34,6 +37,7 @@ import com.android.callmemaybe.server.FireBaseCloudServer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -166,6 +170,37 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        final MenuItem surpriseMe = menu.findItem(R.id.surprise_me);
+        surpriseMe.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int rand;
+                Context context = getApplicationContext();
+                Contact contact;
+                Contact[] aval = ContactFilter.filterContacts(ContactFilterType.available, context);
+                Contact[] favsAndAv = ContactFilter.filterContacts(ContactFilterType.favorites, context, aval);
+                if (favsAndAv.length == 0) {
+                    if (aval.length == 0) {
+                        Toast toast = new Toast(context);
+                        toast.setText("All your friends are busy");
+                        toast.setDuration(toast.LENGTH_LONG);
+                        toast.show();
+                        return false;
+                    } else {
+                        rand = new Random().nextInt(aval.length);
+                        contact = aval[rand];
+                    }
+                } else {
+                    rand = new Random().nextInt(favsAndAv.length);
+                    contact = favsAndAv[rand];
+                }
+                ContactActivity.StartContactActivity(context, contact.getPhoneNumber());
+
+                return true;
+            }
+        });
+
         return true;
     }
 
