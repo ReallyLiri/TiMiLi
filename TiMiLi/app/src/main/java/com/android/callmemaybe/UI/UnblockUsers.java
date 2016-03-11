@@ -39,9 +39,6 @@ public class UnblockUsers extends AppCompatActivity {
         ActivityUnblockUsersBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_unblock_users);
         cListView = binding.blockedContacts;
 
-        Toolbar unblockUsersToolbar = binding.unblockUsersToolbar;
-        toolbar = unblockUsersToolbar;
-        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //allows up navigation
 
         //needs to deal with the cases of no contacts at all or less then 3 contacts

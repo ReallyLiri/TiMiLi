@@ -76,9 +76,6 @@ public class SearchActivity extends AppCompatActivity {
         final String getsearchWordFromIntent = getIntent().getStringExtra("SEARCH_STRING");
         Log.d("Intent Search: ", getsearchWordFromIntent);
 
-        //toolbar
-        searchBar = binding.searchActivityToolbar;
-        setSupportActionBar(searchBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //contact list

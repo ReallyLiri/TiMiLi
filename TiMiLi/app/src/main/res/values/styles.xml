@@ -17,7 +17,7 @@
     </style>
 
     <!-- Tabs theme -->
-    <style name="tabsTheme" parent="@android:style/Theme.Holo.Light">
+    <style name="tabsTheme" parent="@style/Theme.AppCompat.Light">
         <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
         <item name="actionBarTabStyle">@style/ActionBarTabBarStyle</item>
     </style>

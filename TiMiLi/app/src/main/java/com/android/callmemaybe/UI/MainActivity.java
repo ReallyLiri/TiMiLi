@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
     private final String LOG_TAG = MainActivity.class.getSimpleName();
 
-    private Toolbar toolbar;
     private ImageButton searchText;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -104,8 +103,6 @@ public class MainActivity extends AppCompatActivity {
         showOnlyActiveItemCheck = helper.getShowOnlyActive(MainActivity.this, SHOW_ONLY_ACTIVE);
 
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        toolbar = binding.activityMainToolbar;
-        setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

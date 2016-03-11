@@ -41,8 +41,6 @@ public class MyProfileActivity extends AppCompatActivity {
         ActivityMyProfileBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_my_profile);
         binding.setContact(myContact);
 
-        toolbar = binding.myProfileToolbar;
-        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //allows up navigation
 
         this.funnyStatus = binding.myFunnyStatus;

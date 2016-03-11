@@ -16,13 +16,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/contact_detail_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:elevation="4dp"
-                android:title="@{contact.userName}"></android.support.v7.widget.Toolbar>
-
             <FrameLayout
                 android:id="@+id/fragment_contact"
                 android:layout_width="match_parent"

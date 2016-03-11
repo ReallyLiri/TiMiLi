@@ -211,6 +211,7 @@ public class Contact extends BaseObservable {
     public Contact(Uri imageUri, String name, String phoneNumber){
         this(name, phoneNumber);
         this.imageUri = imageUri == null ? null : imageUri.toString();
+        contactStatus = new UserStatus(phoneNumber);
     }
 
 
@@ -219,6 +220,7 @@ public class Contact extends BaseObservable {
         phoneNumber = number;
         searchesCounter = 0;
         imageUri = null;
+        contactStatus = new UserStatus(number);
     }
 
     public boolean isInBlockedList(Contact contact){
