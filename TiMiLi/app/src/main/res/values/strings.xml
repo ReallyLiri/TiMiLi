@@ -60,6 +60,9 @@
     <!--add contact button -->
     <string name="add_contact">add new contact</string>
 
+    <!-- track button -->
+    <string name="track">track</string>
+
     <!--settings -->
     <string name="hebrew">hebrew</string>
     <string name="english">english</string>
