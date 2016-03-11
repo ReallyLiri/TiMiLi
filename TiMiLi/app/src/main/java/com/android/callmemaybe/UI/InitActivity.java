@@ -48,9 +48,6 @@ public class InitActivity extends AppCompatActivity {
 
         mPhoneNumberHelper = new PhoneNumberHelper();
 
-        mPhoneNumberHelper.setMyPhoneNumber(this, "972546336843");
-
-
         String myNumber = mPhoneNumberHelper.getMyPhoneNumber(this);
         if (myNumber == null || myNumber.length() == 0) {
             mAuthButton.setVisibility(View.VISIBLE);
@@ -71,6 +68,7 @@ public class InitActivity extends AppCompatActivity {
     private void getMyNumber() {
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
         Fabric.with(this, new TwitterCore(authConfig), new Digits());
+        mAuthButton.setAuthTheme(R.style.CustomDigitsTheme);
 
         mAuthButton.setCallback(new AuthCallback() {
             @Override

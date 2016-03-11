@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.android.callmemaybe.UI.BR;
 import com.android.callmemaybe.UI.ContactActivity;
 import com.android.callmemaybe.UI.MainActivity;
+import com.android.callmemaybe.UI.R;
 import com.android.callmemaybe.UI.databinding.ContactListItemBinding;
 import com.android.callmemaybe.contracts.ActiveInPractice;
 import com.android.callmemaybe.contracts.ICloudServer;
@@ -79,7 +80,15 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
 
         holder.contactListItemBinding.setContact(contact);
 
-        holder.contactListItemBinding.contactImage.setOnClickListener(new View.OnClickListener() {
+        holder.contactListItemBinding.itemFavButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                contact.toggleFavorite();
+                MainActivity.refreshAllData();
+            }
+        });
+
+        holder.contactListItemBinding.contactTexts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (searchString == null) {
@@ -90,13 +99,13 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
             }
         });
 
-        holder.contactListItemBinding.contactImage.setImageBitmap(ContactHelper.photoLoader(contact.getImageUri(), getContext()));
-
-        holder.contactListItemBinding.itemFavButton.setOnClickListener(new View.OnClickListener() {
+        holder.contactListItemBinding.activeCircle.setBackgroundResource(contact.getActiveInPracticeDrawable());
+        contact.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
-            public void onClick(View v) {
-                contact.toggleFavorite();
-                MainActivity.refreshAllData();
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                if (propertyId == BR.activeInPractice) {
+                    holder.contactListItemBinding.activeCircle.setBackgroundResource(contact.getActiveInPracticeDrawable());
+                }
             }
         });
 
