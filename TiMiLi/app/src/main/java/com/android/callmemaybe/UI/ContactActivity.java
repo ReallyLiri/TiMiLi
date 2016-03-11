@@ -123,13 +123,13 @@ public class ContactActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_contact, fragment, "ContactActivityFragmentTag")
-                .addToBackStack(null).commit();
+                .commit();
     }
 
     @Override
     public boolean onCreateOptionsMenu (Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.contact_detail_toolbar, menu);
+        getMenuInflater().inflate(R.menu.contact_toolbar, menu);
         return true;
     }
 

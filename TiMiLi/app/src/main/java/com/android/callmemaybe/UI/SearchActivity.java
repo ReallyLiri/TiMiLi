@@ -67,7 +67,7 @@ public class SearchActivity extends AppCompatActivity {
         filteredSet = ContactHelper.getAllContacts();
         String word = getIntent().getStringExtra(SEARCH_STRING);
         Log.d("SearchString", "word = " + word);
-        if (word == "-1") {
+        if (word.equals("-1")) {
             defaultSearchFragment();
         } else {
             edtSearch.setText(word);
