@@ -41,9 +41,8 @@ import java.util.Set;
 public class SearchActivity extends AppCompatActivity {
     private Toolbar searchBar;
     private ListView cListView;
-    private boolean isSearchOpened = false;
-    private EditText edtSearch;
-    private StringBuilder word;
+
+    private String lastWordSearches;
 
     private Contact[] filteredContacts;
     private String[] contactsDescriptions;
@@ -107,6 +106,7 @@ public class SearchActivity extends AppCompatActivity {
                 else {
                     newWord = searchEditText.getText().toString();
                 }
+                lastWordSearches = newWord;
                 updateFilteredContacts(newWord);
                 return false;
             }
