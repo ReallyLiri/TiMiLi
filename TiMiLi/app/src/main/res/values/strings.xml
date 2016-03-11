@@ -8,6 +8,7 @@
     <!-- main_toolbar -->
     <string name="my_profile_action">My Profile</string>
     <string name="show_only_active">show only actives</string>
+    <string name="surprise_me">surprise me!</string>
 
     <!-- UnblockActivity -->
     <string name="unblock">unblock users</string>
