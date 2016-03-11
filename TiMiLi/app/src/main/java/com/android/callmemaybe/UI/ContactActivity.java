@@ -34,24 +34,28 @@ public class ContactActivity extends AppCompatActivity {
 
     public static final String PHONE_NUMBER_EXTRA = "PHONE_NUMBER";
     public static final String SEARCH_STRING = "SEARCH_STRING";
+    public static final String CALLING_ACTIVITY = "CALLING_ACTIVITY";
 
-    public static void StartContactActivity(Context context, String phoneNumber) {
+    public static void StartContactActivity(Context context, String phoneNumber, String activity) {
 
         Intent goToContactActivity = new Intent(context, ContactActivity.class);
 
         goToContactActivity.putExtra(PHONE_NUMBER_EXTRA, phoneNumber);
         goToContactActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        goToContactActivity.putExtra(CALLING_ACTIVITY, activity);
 
         context.startActivity(goToContactActivity);
     }
 
-    public static void StartContactActivity(Context context, String phoneNumber, String searchWord) {
+    public static void StartContactActivity(Context context, String phoneNumber, String searchWord,
+                                            String activity) {
 
         Intent goToContactActivity = new Intent(context, ContactActivity.class);
 
         goToContactActivity.putExtra(PHONE_NUMBER_EXTRA, phoneNumber);
         goToContactActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         goToContactActivity.putExtra(SEARCH_STRING, searchWord);
+        goToContactActivity.putExtra(CALLING_ACTIVITY, activity);
 
         context.startActivity(goToContactActivity);
     }

@@ -13,6 +13,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import com.android.callmemaybe.UI.ContactActivity;
+import com.android.callmemaybe.UI.MainActivity;
 import com.android.callmemaybe.contracts.ActiveInPractice;
 import com.android.callmemaybe.contracts.ICloudServer;
 import com.android.callmemaybe.contracts.IOnLatestGistUpdatedListener;
@@ -162,6 +163,7 @@ public class NotificationService extends Service implements IOnLatestGistUpdated
         // Intent for the activity to open when user selects the notification
         Intent goToContactActivity = new Intent(this, ContactActivity.class);
         goToContactActivity.putExtra("PHONE_NUMBER", userId);
+        goToContactActivity.putExtra("CALLING_ACTIVITY", "MainActivity");
 
         // Use TaskStackBuilder to build the back stack and get the PendingIntent
         PendingIntent pendingIntent =

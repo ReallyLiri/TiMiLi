@@ -96,9 +96,9 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
             @Override
             public void onClick(View v) {
                 if (searchString == null) {
-                    ContactActivity.StartContactActivity(getContext(), phone);
+                    ContactActivity.StartContactActivity(getContext(), phone, "MainActivity");
                 } else {
-                    ContactActivity.StartContactActivity(getContext(), phone, searchString);
+                    ContactActivity.StartContactActivity(getContext(), phone, "MainActivity", searchString);
                 }
             }
         });

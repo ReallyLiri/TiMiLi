@@ -15,5 +15,10 @@
         android:checkable="true"
         app:showAsAction = "never"/>
 
+    <item
+        android:id="@+id/surprise_me"
+        android:title="@string/surprise_me"
+        app:showAsAction = "never"/>
+
 
 </menu>
