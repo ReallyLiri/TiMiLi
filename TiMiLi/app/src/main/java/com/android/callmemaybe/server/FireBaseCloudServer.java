@@ -30,7 +30,7 @@ public class FireBaseCloudServer implements ICloudServer {
     private ConcurrentHashMap<String, ChildEventListener> mGistListeners;
     private ConcurrentHashMap<String, ValueEventListener> mStatusListeners;
 
-    private final String BaseFirebaseURL = "https://timili.firebaseio.com/android";
+    private final String BaseFirebaseURL = "https://alleyes.firebaseio.com/android";
 
     public FireBaseCloudServer(Context context) {
         Firebase.setAndroidContext(context);

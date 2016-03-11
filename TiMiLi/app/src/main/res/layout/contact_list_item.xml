@@ -67,32 +67,32 @@
             android:id="@+id/contact_actions"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:padding="5dp">
 
             <Button
                 android:id="@+id/item_fav_button"
+                android:layout_height="40dp"
+                android:layout_width="40dp"
                 style="@style/itemButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:background="@{contact.isFavorite ? @drawable/favorite_on : @drawable/favorite_off}"
                 android:tag="@string/fav_tag" />
 
             <Button
                 android:id="@+id/item_block_button"
+                android:layout_height="40dp"
+                android:layout_width="40dp"
                 style="@style/itemButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:background="@drawable/block"
                 android:tag="@string/block_tag" />
 
             <Button
                 android:id="@+id/item_track_button"
+                android:layout_height="40dp"
+                android:layout_width="40dp"
                 style="@style/itemButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:background="@drawable/track"
                 android:tag="@string/track"/>
 

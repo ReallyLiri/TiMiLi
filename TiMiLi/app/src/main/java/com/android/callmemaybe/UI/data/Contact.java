@@ -32,6 +32,7 @@ public class Contact extends BaseObservable {
 
     public static Contact createMyContact(String phoneNumber){
         Contact contact = new Contact(THIS_USER_NAME, phoneNumber);
+        contact.contactStatus.phoneNum = phoneNumber;
         return contact;
     }
 
@@ -93,6 +94,7 @@ public class Contact extends BaseObservable {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        this.contactStatus.phoneNum = phoneNumber;
         notifyPropertyChanged(BR.phoneNumber);
     }
 
