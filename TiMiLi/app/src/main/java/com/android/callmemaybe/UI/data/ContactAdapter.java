@@ -27,6 +27,8 @@ import java.util.Arrays;
 public class ContactAdapter extends ArrayAdapter<Contact> {
     private final String LOG_TAG = ContactAdapter.class.getSimpleName();
     private Contact[] contactsList;
+    private int searchKey = 1;
+    private String searchString;
 
     /**
      * Cache of the children views for a forecast list item.
@@ -42,6 +44,12 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
     public ContactAdapter(Context context, Contact[] contacts) {
         super(context, 0, new ArrayList<>(Arrays.asList(contacts)));
         contactsList = contacts;
+        searchString = null;
+    }
+
+    public ContactAdapter(Context context, Contact[] contacts, String searchTag) {
+        this(context, contacts);
+        searchString = searchTag;
     }
 
     @Override
@@ -71,7 +79,11 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         holder.contactListItemBinding.contactListItemUsername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ContactActivity.StartContactActivity(getContext(), phone);
+                if (searchString == null) {
+                    ContactActivity.StartContactActivity(getContext(), phone);
+                } else {
+                    ContactActivity.StartContactActivity(getContext(), phone, searchString);
+                }
             }
         });
 
