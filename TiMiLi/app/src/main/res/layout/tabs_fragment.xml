@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/primary_text"
         android:orientation="vertical"
         tools:context="com.android.callmemaybe.UI.">
 
         <TextView
             android:id="@+id/greeting_massage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/primary_light"
+            android:textAlignment="center"
+            android:layout_margin="5dp"/>
 
         <ListView
             android:id="@+id/items_list"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:divider="@null"></ListView>
+            android:layout_below="@id/greeting_massage"
+            android:divider="@null" />
 
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

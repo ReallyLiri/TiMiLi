@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.android.callmemaybe.UI.data.Contact;
 import com.android.callmemaybe.UI.databinding.ActivityMainBinding;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private final String LOG_TAG = MainActivity.class.getSimpleName();
 
     private Toolbar toolbar;
-    private Button searchText;
+    private ImageButton searchText;
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
@@ -134,29 +135,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Check that the activity is using the layout version with
-        // the fragment_main FrameLayout
-        if (binding.fragmentMain != null) {
-
-            // However, if we're being restored from a previous state,
-            // then we don't need to do anything and should return or else
-            // we could end up with overlapping fragments.
-            if (savedInstanceState != null) {
-                return;
-            }
-
-            // Create a new Fragment to be placed in the activity layout
+        if (savedInstanceState == null) {
             DeafultMostSearchedFragment mostSearchedFragment = new DeafultMostSearchedFragment(); ///99
 
-            //Add the fragment to the 'fragment_container' FrameLayout
-            //Optional tag name for the fragment, to later retrieve the fragment with
-            //FragmentManager.findFragmentByTag(String)
-            //addToBackStack -  transaction will be remembered after it is committed,
-            //and will reverse its operation when later popped off the stack
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_main, mostSearchedFragment, "MostSearchedFragmentTag")
                     .addToBackStack(null).commit();
-
         }
     }
 

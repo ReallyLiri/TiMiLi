@@ -68,12 +68,14 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
 
         holder.contactListItemBinding.setContact(contact);
 
-        holder.contactListItemBinding.contactListItemUsername.setOnClickListener(new View.OnClickListener() {
+        holder.contactListItemBinding.contactImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ContactActivity.StartContactActivity(getContext(), phone);
             }
         });
+
+        holder.contactListItemBinding.contactImage.setImageBitmap(ContactHelper.photoLoader(contact.getImageUri(), getContext()));
 
         holder.contactListItemBinding.itemFavButton.setOnClickListener(new View.OnClickListener() {
             @Override
