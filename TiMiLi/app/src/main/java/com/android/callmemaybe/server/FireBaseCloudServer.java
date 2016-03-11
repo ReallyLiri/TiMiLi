@@ -109,17 +109,14 @@ public class FireBaseCloudServer implements ICloudServer {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                throw new IllegalStateException("onChildRemoved should not be triggered");
             }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                throw new IllegalStateException("onChildMoved should not be triggered");
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                throw new IllegalStateException("onCancelled should not be triggered");
             }
         };
         mGistListeners.put(userId, listener);
