@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.Observable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,10 @@ import com.android.callmemaybe.UI.MainActivity;
 import com.android.callmemaybe.UI.databinding.ContactListItemBinding;
 import com.android.callmemaybe.contracts.ActiveInPractice;
 import com.android.callmemaybe.contracts.ICloudServer;
+import com.android.callmemaybe.contracts.UserStatus;
 import com.android.callmemaybe.helpers.ContactHelper;
 import com.android.callmemaybe.helpers.ButtonAction;
+import com.android.callmemaybe.notificationService.NotificationService;
 import com.android.callmemaybe.server.FireBaseCloudServer;
 
 import java.util.ArrayList;
@@ -78,7 +81,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         }
 
         holder.contactListItemBinding.setContact(contact);
-
+/**
         holder.contactListItemBinding.contactImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,12 +94,25 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         });
 
         holder.contactListItemBinding.contactImage.setImageBitmap(ContactHelper.photoLoader(contact.getImageUri(), getContext()));
-
+**/
         holder.contactListItemBinding.itemFavButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 contact.toggleFavorite();
                 MainActivity.refreshAllData();
+            }
+        });
+
+        holder.contactListItemBinding.itemTrackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Contact myContact1 = ContactHelper.getMyContact(getContext());
+                UserStatus currContactStatus = myContact1.contactStatus;
+                ArrayList<String> currTrackedList = currContactStatus.trackedUsers;
+                Log.d("Tracking", "contact = " + contact + " currTrackList = " + currTrackedList);
+                currTrackedList.add(contact.getPhoneNumber());
+                ContactHelper.updateMyContact(getContext());
+                NotificationService.NotifyOfTrackedListChanged(getContext(), ContactHelper.getMyContact(getContext()).contactStatus.trackedUsers);
             }
         });
 

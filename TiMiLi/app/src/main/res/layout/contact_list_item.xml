@@ -27,14 +27,12 @@
 
             <TextView
                 android:id="@+id/contact_list_item_username"
-                app:style="?android:attr/itemTextViewStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@{contact.userName}"
                 android:textSize="20sp" />
 
             <TextView
-                app:style="?android:attr/itemTextViewStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@{contact.phoneNumber}"
@@ -53,7 +51,6 @@
                 />
 
             <TextView
-                app:style="?android:attr/itemTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{contact.activeInPractice}"
@@ -67,26 +64,29 @@
             android:id="@+id/contact_actions"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:padding="5dp">
 
             <Button
                 android:id="@+id/item_fav_button"
-                app:style="?android:attr/itemButtonStyle"
+                android:layout_height="40dp"
+                android:layout_width="40dp"
                 android:background="@{contact.isFavorite ? @drawable/favorite_on : @drawable/favorite_off}"
                 android:tag="@string/fav_tag" />
 
             <Button
                 android:id="@+id/item_block_button"
-                app:style="?android:attr/itemButtonStyle"
+                android:layout_height="40dp"
+                android:layout_width="40dp"
                 android:background="@drawable/block"
                 android:tag="@string/block_tag" />
 
             <Button
                 android:id="@+id/item_track_button"
-                app:style="?android:attr/itemButtonStyle"
+                android:layout_height="40dp"
+                android:layout_width="40dp"
                 android:background="@drawable/track"
                 android:tag="@string/track"/>
 
