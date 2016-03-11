@@ -59,9 +59,11 @@ abstract class TabsFragment extends Fragment {
     }
 
     public void RefreshData() {
-        contactAdapter.clear();
-        contactAdapter.addAll(getContacts());
-        contactAdapter.notifyDataSetChanged();
+        if (contactAdapter != null) {
+            contactAdapter.clear();
+            contactAdapter.addAll(getContacts());
+            contactAdapter.notifyDataSetChanged();
+        }
     }
 
     abstract int getGreetingMessege();

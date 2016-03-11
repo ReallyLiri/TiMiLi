@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -37,19 +38,20 @@ import java.util.Set;
  */
 public class SearchActivity extends AppCompatActivity {
     private Toolbar searchBar;
-    private MenuItem mSearchAction;
     private ListView cListView;
     private boolean isSearchOpened = false;
     private EditText edtSearch;
-    private Set<Contact> filteredSet;
     private StringBuilder word;
     private String SEARCH_STRING = "SEARCH_STRING";
+
+    private Contact filteredContacts[];
+    private String contactsDescriptions[];
+    private ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SearchActivityBinding binding = DataBindingUtil.setContentView(
-                this, R.layout.search_activity);
+        SearchActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.search_activity);
         final Context context = getApplicationContext();
         searchBar = binding.searchActivityToolbar;
         setSupportActionBar(searchBar);
@@ -64,22 +66,9 @@ public class SearchActivity extends AppCompatActivity {
         });
 
         cListView = binding.searchList;
-        filteredSet = ContactHelper.getAllContacts();
-        String word = getIntent().getStringExtra(SEARCH_STRING);
-        Log.d("SearchString", "word = " + word);
-        if (word.equals("-1")) {
-            defaultSearchFragment();
-        } else {
-            edtSearch.setText(word);
-            doSearch();
-        }
 
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        mSearchAction = menu.findItem(R.id.search);
-        return super.onPrepareOptionsMenu(menu);
+        filteredContacts = ContactHelper.getAllContacts().toArray(new Contact[0]);
+        updateFilteredContacts();
     }
 
     @Override
@@ -162,25 +151,23 @@ public class SearchActivity extends AppCompatActivity {
     private void doSearch() {
         String searching = edtSearch.getText().toString();
         if(searching.length() < word.length()) { //the user deleted a letter
-            filteredSet = ContactHelper.getAllContacts();
+            filteredContacts = ContactHelper.getAllContacts().toArray(new Contact[0]);
         }
 
-        Contact[] filtered = ContactFilter.filterContacts(searching,
-                filteredSet.toArray(new Contact[0]));
-        filtered = ContactSort.sortContacts(ContactSortOrderType.name_A_To_Z, filtered);
-        filteredSet = new HashSet<>(Arrays.asList(filtered));
+
         word = new StringBuilder(searching);
 
-        ContactAdapter contactAdapter = new ContactAdapter(getApplicationContext(), filtered,
-                word.toString());
-        cListView.setAdapter(contactAdapter);
     }
 
-    public void defaultSearchFragment() {
-        Contact[] list = ContactSort.sortContacts(ContactSortOrderType.mostSearchedToLeastSearched,
-                filteredSet);
-        ContactAdapter contactAdapter = new ContactAdapter(getApplicationContext(), list, "-1");
-        cListView.setAdapter(contactAdapter);
-    }
 
+    private void updateFilteredContacts() {
+        filteredContacts = ContactSort.sortContacts(ContactSortOrderType.mostSearchedToLeastSearched, filteredContacts);
+        contactsDescriptions = new String[filteredContacts.length];
+        for (int i = 0; i < filteredContacts.length; i++) {
+            contactsDescriptions[i] = filteredContacts[i].getUserName() + " (" + filteredContacts[i].getPhoneNumber() + ")";
+        }
+        adapter.clear();
+        adapter.addAll(contactsDescriptions);
+        adapter.notifyDataSetChanged();
+    }
 }

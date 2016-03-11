@@ -18,6 +18,10 @@ public class UserGist {
 
     public ActiveInPractice IsActiveInPractice(String myId, UserStatus userStatus) {
 
+        if (userStatus == null) {
+            return ActiveInPractice.Loading;
+        }
+
         if (userStatus.blockedUsers.contains(myId)) {
             return ActiveInPractice.Unwilling;
         }

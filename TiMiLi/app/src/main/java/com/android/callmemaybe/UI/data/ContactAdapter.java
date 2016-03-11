@@ -18,6 +18,9 @@ import com.android.callmemaybe.helpers.ContactHelper;
 import com.android.callmemaybe.helpers.ButtonAction;
 import com.android.callmemaybe.server.FireBaseCloudServer;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Created by Ana on 05/02/2016.
  */
@@ -39,7 +42,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
     }
 
     public ContactAdapter(Context context, Contact[] contacts) {
-        super(context, 0, contacts);
+        super(context, 0, new ArrayList<>(Arrays.asList(contacts)));
         contactsList = contacts;
         searchString = null;
     }
@@ -120,5 +123,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
 
         return convertView;
     }
+
+
 }
 
