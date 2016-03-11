@@ -36,6 +36,10 @@ public class Contact extends BaseObservable {
         return contact;
     }
 
+    public String getfunnystatus() {
+        return this.contactStatus.funnyStatus;
+    }
+
     public boolean[] getBlockedDays(){
         boolean[] res = new boolean[7];
         for (Integer i = 1; i < 8; i++){
