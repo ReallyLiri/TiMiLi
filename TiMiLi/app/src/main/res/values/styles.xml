@@ -49,6 +49,12 @@
     <!-- contact TextView -->
     <style name="contactTextView">
         <item name="android:color">@color/primary</item>
+        <item name="android:layout_margin">16dp</item>
+    </style>
+
+    <!--contact Button -->
+    <style name="contactButton">
+        <item name="android:layout_margin">16dp</item>
     </style>
 
 </resources>
