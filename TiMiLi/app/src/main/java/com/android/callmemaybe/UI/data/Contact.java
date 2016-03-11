@@ -201,9 +201,11 @@ public class Contact extends BaseObservable {
         imageUri = null;
     }
 
-
     public boolean isInBlockedList(Contact contact){
         return this.contactStatus.blockedUsers.contains(contact.phoneNumber);
     }
 
+    public boolean hasBlockedUsers(){
+        return this.contactStatus.blockedUsers.size() > 0;
+    }
 }
