@@ -17,7 +17,7 @@
     </style>
 
     <!-- Tabs theme -->
-    <style name="tabsTheme" parent="@android:style/Theme.Holo.Light">
+    <style name="tabsTheme" parent="@style/Theme.AppCompat.Light">
         <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
         <item name="actionBarTabStyle">@style/ActionBarTabBarStyle</item>
     </style>
@@ -37,11 +37,12 @@
     <!-- contact list item textview -->
     <style name="itemTextViewStyle">
         <item name="android:padding">5dp</item>
-        <item name="android:color">@color/primary</item>
+        <item name="android:textColor">@color/primary_text</item>
     </style>
 
     <!-- contact list item button -->
     <style name="itemButtonStyle">
+        <item name="android:layout_margin">5dp</item>
         <item name="android:gravity">center</item>
         <item name="android:padding">5dp</item>
     </style>

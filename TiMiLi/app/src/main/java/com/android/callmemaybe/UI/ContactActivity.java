@@ -92,8 +92,6 @@ public class ContactActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         ContactDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.contact_detail);
-        Toolbar myContactToolbar = binding.contactDetailToolbar;
-        setSupportActionBar(myContactToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //allows up navigation
 
         callingActivity = getIntent().getStringExtra("CALLNG_ACTIVITY");
@@ -116,6 +114,8 @@ public class ContactActivity extends AppCompatActivity {
             finish();
             return;
         }
+
+        getSupportActionBar().setTitle(mContact.getUserName());
 
         binding.setContact(mContact);
 

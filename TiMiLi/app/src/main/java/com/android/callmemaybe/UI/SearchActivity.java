@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -56,6 +57,17 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.search_activity_add_contact_btn:
+                ButtonAction.addContactToPhone(this);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SearchActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.search_activity);
@@ -64,19 +76,7 @@ public class SearchActivity extends AppCompatActivity {
         final String getsearchWordFromIntent = getIntent().getStringExtra("SEARCH_STRING");
         Log.d("Intent Search: ", getsearchWordFromIntent);
 
-        //toolbar
-        searchBar = binding.searchActivityToolbar;
-        setSupportActionBar(searchBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        //add new contact
-        Button addContact = binding.searchActivityAddContactBtn;
-        addContact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ButtonAction.addContactToPhone(context);
-            }
-        });
 
         //contact list
         cListView = binding.searchList;

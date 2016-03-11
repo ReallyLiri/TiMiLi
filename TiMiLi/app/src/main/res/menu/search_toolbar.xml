@@ -4,5 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.materialtheme.SearchActivity">
 
+    <item
+        android:id="@+id/search_activity_add_contact_btn"
+        android:title="Add contact"
+        android:checkable="true"
+        app:showAsAction = "always"
+        android:icon="@drawable/add_contact"
+        />
 
 </menu>

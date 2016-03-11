@@ -202,7 +202,8 @@ public class ContactHelper {
                 }
                 Set<Contact> prefContacts = new HashSet<>();
                 for (Contact contact : phoneContacts) {
-                    if (existsByUserId.get(contact.getPhoneNumber())) {
+                    Log.d("ContactHelper", "existsByUserId = " + existsByUserId + " contact " + contact + " phone " + contact.getPhoneNumber());
+                    if (contact != null && existsByUserId.containsKey(contact.getPhoneNumber())) {
                         prefContacts.add(contact);
                     }
                 }
