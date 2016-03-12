@@ -60,7 +60,7 @@ abstract class TabsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Contact selected = contactAdapter.getItem(position);
-                ContactActivity.StartContactActivity(getActivity(), selected.getPhoneNumber());
+                ContactActivity.StartContactActivity(getActivity(), selected.getPhoneNumber(), "MainActivity");
             }
         };
     }

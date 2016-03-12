@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import com.android.callmemaybe.UI.MainActivity;
+import com.android.callmemaybe.UI.R;
 import com.android.callmemaybe.UI.data.Contact;
 import com.android.callmemaybe.contracts.ICloudServer;
 import com.android.callmemaybe.contracts.IOnUsersExistResponse;
@@ -131,7 +132,7 @@ public class ContactHelper {
     public static Bitmap photoLoader(Uri image_uri, Context context){
             try {
                 if (image_uri == null || image_uri.toString().length() == 0) {
-                    return BitmapFactory.decodeResource(context.getResources(), android.R.drawable.sym_contact_card);
+                    return BitmapFactory.decodeResource(context.getResources(), R.drawable.logo);
                 }
 
                 Bitmap bitmap = MediaStore.Images.Media

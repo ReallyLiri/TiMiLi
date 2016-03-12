@@ -71,7 +71,7 @@ public class BlockedContactAdapter extends ArrayAdapter<Contact> {
         holder.contactListItemBinding.contactListItemUsername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ContactActivity.StartContactActivity(getContext(), phone);
+                ContactActivity.StartContactActivity(getContext(), phone, "BlockedContacts");
             }
         });
 

@@ -34,7 +34,7 @@
             android:id="@+id/all_blocked_days"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/sun"

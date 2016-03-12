@@ -14,8 +14,8 @@
 
         <ImageView
             android:id="@+id/contact_fragment_photo"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_margin="16dp"
             android:layout_gravity="center"/>
 
@@ -55,18 +55,20 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
-                <Button
+                <ImageButton
                     android:id="@+id/contact_fragment_call_btn"
                     style="@style/contactButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@color/transparent"
                     android:src="@drawable/call"/>
 
-                <Button
+                <ImageButton
                     android:id="@+id/contact_fragment_sms_btn"
                     style="@style/contactButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@color/transparent"
                     android:src="@drawable/message"/>
             </LinearLayout>
 
@@ -77,26 +79,29 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center">
-            <Button
+            <ImageButton
                 android:id="@+id/contact_fragment_fav_button"
                 style="@style/contactButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{contact.isFavorite ? @string/in_my_favs_button : @string/not_in_my_favs_button}"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/transparent"
+                android:src="@{contact.isFavorite ? @drawable/favorite_on : @drawable/favorite_off}"
                 android:tag="@string/fav_tag"/>
-            <Button
+            <ImageButton
                 android:id="@+id/contact_fragment_block_button"
                 style="@style/contactButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/transparent"
                 android:src="@drawable/block"
                 android:tag="@string/block_tag"/>
-            <Button
+            <ImageButton
                 android:id="@+id/contact_fragment_track_button"
                 style="@style/contactButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/track"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/transparent"
+                android:src="@drawable/track"
                 android:tag="@string/track"/>
         </LinearLayout>
 

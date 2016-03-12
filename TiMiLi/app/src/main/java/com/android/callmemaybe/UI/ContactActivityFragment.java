@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -46,7 +47,7 @@ public class ContactActivityFragment extends Fragment {
         ImageView photo = binding.contactFragmentPhoto;
         photo.setImageBitmap(ContactHelper.photoLoader(mContact.getImageUri(), getContext()));
 
-        Button callBtn = binding.contactFragmentCallBtn;
+        ImageButton callBtn = binding.contactFragmentCallBtn;
         callBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +55,7 @@ public class ContactActivityFragment extends Fragment {
             }
         }) ;
 
-        Button smsBtn = binding.contactFragmentSmsBtn;
+        ImageButton smsBtn = binding.contactFragmentSmsBtn;
         smsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +63,7 @@ public class ContactActivityFragment extends Fragment {
             }
         });
 
-        Button favButton = binding.contactFragmentFavButton;
+        ImageButton favButton = binding.contactFragmentFavButton;
         favButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -72,7 +73,7 @@ public class ContactActivityFragment extends Fragment {
             }
         });
 
-        Button blockBtn = binding.contactFragmentBlockButton;
+        ImageButton blockBtn = binding.contactFragmentBlockButton;
         blockBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override

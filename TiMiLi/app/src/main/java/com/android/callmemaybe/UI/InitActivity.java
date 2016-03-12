@@ -54,7 +54,7 @@ public class InitActivity extends AppCompatActivity {
 
         mPhoneNumberHelper = new PhoneNumberHelper();
 
-        mPhoneNumberHelper.setMyPhoneNumber(this, "972546336843");
+        //mPhoneNumberHelper.setMyPhoneNumber(this, "972546336843");
 
         String myNumber = mPhoneNumberHelper.getMyPhoneNumber(this);
         if (myNumber == null || myNumber.length() == 0) {
