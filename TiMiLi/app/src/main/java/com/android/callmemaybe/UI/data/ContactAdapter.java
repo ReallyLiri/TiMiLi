@@ -118,6 +118,10 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
                                                  @Override
                                                  public void onPropertyChanged(Observable sender, int propertyId) {
                                                      if (propertyId == BR.activeInPractice) {
+                                                         Contact senderContact = (Contact) sender;
+                                                         if (senderContact == null || !senderContact.equals(contact)) {
+                                                             return;
+                                                         }
                                                          holder.contactListItemBinding.activeCircle.setBackgroundResource(contact.getActiveInPracticeDrawable());
                                                      }
                                                  }
@@ -126,47 +130,46 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         );
 
         holder.contactListItemBinding.itemTrackButton.setOnClickListener(new View.OnClickListener()
-
-                                                                         {
-                                                                             @Override
-                                                                             public void onClick(View v) {
-                                                                                 Contact myContact1 = ContactHelper.getMyContact(getContext());
-                                                                                 UserStatus currContactStatus = myContact1.contactStatus;
-                                                                                 List<String> currTrackedList = currContactStatus.trackedUsers;
-                                                                                 Log.d("Tracking", "contact = " + contact + " currTrackList = " + currTrackedList);
-                                                                                 currTrackedList.add(contact.getPhoneNumber());
-                                                                                 ContactHelper.updateMyContact(getContext());
-                                                                                 NotificationService.NotifyOfTrackedListChanged(getContext(), ContactHelper.getMyContact(getContext()).contactStatus.trackedUsers);
-                                                                             }
-                                                                         }
+       {
+           @Override
+           public void onClick(View v) {
+               Contact myContact1 = ContactHelper.getMyContact(getContext());
+               UserStatus currContactStatus = myContact1.contactStatus;
+               List<String> currTrackedList = currContactStatus.trackedUsers;
+               Log.d("Tracking", "contact = " + contact + " currTrackList = " + currTrackedList);
+               currTrackedList.add(contact.getPhoneNumber());
+               ContactHelper.updateMyContact(getContext());
+               NotificationService.NotifyOfTrackedListChanged(getContext(), ContactHelper.getMyContact(getContext()).contactStatus.trackedUsers);
+           }
+       }
 
         );
 
         holder.contactListItemBinding.itemBlockButton.setOnClickListener(new View.OnClickListener()
 
-                                                                         {
+       {
 
-                                                                             @Override
-                                                                             public void onClick(View v) {
-                                                                                 final Context context = getContext();
-                                                                                 DialogInterface.OnClickListener onPositiveButtonClicked = new DialogInterface.OnClickListener() {
-                                                                                     public void onClick(DialogInterface dialog, int which) {
-                                                                                         Contact myContact = ContactHelper.getMyContact(getContext());
-                                                                                         myContact.contactStatus.blockedUsers.add(contact.getPhoneNumber());
+           @Override
+           public void onClick(View v) {
+               final Context context = getContext();
+               DialogInterface.OnClickListener onPositiveButtonClicked = new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int which) {
+                       Contact myContact = ContactHelper.getMyContact(getContext());
+                       myContact.contactStatus.blockedUsers.add(contact.getPhoneNumber());
 
-                                                                                         ICloudServer server = new FireBaseCloudServer(context);
-                                                                                         server.UpdateMyStatus(myContact.getContactStatus());
+                       ICloudServer server = new FireBaseCloudServer(context);
+                       server.UpdateMyStatus(myContact.getContactStatus());
 
-                                                                                         ContactHelper.updateMyContact(getContext());
-                                                                                         MainActivity.refreshAllData();
-                                                                                         Toast.makeText(getContext(), "this user is blocked!!", Toast.LENGTH_LONG).show();
-                                                                                         dialog.dismiss();
-                                                                                     }
+                       ContactHelper.updateMyContact(getContext());
+                       MainActivity.refreshAllData();
+                       Toast.makeText(getContext(), "this user is blocked!!", Toast.LENGTH_LONG).show();
+                       dialog.dismiss();
+                   }
 
-                                                                                 };
-                                                                                 buttonAction.blockAction(context, v, onPositiveButtonClicked);
-                                                                             }
-                                                                         }
+               };
+               buttonAction.blockAction(context, v, onPositiveButtonClicked);
+           }
+       }
 
         );
 

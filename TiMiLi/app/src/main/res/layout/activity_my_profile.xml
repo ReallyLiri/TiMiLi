@@ -7,27 +7,56 @@
             type="com.android.callmemaybe.UI.data.Contact" />
     </data>
 
-    <LinearLayout
+    <ScrollView
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
+        android:layout_margin="5dp"
+        android:background="@color/primary_text"
         tools:context=".MyProfileActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <ImageButton
+            android:id="@+id/save_all_changes"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@style/itemButtonStyle"
+            android:src="@android:drawable/ic_menu_save"
+            android:text="@string/save_all_changes"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="5dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="this is my profile"/>
+            android:textColor="@color/accent"
+            android:text="@string/set_my_status"
+            />
 
         <EditText
             android:id="@+id/my_funny_status"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@{contact.funnyStatus}"
+            android:textColor="@color/primary"
+            android:layout_marginLeft="5dp"
+            />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:background="@drawable/separator"
             />
 
         <LinearLayout
@@ -40,57 +69,72 @@
                 android:id="@+id/sun"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/itemButtonStyle"
                 android:text="@{contact.getBlockedDays()[0] ? @string/sun_is_blocked : @string/sun_is_not_blocked}"/>
 
             <Button
                 android:id="@+id/mon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/itemButtonStyle"
                 android:text="@{contact.getBlockedDays()[1] ? @string/mon_is_blocked : @string/mon_is_not_blocked}"/>
 
             <Button
                 android:id="@+id/tue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/itemButtonStyle"
                 android:text="@{contact.getBlockedDays()[2] ? @string/tue_is_blocked : @string/tue_is_not_blocked}"/>
 
             <Button
                 android:id="@+id/wed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/itemButtonStyle"
                 android:text="@{contact.getBlockedDays()[3] ? @string/wed_is_blocked : @string/wed_is_not_blocked}"/>
 
             <Button
                 android:id="@+id/thu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/itemButtonStyle"
                 android:text="@{contact.getBlockedDays()[4] ? @string/thu_is_blocked : @string/thu_is_not_blocked}"/>
 
             <Button
                 android:id="@+id/fri"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/itemButtonStyle"
                 android:text="@{contact.getBlockedDays()[5] ? @string/fri_is_blocked : @string/fri_is_not_blocked}"/>
 
             <Button
                 android:id="@+id/sat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/itemButtonStyle"
                 android:text="@{contact.getBlockedDays()[6] ? @string/sat_is_blocked : @string/sat_is_not_blocked}"/>
 
         </LinearLayout>
 
-        <Button
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:background="@drawable/separator"
+            />
+
+        <ImageButton
             android:id="@+id/go_to_unblocked"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            style="@style/itemButtonStyle"
+            android:src="@drawable/block"
+            android:padding="2dp"
             android:text="@string/go_to_unblocked_activity"/>
 
-        <Button
-            android:id="@+id/save_all_changes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/save_all_changes"/>
-
     </LinearLayout>
+
+    </ScrollView>
 </layout>

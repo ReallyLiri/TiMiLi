@@ -2,6 +2,7 @@ package com.android.callmemaybe.server;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.callmemaybe.contracts.ICloudServer;
 import com.android.callmemaybe.contracts.IOnLatestGistUpdatedListener;
@@ -100,8 +101,12 @@ public class FireBaseCloudServer implements ICloudServer {
         ChildEventListener listener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChild) {
-                UserGist latestGist = snapshot.getValue(UserGist.class);
-                onLatestGistUpdated.latestGistUpdated(latestGist);
+                try {
+                    UserGist latestGist = snapshot.getValue(UserGist.class);
+                    onLatestGistUpdated.latestGistUpdated(latestGist);
+                }
+                catch(Exception ex) {
+                }
             }
 
             @Override
@@ -156,12 +161,12 @@ public class FireBaseCloudServer implements ICloudServer {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Object object = dataSnapshot.getValue();
-                if (object == null) {
-                    return;
+                try {
+                    UserStatus latestStatus = dataSnapshot.getValue(UserStatus.class);
+                    onLatestStatusUpdated.latestStatusUpdated(latestStatus);
                 }
-                UserStatus latestStatus = dataSnapshot.getValue(UserStatus.class);
-                onLatestStatusUpdated.latestStatusUpdated(latestStatus);
+                catch (Exception ex) {
+                }
             }
 
             @Override

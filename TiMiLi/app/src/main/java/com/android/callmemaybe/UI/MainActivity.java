@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
             mCloudServer.RegisterForUserGistData(contact.getPhoneNumber(), new IOnLatestGistUpdatedListener() {
                 @Override
                 public void latestGistUpdated(UserGist latestGist) {
+                    Log.e("FireBase.GIST", "Got gist for '" + latestGist.userId + "'");
                     contact.setContactGist(latestGist);
                     if (showOnlyActiveItemCheck) {
                         MainActivity.refreshAllData();
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
             mCloudServer.RegisterForUserStatusData(contact.getPhoneNumber(), new IOnLatestStatusUpdatedListener() {
                 @Override
                 public void latestStatusUpdated(UserStatus latestStatus) {
+                    Log.e("FireBase.STATUS", "Got status for '" + latestStatus.phoneNum + "'");
                     contact.setContactStatus(latestStatus);
                 }
             });

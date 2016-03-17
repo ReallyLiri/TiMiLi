@@ -16,6 +16,7 @@
 
     <!-- myProfile -->
     <string name="my_profile">my profile</string>
+    <string name="set_my_status">Set my status:</string>
     <string name="save_all_changes">save all changes</string>
     <string name="go_to_unblocked_activity">go to blocked users</string>
 

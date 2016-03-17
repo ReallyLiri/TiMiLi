@@ -116,7 +116,7 @@ public class Contact extends BaseObservable {
 
     public int getActiveInPracticeDrawable() {
 
-        if (this.contactGist == null) {
+        if (this.contactGist == null || this.contactStatus == null) {
             return R.drawable.circle_gray;
         }
         switch (this.contactGist.IsActiveInPractice(PhoneNumberHelper.GetMyPhoneNumber(), this.contactStatus)) {

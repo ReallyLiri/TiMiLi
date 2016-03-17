@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.android.callmemaybe.UI.data.Contact;
 import com.android.callmemaybe.UI.databinding.ActivityMyProfileBinding;
@@ -25,9 +26,9 @@ import java.util.List;
 public class MyProfileActivity extends AppCompatActivity {
 
     private EditText funnyStatus;
-    private Button saveButton;
+    private ImageButton saveButton;
     private Contact myContact;
-    private Button goToUnblockedActivity;
+    private ImageButton goToUnblockedActivity;
     private Toolbar toolbar;
 
     private Button[] blocked_days;
