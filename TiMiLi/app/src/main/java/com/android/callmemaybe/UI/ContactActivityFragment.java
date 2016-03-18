@@ -2,6 +2,7 @@ package com.android.callmemaybe.UI;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.databinding.Observable;
 import android.support.v4.app.Fragment;
 
 import android.content.Intent;
@@ -31,7 +32,7 @@ public class ContactActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        ContactFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.contact_fragment, container, false);
+        final ContactFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.contact_fragment, container, false);
 
         String phoneNumber = getActivity().getIntent().getStringExtra(ContactActivity.PHONE_NUMBER_EXTRA);
         mContact = ContactHelper.getContact(phoneNumber);
@@ -102,6 +103,24 @@ public class ContactActivityFragment extends Fragment {
                 buttonAction.blockAction(context, v, onPositiveButtonClicked);
             }
         });
+
+        binding.activeCircle.setBackgroundResource(mContact.getActiveInPracticeDrawable());
+        mContact.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback()
+
+                                             {
+                                                 @Override
+                                                 public void onPropertyChanged(Observable sender, int propertyId) {
+                                                     if (propertyId == com.android.callmemaybe.UI.BR.activeInPractice) {
+                                                         Contact senderContact = (Contact) sender;
+                                                         if (senderContact == null || !senderContact.equals(mContact)) {
+                                                             return;
+                                                         }
+                                                         binding.activeCircle.setBackgroundResource(mContact.getActiveInPracticeDrawable());
+                                                     }
+                                                 }
+                                             }
+
+        );
 
         return binding.getRoot();
     }

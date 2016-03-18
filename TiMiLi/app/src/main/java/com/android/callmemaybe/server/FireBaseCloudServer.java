@@ -162,10 +162,21 @@ public class FireBaseCloudServer implements ICloudServer {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 try {
-                    UserStatus latestStatus = dataSnapshot.getValue(UserStatus.class);
+                    HashMap object = (HashMap) dataSnapshot.getValue();
+                    if (object == null) {
+                        return;
+                    }
+                    String phoneNum = (String) object.get("phoneNum");
+                    UserStatus latestStatus = new UserStatus(phoneNum);
+                    latestStatus.funnyStatus = (String) object.get("funnyStatus");
+                    latestStatus.blockedUsers = (List<String>) object.get("blockedUsers");
+                    latestStatus.trackedUsers = (List<String>) object.get("trackedUsers");
+                    latestStatus.inactiveDays = (List<Integer>) object.get("inactiveDays");
+
                     onLatestStatusUpdated.latestStatusUpdated(latestStatus);
                 }
                 catch (Exception ex) {
+                    Log.e("Firebase", ex.toString());
                 }
             }
 

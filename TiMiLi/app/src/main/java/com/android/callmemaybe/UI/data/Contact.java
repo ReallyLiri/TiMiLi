@@ -218,9 +218,6 @@ public class Contact extends BaseObservable {
         searchesCounter = 0;
         imageUri = null;
         contactStatus = new UserStatus(number);
-        contactStatus.inactiveDays.add(7);
-        contactStatus.trackedUsers.add("972547703703");
-        contactStatus.blockedUsers.add("972547703703");
     }
 
     public boolean isInBlockedList(Contact contact){
