@@ -14,6 +14,7 @@ import android.util.Log;
 
 import com.android.callmemaybe.UI.ContactActivity;
 import com.android.callmemaybe.UI.MainActivity;
+import com.android.callmemaybe.UI.R;
 import com.android.callmemaybe.contracts.ActiveInPractice;
 import com.android.callmemaybe.contracts.ICloudServer;
 import com.android.callmemaybe.contracts.IOnLatestGistUpdatedListener;
@@ -157,7 +158,8 @@ public class NotificationService extends Service implements IOnLatestGistUpdated
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this)
                         .setContentTitle("User is active!")
-                        .setContentText("Id: " + userId);
+                        .setContentText("Id: " + userId)
+                        .setSmallIcon(R.drawable.notification);
 
         //TODO: check if it actually works-Tiana
         // Intent for the activity to open when user selects the notification
@@ -176,7 +178,6 @@ public class NotificationService extends Service implements IOnLatestGistUpdated
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setContentIntent(pendingIntent);
-        //end of Tiana's code
 
         notificationManager.notify(notificationId, notificationBuilder.build());
     }
