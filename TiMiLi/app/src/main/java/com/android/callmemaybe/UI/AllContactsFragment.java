@@ -11,7 +11,7 @@ import com.android.callmemaybe.UI.data.ContactSortOrderType;
 import com.android.callmemaybe.helpers.ContactHelper;
 
 /**
- * Created by user on 22/02/2016.
+ * Created by MiaJ on 22/02/2016.
  */
 public class AllContactsFragment extends TabsFragment {
     @Override

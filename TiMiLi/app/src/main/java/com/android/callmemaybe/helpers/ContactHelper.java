@@ -28,7 +28,7 @@ import java.util.Set;
 import static android.provider.ContactsContract.*;
 
 /**
- * Created by user on 13/02/2016.
+ * Created by MiaJ on 13/02/2016.
  */
 public class ContactHelper {
 

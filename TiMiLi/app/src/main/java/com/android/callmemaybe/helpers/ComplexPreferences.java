@@ -1,7 +1,7 @@
 package com.android.callmemaybe.helpers;
 
 /**
- * Created by user on 20/02/2016.
+ * Created by MiaJ on 20/02/2016.
  */
 
 import java.lang.reflect.Type;

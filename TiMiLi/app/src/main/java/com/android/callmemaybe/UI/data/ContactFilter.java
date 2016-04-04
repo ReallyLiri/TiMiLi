@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by user on 17/02/2016.
+ * Created by MiaJ on 17/02/2016.
  */
 public class ContactFilter {
 
