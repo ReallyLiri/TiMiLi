@@ -62,7 +62,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
         final boolean[] updatedActiveDays = new boolean[7];
         for (int i = 0; i < 7; i++){
-            updatedActiveDays[i] = myContact.contactStatus.inactiveDays.contains(i+1);
+            updatedActiveDays[i] = myContact.getContactStatus().inactiveDays.contains(i+1);
         }
 
         for (int i = 0; i < 7; i++){
@@ -72,12 +72,12 @@ public class MyProfileActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if (updatedActiveDays[j]){
                         updatedActiveDays[j] = false;
-                        myContact.contactStatus.inactiveDays.remove((Object) (j+1));
+                        myContact.getContactStatus().inactiveDays.remove((Object) (j+1));
                         blocked_days[j].setText(debugArray[j] + "blocked");
                     }
                     else{
                         updatedActiveDays[j] = true;
-                        myContact.contactStatus.inactiveDays.add(j+1);
+                        myContact.getContactStatus().inactiveDays.add(j+1);
                         blocked_days[j].setText(debugArray[j] + "free");
                     }
                 }
@@ -91,10 +91,10 @@ public class MyProfileActivity extends AppCompatActivity {
                 if (!funnyStatusString.equals(myContact.getFunnyStatus())){
                     myContact.setFunnyStatus(funnyStatusString);
                 }
-                List<Integer> old = myContact.contactStatus.inactiveDays;
+                List<Integer> old = myContact.getContactStatus().inactiveDays;
                 List<Integer> newList = getUpdatedInactiveDays(updatedActiveDays);
                 if (!old.equals(newList)){
-                    myContact.contactStatus.inactiveDays = newList;
+                    myContact.getContactStatus().inactiveDays = newList;
                 }
                 ContactHelper.updateMyContact(MyProfileActivity.this);
                 saveToServer();

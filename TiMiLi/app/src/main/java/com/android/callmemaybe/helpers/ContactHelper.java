@@ -113,18 +113,11 @@ public class ContactHelper {
 
     public static void setAllContactPref(Context context, Set<Contact> contacts){
         for (Contact contact : contacts) {
-            contact.contactGist = null; // we don't want an outdated gist
+            contact.setContactGist(null); // we don't want an outdated gist
         }
         SharedPreferencesHelper pref = new SharedPreferencesHelper();
         pref.PutAllContacts(context, contacts, CONTACTS_PREF_KEY);
     }
-
-
-    public static void initAllContacts(Context context){
-        setAllContactPref(context, getPhoneAllContacts(context));
-        //& reg
-    }
-
 
     /*
     gets image uri and prints the pic
@@ -233,7 +226,7 @@ public class ContactHelper {
     private static void checkIfUsersExist(Set<Contact> users, ICloudServer server, IOnUsersExistResponse onResponse) {
         Set<String> numbers = new HashSet<>();
         for (Contact user: users) {
-            numbers.add(user.phoneNumber);
+            numbers.add(user.getPhoneNumber());
         }
         server.DoesUsersExist(numbers, onResponse);
     }

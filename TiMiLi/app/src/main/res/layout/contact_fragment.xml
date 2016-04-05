@@ -90,7 +90,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@color/transparent"
-                android:src="@drawable/track"
+                android:src="@{contact.isTracked ? @drawable/untrack : @drawable/track}"
                 android:tag="@string/track"/>
         </LinearLayout>
 

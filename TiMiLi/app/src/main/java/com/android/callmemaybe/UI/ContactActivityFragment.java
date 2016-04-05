@@ -105,22 +105,25 @@ public class ContactActivityFragment extends Fragment {
         });
 
         binding.activeCircle.setBackgroundResource(mContact.getActiveInPracticeDrawable());
-        mContact.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback()
+        mContact.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                if (propertyId == com.android.callmemaybe.UI.BR.activeInPractice) {
+                    Contact senderContact = (Contact) sender;
+                    if (senderContact == null || !senderContact.equals(mContact)) {
+                        return;
+                    }
+                    binding.activeCircle.setBackgroundResource(mContact.getActiveInPracticeDrawable());
+                }
+            }
+        });
 
-                                             {
-                                                 @Override
-                                                 public void onPropertyChanged(Observable sender, int propertyId) {
-                                                     if (propertyId == com.android.callmemaybe.UI.BR.activeInPractice) {
-                                                         Contact senderContact = (Contact) sender;
-                                                         if (senderContact == null || !senderContact.equals(mContact)) {
-                                                             return;
-                                                         }
-                                                         binding.activeCircle.setBackgroundResource(mContact.getActiveInPracticeDrawable());
-                                                     }
-                                                 }
-                                             }
-
-        );
+        binding.contactFragmentTrackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ButtonAction.trackAction(getContext(), mContact);
+            }
+        });
 
         return binding.getRoot();
     }

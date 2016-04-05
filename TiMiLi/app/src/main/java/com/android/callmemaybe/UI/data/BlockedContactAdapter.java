@@ -94,9 +94,9 @@ public class BlockedContactAdapter extends ArrayAdapter<Contact> {
 
                     public void onClick(DialogInterface dialog, int which) {
                         Contact myContact = ContactHelper.getMyContact(getContext());
-                        myContact.contactStatus.blockedUsers.remove(contact.getPhoneNumber());
+                        myContact.getContactStatus().blockedUsers.remove(contact.getPhoneNumber());
 
-                        mServer.UpdateMyStatus(myContact.contactStatus);
+                        mServer.UpdateMyStatus(myContact.getContactStatus());
 
                         BlockedContactAdapter.this.remove(contact);
                         BlockedContactAdapter.this.notifyDataSetChanged();

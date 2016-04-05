@@ -93,7 +93,7 @@
                 android:layout_height="40dp"
                 android:layout_width="40dp"
                 style="@style/itemButtonStyle"
-                android:background="@drawable/track"
+                android:background="@{contact.isTracked ? @drawable/untrack : @drawable/track}"
                 android:tag="@string/track"/>
 
         </LinearLayout>

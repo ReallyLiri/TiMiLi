@@ -18,14 +18,14 @@ import com.android.callmemaybe.helpers.PhoneNumberHelper;
  * Created by Ana on 05/02/2016.
  */
 public class Contact extends BaseObservable {
-    public String imageUri; //the contact image
-    public String userName; //the username the user chose for him
-    public String phoneNumber;
-    public UserStatus contactStatus = new UserStatus(phoneNumber);
-    public UserGist contactGist = null;
-    public int searchesCounter;
-    public boolean hasApp;
-    public boolean isFavorite = false;
+    private String imageUri; //the contact image
+    private String userName; //the username the user chose for him
+    private String phoneNumber;
+    private UserStatus contactStatus = new UserStatus(phoneNumber);
+    private UserGist contactGist = null;
+    private int searchesCounter;
+    private boolean isFavorite = false;
+    private boolean isTracked = false;
 
     private final String LOG_TAG = Contact.class.getSimpleName();
     private static final String THIS_USER_NAME = "myName";
@@ -148,14 +148,6 @@ public class Contact extends BaseObservable {
         notifyPropertyChanged(BR.searchesCounter);
     }
 
-    public boolean isHasApp() {
-        return hasApp;
-    }
-
-    public void setHasApp(boolean hasApp) {
-        this.hasApp = hasApp;
-    }
-
     @Bindable
     public boolean getIsFavorite() {
         return isFavorite;
@@ -171,6 +163,20 @@ public class Contact extends BaseObservable {
         notifyPropertyChanged(BR.isFavorite);
     }
 
+    @Bindable
+    public boolean getIsTracked() {
+        return isTracked;
+    }
+
+    public void setIsTracked(boolean isTracked) {
+        this.isTracked = isTracked;
+        notifyPropertyChanged(BR.isTracked);
+    }
+
+    public void toggleTracked() {
+        this.isTracked = !this.isTracked;
+        notifyPropertyChanged(BR.isTracked);
+    }
 
     public boolean isAvailable(){
         return getActiveInPractice().equals(ActiveInPractice.Active.toString());
@@ -200,8 +206,8 @@ public class Contact extends BaseObservable {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", contactStatus=" + contactStatus +
                 ", searchesCounter=" + searchesCounter +
-                ", hasApp=" + hasApp +
                 ", isFavorite=" + isFavorite +
+                ", isTracked=" + isTracked +
                 '}';
     }
 
@@ -227,4 +233,6 @@ public class Contact extends BaseObservable {
     public boolean hasBlockedUsers(){
         return this.contactStatus.blockedUsers.size() > 0;
     }
+
+
 }

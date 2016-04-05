@@ -12,6 +12,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.android.callmemaybe.UI.data.Contact;
+import com.android.callmemaybe.contracts.UserStatus;
+import com.android.callmemaybe.notificationService.NotificationService;
+
+import java.util.List;
 
 
 /**
@@ -70,5 +74,27 @@ public class ButtonAction {
                 ContactsContract.Contacts.CONTENT_URI);
         goToContactsApp.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(goToContactsApp);
+    }
+
+    public static void trackAction(Context context, Contact contactToBlock) {
+        Contact myContact = ContactHelper.getMyContact(context);
+        UserStatus myStatus = myContact.getContactStatus();
+        List<String> currTrackedList = myStatus.trackedUsers;
+
+        if (contactToBlock.getIsTracked()) {
+            contactToBlock.setIsTracked(false);
+            if (currTrackedList.contains(contactToBlock.getPhoneNumber())) {
+                currTrackedList.remove(contactToBlock.getPhoneNumber());
+            }
+            Toast.makeText(context, contactToBlock.getUserName() + " is not tracked anymore", Toast.LENGTH_LONG).show();
+        } else {
+            contactToBlock.setIsTracked(true);
+            if (!currTrackedList.contains(contactToBlock.getPhoneNumber())) {
+                currTrackedList.add(contactToBlock.getPhoneNumber());
+            }
+            Toast.makeText(context, contactToBlock.getUserName() + " is now tracked", Toast.LENGTH_LONG).show();
+        }
+        ContactHelper.updateMyContact(context);
+        NotificationService.NotifyOfTrackedListChanged(context, currTrackedList);
     }
 }
