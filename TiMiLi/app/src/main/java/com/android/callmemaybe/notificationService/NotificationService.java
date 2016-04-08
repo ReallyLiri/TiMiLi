@@ -57,6 +57,8 @@ public class NotificationService extends Service implements IOnLatestGistUpdated
     public int onStartCommand(Intent intent, int flags, int startId) {
         int opcode = intent.getIntExtra(EXTRA_OPCODE, OPCODE_NOP);
 
+        Log.d(LogTag, "Got start command with opcode " + opcode);
+
         if (mMyId == null) {
             PhoneNumberHelper phoneNumberHelper = new PhoneNumberHelper();
             mMyId = phoneNumberHelper.getMyPhoneNumber(this);
@@ -77,6 +79,7 @@ public class NotificationService extends Service implements IOnLatestGistUpdated
         Intent serviceIntent = new Intent(context, NotificationService.class);
         serviceIntent.putExtra(EXTRA_OPCODE, OPCODE_TRACKED_LIST_CHANGED);
         serviceIntent.putStringArrayListExtra(EXTRA_TRACKED_LIST, new ArrayList<>(tracked));
+        context.startService(serviceIntent);
     }
 
     private void setupTrackedListeners(Set<String> trackedSet) {
@@ -87,7 +90,9 @@ public class NotificationService extends Service implements IOnLatestGistUpdated
         for (String userId : trackedSet) {
             if (!mTrackedUsers.contains(userId)) {
                 // new tracked user
+                mUserLastActive.put(userId, ActiveInPractice.Loading);
                 mCloudServer.RegisterForUserStatusData(userId, this);
+                Log.d(LogTag, "User " + userId + " is now tracked");
                 // We will register for gist only after the first status will arrive
             }
         }
@@ -98,6 +103,7 @@ public class NotificationService extends Service implements IOnLatestGistUpdated
                 mCloudServer.UnRegisterForUserStatusData(userId);
                 mStatuses.remove(userId);
                 mUserLastActive.remove(userId);
+                Log.d(LogTag, "User " + userId + " is no longer tracked");
             }
         }
 
@@ -105,19 +111,23 @@ public class NotificationService extends Service implements IOnLatestGistUpdated
 
         if (mTrackedUsers.isEmpty()) {
             stopForeground(true);
-        }
-        else {
-            startForeground();
+        } else {
+            startForeground(mTrackedUsers.size());
         }
     }
 
-    private void startForeground() {
-        int notificationId = this.hashCode();
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+    private void startForeground(int trackCount) {
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+                new Intent(this, MainActivity.class),
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
         Notification notification =
                 new NotificationCompat.Builder(this)
-                        .setContentTitle("Notification service")
-                        .setContentText("... is running").build();
+                        .setContentTitle(getString(R.string.track_service_title))
+                        .setContentText(trackCount == 1 ? getString(R.string.one_user_track) : trackCount + " " + getString(R.string.multiple_users_track))
+                        .setSmallIcon(R.drawable.notification)
+                        .setContentIntent(pendingIntent)
+                        .build();
         startForeground(FOREGROUND_ID, notification);
     }
 
@@ -161,7 +171,6 @@ public class NotificationService extends Service implements IOnLatestGistUpdated
                         .setContentText("Id: " + userId)
                         .setSmallIcon(R.drawable.notification);
 
-        //TODO: check if it actually works-Tiana
         // Intent for the activity to open when user selects the notification
         Intent goToContactActivity = new Intent(this, ContactActivity.class);
         goToContactActivity.putExtra("PHONE_NUMBER", userId);

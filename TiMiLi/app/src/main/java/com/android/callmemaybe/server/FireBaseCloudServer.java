@@ -111,7 +111,12 @@ public class FireBaseCloudServer implements ICloudServer {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                // throw new IllegalStateException("onChildChanged should not be triggered");
+                try {
+                    UserGist latestGist = dataSnapshot.getValue(UserGist.class);
+                    onLatestGistUpdated.latestGistUpdated(latestGist);
+                }
+                catch(Exception ex) {
+                }
             }
 
             @Override

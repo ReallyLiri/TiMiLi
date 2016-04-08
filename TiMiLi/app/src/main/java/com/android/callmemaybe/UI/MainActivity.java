@@ -33,6 +33,7 @@ import com.android.callmemaybe.gistService.GistService;
 import com.android.callmemaybe.helpers.ContactHelper;
 
 import com.android.callmemaybe.helpers.SharedPreferencesHelper;
+import com.android.callmemaybe.notificationService.NotificationService;
 import com.android.callmemaybe.server.FireBaseCloudServer;
 
 import java.util.ArrayList;
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         GistService.sendStartup(this);
+        NotificationService.NotifyOfTrackedListChanged(this, ContactHelper.getMyContact(this).getContactStatus().trackedUsers);
 
         mCloudServer = new FireBaseCloudServer(this);
         for (final Contact contact: ContactHelper.getAllContacts()) {

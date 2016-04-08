@@ -83,4 +83,9 @@
     <!-- init -->
     <string name="phone_number_button">Start with my phone number</string>
 
+    <!-- track service -->
+    <string name="track_service_title">All Eyes Tracker</string>
+    <string name="one_user_track">1 contact is being tracked</string>
+    <string name="multiple_users_track">contacts are being tracked</string>
+
 </resources>
