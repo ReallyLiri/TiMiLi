@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TiMiLi</string>
+    <string name="app_name">All Eyes</string>
     <string name="undo">UNDO</string>
 
     <string name="greeting_most_searched">My most searched contacts</string>
@@ -8,18 +8,18 @@
 
     <!-- main_toolbar -->
     <string name="my_profile_action">My Profile</string>
-    <string name="show_only_active">show only actives</string>
-    <string name="surprise_me">surprise me!</string>
+    <string name="show_only_active">Show only active contacts</string>
+    <string name="surprise_me">Surprise me!</string>
 
     <!-- UnblockActivity -->
-    <string name="unblock">unblock users</string>
-    <string name="unblock_me">unblock me</string>
+    <string name="unblock">Unblock users</string>
+    <string name="unblock_me">Unblock me</string>
 
     <!-- myProfile -->
-    <string name="my_profile">my profile</string>
+    <string name="my_profile">My profile</string>
     <string name="set_my_status">Set my status:</string>
-    <string name="save_all_changes">save all changes</string>
-    <string name="go_to_unblocked_activity">go to blocked users</string>
+    <string name="save_all_changes">Save all changes</string>
+    <string name="go_to_unblocked_activity">Go to blocked users</string>
 
     <string name="sun_is_blocked">sun is blocked</string>
     <string name="sun_is_not_blocked">sun is not blocked</string>
@@ -43,29 +43,22 @@
     <string name="sat_is_not_blocked">sat is not blocked</string>
 
     <!-- contact toolbar -->
-    <string name="action_favorite">favorite</string>
+    <string name="action_favorite">Favorite</string>
 
     <!-- search toolbar -->
     <string name="search_title">Search contacts</string>
 
     <!-- sorting and filtering options -->
-    <string name="abc">alphabetically</string>
-    <string name="availability">status</string>
-    <string name="hasApp">app users</string>
-    <string name="favorites">my favs</string>
-    <string name="searchesCounter">top searches</string>
+    <string name="abc">Alphabetically</string>
+    <string name="availability">Status</string>
+    <string name="favorites">My favorites</string>
+    <string name="searchesCounter">Top searched</string>
 
     <!-- fav button -->
-    <string name="in_my_favs_button">in my favorites</string>
-    <string name="not_in_my_favs_button">not in my favorites</string>
     <string name="fav_tag">fav</string>
 
     <!--block button -->
-    <string name="block_button">block this contact</string>
     <string name="block_tag">block</string>
-
-    <!--add contact button -->
-    <string name="add_contact">add new contact</string>
 
     <!-- track button -->
     <string name="track">track</string>
@@ -73,14 +66,14 @@
     <string name="contact_is_untracked"> is not tracked anymore</string>
 
     <!--settings -->
-    <string name="hebrew">hebrew</string>
-    <string name="english">english</string>
-    <string name="language">language</string>
-    <string name="privacy">privacy</string>
-    <string name="all">everyone</string>
-    <string name="only_contacts">only my contacts</string>
-    <string name="only_favs">only my favs</string>
-    <string name="none">no one</string>
+    <string name="hebrew">Hebrew</string>
+    <string name="english">English</string>
+    <string name="language">Language</string>
+    <string name="privacy">Privacy</string>
+    <string name="all">Everyone</string>
+    <string name="only_contacts">Only my contacts</string>
+    <string name="only_favs">Only my favorites</string>
+    <string name="none">No one</string>
 
     <!-- init -->
     <string name="phone_number_button">Start with my phone number</string>
