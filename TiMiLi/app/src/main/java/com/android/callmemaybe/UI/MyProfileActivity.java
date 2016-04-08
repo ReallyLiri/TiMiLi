@@ -2,10 +2,18 @@ package com.android.callmemaybe.UI;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Rect;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.text.method.TransformationMethod;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.android.callmemaybe.UI.data.Contact;
 import com.android.callmemaybe.UI.databinding.ActivityMyProfileBinding;
@@ -26,28 +35,26 @@ import java.util.List;
 public class MyProfileActivity extends AppCompatActivity {
 
     private EditText funnyStatus;
-    private ImageButton saveButton;
     private Contact myContact;
-    private ImageButton goToUnblockedActivity;
-    private Toolbar toolbar;
-
+    private Button goToUnblockedActivity;
     private Button[] blocked_days;
+    private boolean isDirty;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("MyProfile", "in onCreate");
 
         myContact = ContactHelper.getMyContact(this);
+        isDirty = false;
 
         ActivityMyProfileBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_my_profile);
         binding.setContact(myContact);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //allows up navigation
+        getSupportActionBar().setTitle(R.string.my_profile_title);
 
         this.funnyStatus = binding.myFunnyStatus;
-        Log.d("MyProfile", "phoneNum = " + myContact);
-
-        this.saveButton = binding.saveAllChanges;
 
         this.blocked_days = new Button[7];
         this.blocked_days[0] = binding.sun;
@@ -58,48 +65,42 @@ public class MyProfileActivity extends AppCompatActivity {
         this.blocked_days[5] = binding.fri;
         this.blocked_days[6] = binding.sat;
 
-        final String[] debugArray = new String[]{"sun", "mon", "tue", "wed", "thu", "fri", "sat"};
+        TransformationMethod boldDayTransformationMethod = new TransformationMethod() {
 
-        final boolean[] updatedActiveDays = new boolean[7];
-        for (int i = 0; i < 7; i++){
-            updatedActiveDays[i] = myContact.getContactStatus().inactiveDays.contains(i+1);
-        }
+            @Override
+            public CharSequence getTransformation(CharSequence source, View view) {
+                CharSequence newSequence = new SpannableString("");
+                String[] words = source.toString().split(" ");
+                for (String word : words) {
+                    if (word.contains("day")) {
+                        SpannableString boldOption = new SpannableString(word);
+                        boldOption.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, word.length(),0);
+                        newSequence = TextUtils.concat(newSequence, " ", boldOption);
+                    }
+                    else {
+                        newSequence = TextUtils.concat(newSequence, " ", word);
+                    }
+                }
+                return newSequence;
+            }
+
+            @Override
+            public void onFocusChanged(View view, CharSequence sourceText, boolean focused, int direction, Rect previouslyFocusedRect) {
+
+            }
+        };
 
         for (int i = 0; i < 7; i++){
-            final Integer j = i;
+            final int dayInt = i + 1;
             blocked_days[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (updatedActiveDays[j]){
-                        updatedActiveDays[j] = false;
-                        myContact.getContactStatus().inactiveDays.remove((Object) (j+1));
-                        blocked_days[j].setText(debugArray[j] + "blocked");
-                    }
-                    else{
-                        updatedActiveDays[j] = true;
-                        myContact.getContactStatus().inactiveDays.add(j+1);
-                        blocked_days[j].setText(debugArray[j] + "free");
-                    }
+                    myContact.toggleBlockedDay(dayInt);
+                    isDirty = true;
                 }
             });
+            blocked_days[i].setTransformationMethod(boldDayTransformationMethod);
         }
-
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String funnyStatusString = funnyStatus.getText().toString();
-                if (!funnyStatusString.equals(myContact.getFunnyStatus())){
-                    myContact.setFunnyStatus(funnyStatusString);
-                }
-                List<Integer> old = myContact.getContactStatus().inactiveDays;
-                List<Integer> newList = getUpdatedInactiveDays(updatedActiveDays);
-                if (!old.equals(newList)){
-                    myContact.getContactStatus().inactiveDays = newList;
-                }
-                ContactHelper.updateMyContact(MyProfileActivity.this);
-                saveToServer();
-            }
-        });
 
         this.goToUnblockedActivity = binding.goToUnblocked;
         if (!myContact.hasBlockedUsers()) {
@@ -112,6 +113,27 @@ public class MyProfileActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        goToUnblockedActivity.setTransformationMethod(null);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        String funnyStatusString = funnyStatus.getText().toString();
+        if (!funnyStatusString.equals(myContact.getFunnyStatus())){
+            isDirty = true;
+            myContact.setFunnyStatus(funnyStatusString);
+        }
+
+        if (!isDirty) {
+            return;
+        }
+
+        ContactHelper.updateMyContact(MyProfileActivity.this);
+        saveToServer();
+
+        Toast.makeText(this, R.string.profile_saved, Toast.LENGTH_SHORT).show();
     }
 
     @Override

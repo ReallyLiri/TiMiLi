@@ -225,9 +225,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(mostSearchedFragment, "Most Searched");
-        adapter.addFragment(favsFragment, "My Favs");
-        adapter.addFragment(allContactsFragment, "All Contacts");
+        adapter.addFragment(mostSearchedFragment, getString(R.string.most_searched_tab));
+        adapter.addFragment(favsFragment, getString(R.string.fav_tab));
+        adapter.addFragment(allContactsFragment, getString(R.string.all_contacts_tab));
         viewPager.setAdapter(adapter);
     }
 

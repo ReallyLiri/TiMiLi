@@ -40,6 +40,7 @@ public class UnblockUsers extends AppCompatActivity {
         cListView = binding.blockedContacts;
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //allows up navigation
+        getSupportActionBar().setTitle(R.string.unblock);
 
         //needs to deal with the cases of no contacts at all or less then 3 contacts
         Contact[] blocked = getContacts();
@@ -51,7 +52,6 @@ public class UnblockUsers extends AppCompatActivity {
     public boolean onCreateOptionsMenu (Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.contact_toolbar, menu);
-        toolbar.setTitle(R.string.unblock);
         return true;
     }
 

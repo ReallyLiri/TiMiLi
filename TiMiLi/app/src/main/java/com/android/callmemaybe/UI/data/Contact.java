@@ -36,17 +36,23 @@ public class Contact extends BaseObservable {
         return contact;
     }
 
+    @Bindable
     public boolean[] getBlockedDays(){
-        boolean[] res = new boolean[7];
-        for (Integer i = 1; i < 8; i++){
-            if (this.contactStatus.inactiveDays.contains(i)){
-                res[i-1] = true;
-            }
-            else {
-                res[i - 1] = false;
-            }
+        boolean[] days = new boolean[8];
+        for (int i = 1; i<=7; i++) {
+            days[i] = this.contactStatus.inactiveDays.contains(i);
         }
-        return res;
+        return days;
+    }
+
+    public void toggleBlockedDay(Integer i){
+        if (this.contactStatus.inactiveDays.contains(i)) {
+            this.contactStatus.inactiveDays.remove(i);
+        }
+        else {
+            this.contactStatus.inactiveDays.add(i);
+        }
+        notifyPropertyChanged(BR.blockedDays);
     }
 
     public Contact () {

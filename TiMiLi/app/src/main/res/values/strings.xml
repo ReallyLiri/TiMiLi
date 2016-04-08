@@ -5,42 +5,47 @@
     <string name="greeting_most_searched">My most searched contacts</string>
     <string name="greeting_favs">My favorite contacts</string>
     <string name="greeting_all">All contacts</string>
+    <string name="most_searched_tab">Most searched</string>
+    <string name="fav_tab">Favorites</string>
+    <string name="all_contacts_tab">All contacts</string>
 
     <!-- main_toolbar -->
-    <string name="my_profile_action">My Profile</string>
+    <string name="my_profile_action">My profile</string>
     <string name="show_only_active">Show only active contacts</string>
     <string name="surprise_me">Surprise me!</string>
 
     <!-- UnblockActivity -->
-    <string name="unblock">Unblock users</string>
+    <string name="unblock">Unblock Users</string>
     <string name="unblock_me">Unblock me</string>
 
     <!-- myProfile -->
+    <string name="my_profile_title">My Profile</string>
     <string name="my_profile">My profile</string>
     <string name="set_my_status">Set my status:</string>
     <string name="save_all_changes">Save all changes</string>
     <string name="go_to_unblocked_activity">Go to blocked users</string>
+    <string name="profile_saved">Profile saved</string>
 
-    <string name="sun_is_blocked">sun is blocked</string>
-    <string name="sun_is_not_blocked">sun is not blocked</string>
+    <string name="sun_is_blocked">Reveal myself on <b>Sunday</b></string>
+    <string name="sun_is_not_blocked">Hide myself on <b>Sunday</b></string>
 
-    <string name="mon_is_blocked">mon is blocked</string>
-    <string name="mon_is_not_blocked">mon is not blocked</string>
+    <string name="mon_is_blocked">Reveal myself on <b>Monday</b></string>
+    <string name="mon_is_not_blocked">Hide myself on <b>Monday</b></string>
 
-    <string name="tue_is_blocked">tue is blocked</string>
-    <string name="tue_is_not_blocked">tue is not blocked</string>
+    <string name="tue_is_blocked">Reveal myself on <b>Tuesday</b></string>
+    <string name="tue_is_not_blocked">Hide myself on <b>Tuesday</b></string>
 
-    <string name="wed_is_blocked">wed is blocked</string>
-    <string name="wed_is_not_blocked">wed is not blocked</string>
+    <string name="wed_is_blocked">Reveal myself on <b>Wednesday</b></string>
+    <string name="wed_is_not_blocked">Hide myself on <b>Wednesday</b></string>
 
-    <string name="thu_is_blocked">thu is blocked</string>
-    <string name="thu_is_not_blocked">thu is not blocked</string>
+    <string name="thu_is_blocked">Reveal myself on <b>Thursday</b></string>
+    <string name="thu_is_not_blocked">Hide myself on <b>Thursday</b></string>
 
-    <string name="fri_is_blocked">fri is blocked</string>
-    <string name="fri_is_not_blocked">fri is not blocked</string>
+    <string name="fri_is_blocked">Reveal myself on <b>Friday</b></string>
+    <string name="fri_is_not_blocked">Hide myself on <b>Friday</b></string>
 
-    <string name="sat_is_blocked">sat is blocked</string>
-    <string name="sat_is_not_blocked">sat is not blocked</string>
+    <string name="sat_is_blocked">Reveal myself on <b>Saturday</b></string>
+    <string name="sat_is_not_blocked">Hide myself on <b>Saturday</b></string>
 
     <!-- contact toolbar -->
     <string name="action_favorite">Favorite</string>
