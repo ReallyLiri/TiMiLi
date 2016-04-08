@@ -121,7 +121,7 @@ public class ContactActivityFragment extends Fragment {
         binding.contactFragmentTrackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ButtonAction.trackAction(getContext(), mContact);
+                ButtonAction.trackAction(getContext(), mContact, binding.snackbarPosition);
             }
         });
 

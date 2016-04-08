@@ -128,7 +128,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         holder.contactListItemBinding.itemTrackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ButtonAction.trackAction(getContext(), contact);
+                ButtonAction.trackAction(getContext(), contact, holder.contactListItemBinding.snackbarPosition);
             }
         });
 

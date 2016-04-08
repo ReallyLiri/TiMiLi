@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.provider.ContactsContract;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +13,7 @@ import android.net.Uri;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.callmemaybe.UI.R;
 import com.android.callmemaybe.UI.data.Contact;
 import com.android.callmemaybe.contracts.UserStatus;
 import com.android.callmemaybe.notificationService.NotificationService;
@@ -76,25 +79,43 @@ public class ButtonAction {
         context.startActivity(goToContactsApp);
     }
 
-    public static void trackAction(Context context, Contact contactToBlock) {
+    public static void trackAction(final Context context, final Contact contactToTrack, final CoordinatorLayout coordinatorLayout) {
         Contact myContact = ContactHelper.getMyContact(context);
         UserStatus myStatus = myContact.getContactStatus();
         List<String> currTrackedList = myStatus.trackedUsers;
 
-        if (contactToBlock.getIsTracked()) {
-            contactToBlock.setIsTracked(false);
-            if (currTrackedList.contains(contactToBlock.getPhoneNumber())) {
-                currTrackedList.remove(contactToBlock.getPhoneNumber());
+        if (contactToTrack.getIsTracked()) {
+            contactToTrack.setIsTracked(false);
+            if (currTrackedList.contains(contactToTrack.getPhoneNumber())) {
+                currTrackedList.remove(contactToTrack.getPhoneNumber());
             }
-            Toast.makeText(context, contactToBlock.getUserName() + " is not tracked anymore", Toast.LENGTH_LONG).show();
+
+            showTrackSnackbar(false, context, contactToTrack, coordinatorLayout);
         } else {
-            contactToBlock.setIsTracked(true);
-            if (!currTrackedList.contains(contactToBlock.getPhoneNumber())) {
-                currTrackedList.add(contactToBlock.getPhoneNumber());
+            contactToTrack.setIsTracked(true);
+            if (!currTrackedList.contains(contactToTrack.getPhoneNumber())) {
+                currTrackedList.add(contactToTrack.getPhoneNumber());
             }
-            Toast.makeText(context, contactToBlock.getUserName() + " is now tracked", Toast.LENGTH_LONG).show();
+
+            showTrackSnackbar(true, context, contactToTrack, coordinatorLayout);
         }
         ContactHelper.updateMyContact(context);
         NotificationService.NotifyOfTrackedListChanged(context, currTrackedList);
+    }
+
+    private static void showTrackSnackbar(boolean isTrackedNow, final Context context, final Contact contactToTrack, CoordinatorLayout coordinatorLayout) {
+        if (coordinatorLayout != null) {
+            Snackbar snackbar = Snackbar
+                    .make(coordinatorLayout,
+                            contactToTrack.getUserName() + " " + (isTrackedNow ? context.getString(R.string.contact_is_tracked) : context.getString(R.string.contact_is_untracked)),
+                            Snackbar.LENGTH_LONG)
+                    .setAction(R.string.undo, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            trackAction(context, contactToTrack, null);
+                        }
+                    });
+            snackbar.show();
+        }
     }
 }

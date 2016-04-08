@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">TiMiLi</string>
+    <string name="undo">UNDO</string>
 
     <string name="greeting_most_searched">My most searched contacts</string>
     <string name="greeting_favs">My favorite contacts</string>
@@ -68,6 +69,8 @@
 
     <!-- track button -->
     <string name="track">track</string>
+    <string name="contact_is_tracked"> is now tracked</string>
+    <string name="contact_is_untracked"> is not tracked anymore</string>
 
     <!--settings -->
     <string name="hebrew">hebrew</string>
@@ -78,13 +81,6 @@
     <string name="only_contacts">only my contacts</string>
     <string name="only_favs">only my favs</string>
     <string name="none">no one</string>
-
-    <!-- statuses -->
-    <string name="busy">busy</string>
-    <string name="available">available</string>
-    <string name="only_writing">write me</string>
-    <string name="bored">please amuse me</string>
-    <string name="default_status">dont know</string>
 
     <!-- init -->
     <string name="phone_number_button">Start with my phone number</string>
