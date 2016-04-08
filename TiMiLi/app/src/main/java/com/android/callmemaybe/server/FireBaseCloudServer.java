@@ -56,7 +56,7 @@ public class FireBaseCloudServer implements ICloudServer {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                throw new IllegalStateException("onCancelled should not be triggered");
+                // throw new IllegalStateException("onCancelled should not be triggered");
             }
         };
         ref.addListenerForSingleValueEvent(eventListener);
@@ -77,7 +77,7 @@ public class FireBaseCloudServer implements ICloudServer {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                throw new IllegalStateException("onCancelled should not be triggered");
+                // throw new IllegalStateException("onCancelled should not be triggered");
             }
         };
         ref.addListenerForSingleValueEvent(eventListener);
@@ -111,7 +111,7 @@ public class FireBaseCloudServer implements ICloudServer {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                throw new IllegalStateException("onChildChanged should not be triggered");
+                // throw new IllegalStateException("onChildChanged should not be triggered");
             }
 
             @Override
@@ -182,7 +182,7 @@ public class FireBaseCloudServer implements ICloudServer {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                throw new IllegalStateException("onCancelled should not be triggered");
+                // throw new IllegalStateException("onCancelled should not be triggered");
             }
         };
         mStatusListeners.put(userId, listener);
