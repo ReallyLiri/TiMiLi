@@ -86,18 +86,11 @@ public class ContactActivityFragment extends Fragment {
                         Toast.makeText(context, "this user is blocked!!", Toast.LENGTH_LONG).show();
                         dialog.dismiss();
 
-                        if (getActivity().isTaskRoot()) {
-                            //the app's backstack is empty, so start MainActivity
-                            Intent goToMainActivity = new Intent(context, MainActivity.class);
-                            //the flag delets from stack's all activities comint after the target activity
-                            goToMainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            context.startActivity(goToMainActivity);
-                        } else {
-                            //TODO: go to previous activity. we cant use finishActivity() because its a fragment
-                            getActivity().finish();
-                            //not sure whether to use onBackPressed, onDestroy or finish
-                            //still need to delete from backstack
-                        }
+                        //the user is blocked, so start MainActivity
+                        Intent goToMainActivity = new Intent(context, MainActivity.class);
+                        //the flag delets from stack's all activities comint after the target activity
+                        goToMainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(goToMainActivity);
                     }
                 };
                 buttonAction.blockAction(context, v, onPositiveButtonClicked);
